@@ -1,0 +1,14 @@
+.text-block {
+    width: 320px;
+    position: absolute;
+    top: 80px;
+    left: 30px;
+    right: 100px;
+    background-color: white;
+    font-size: x-large;
+    color: black;
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 30px;
+  }
