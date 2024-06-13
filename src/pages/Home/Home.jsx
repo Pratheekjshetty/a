@@ -1,14 +1,14 @@
-import React from 'react'
-import './Home.css'
-import front from '../../assets/front.jpg'
+import React  from 'react';
+import front from '../../assets/front.jpg';
+import VehicleDisplay from './VehicleDisplay';
 const Home = () => {
   return (
+    <>
     <div>
-      <img  className=""src={front} alt="" style={{ height: '600px' , width: '100%'}}/>
-      <div className='text-block'>
-        <input type='radio'/>One Way &nbsp;<input type='radio'/>Round Trip
-      </div>
+      <img className="" src={front} alt="Front" style={{ height: '600px', width: '100%' }} />
     </div>
-  )
-}
-export default Home
+    <VehicleDisplay/>
+    </>
+  );
+};
+export default Home;
