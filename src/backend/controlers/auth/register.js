@@ -1,16 +1,16 @@
-//import express from 'express';
-import initTeacherModel from '../../model/teacherModel.js';
+import express from 'express';
+import initAdminModel from '../../model/adminModel.js';
 import { RESPONSE } from '../../config/global.js';
 import validator from 'validator';
 import bcrypt from 'bcrypt';
 import constants from "../../config/constants.js"
-import router from './login.js';
+const router =express.Router();
 router.post("/",async(req,res)=>{
     try{
-        const teacherModel =await initTeacherModel();
-        const{teacher_name,email,phone,password}=req.body;
+        const adminModel =await initAdminModel();
+        const{admin_name,email,phone,password}=req.body;
         let response;
-        if(!teacher_name||teacher_name===""){
+        if(!admin_name||admin_name===""){
             response=RESPONSE.MANDATORY_PARAMS;
             return res.json({           //sending data using json format
                 code:response.code,
@@ -47,7 +47,7 @@ router.post("/",async(req,res)=>{
                 message:"email "+response.message,
             });
         }
-        const isextistingEmail =await teacherModel.find({
+        const isextistingEmail =await adminModel.find({
             is_Active:constants.STATE.ACTIVE,
             email:email,
         })
@@ -68,7 +68,7 @@ router.post("/",async(req,res)=>{
                 message:"phone "+response.message,
             });
         }
-        const isextistingPhone =await teacherModel.find({
+        const isextistingPhone =await adminModel.find({
             is_Active:constants.STATE.ACTIVE,
             phone:phone,
         })
@@ -82,8 +82,8 @@ router.post("/",async(req,res)=>{
         }
         const encryptedPassword =await bcrypt.hash(password,constants.HASH_ROUND);
         // console.log(encryptedPassword);
-        await teacherModel.create({
-            teacher_name:teacher_name,
+        await adminModel.create({
+            admin_name:admin_name,
             email:email,
             phone:phone,
             password:encryptedPassword,

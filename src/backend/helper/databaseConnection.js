@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const connectDB = async()=>{
     try{
         //compass
-        const url="mongodb://127.0.0.1:27017/internship_db";
+        const url="mongodb://127.0.0.1:27017/carsharing_db";
         await mongoose.connect(url);
         //atlas
         //const url="mongodb+srv://Pratheek:1234@cluster0.wmfxfpy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";

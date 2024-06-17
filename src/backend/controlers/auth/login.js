@@ -1,5 +1,5 @@
 import express from 'express';
-import initTeacherModel from '../../model/teacherModel.js';
+import initAdminModel from '../../model/adminModel.js';
 import { RESPONSE } from '../../config/global.js';
 import validator from 'validator';
 import bcrypt from 'bcrypt';
@@ -8,7 +8,7 @@ import constants from "../../config/constants.js"
 const router =express.Router();
 router.post("/",async(req,res)=>{
     try{
-        const teacherModel =await initTeacherModel();
+        const adminModel =await initAdminModel();
         const{email,password}=req.body;
         let response;
         if(!email||email===""){
@@ -34,7 +34,7 @@ router.post("/",async(req,res)=>{
                 message:"email "+response.message,
             });
         }
-        const data=await teacherModel.findOne({
+        const data=await adminModel.findOne({
             is_Active:constants.STATE.ACTIVE,
             email:email,
         })
