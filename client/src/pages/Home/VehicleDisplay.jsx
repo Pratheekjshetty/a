@@ -30,8 +30,10 @@ const VehicleDisplay = () => {
   return (
     <div className='flex justify-center text-center flex-col'>
       <h1 className='m-8 font-bold text-4xl'>Endless Options</h1>
-      <center><button className='bg-indigo-600 text-white p-2 rounded-lg text-md w-52'>Book a perfect car</button></center>
-      <div id="controls-carousel" className="relative w-full" data-carousel="static">
+      <p>With our extensive range of cars, finding a ride anytime, anywhere has never been easier.</p><br/>
+      <center><button className='bg-indigo-600 text-white p-2 rounded-lg text-md w-44'>Explore Cars</button></center>
+      <div id="controls-carousel" className="relative w-full" data-carousel="static"><br/><br/>
+        <h2 className="ml-4 mr-4 font-bold text-lg">Browse by make</h2>
         <div className="relative flex items-center justify-center overflow-hidden rounded-lg" style={{ height: '50vh' }}>
           {images.map((image, index) => (
             <div
