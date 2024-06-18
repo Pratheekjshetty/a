@@ -1,6 +1,7 @@
 import React  from 'react';
 import front from '../../assets/front.jpg';
 import VehicleDisplay from './VehicleDisplay';
+import BrowseCar from './BrowseCar';
 const Home = () => {
   return (
     <>
@@ -8,7 +9,9 @@ const Home = () => {
       <img className="" src={front} alt="Front" style={{ height: '600px', width: '100%' }} />
     </div>
     <VehicleDisplay/>
+    <BrowseCar/>
     </>
   );
 };
+
 export default Home;
