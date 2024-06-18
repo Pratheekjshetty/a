@@ -2,6 +2,7 @@ import React  from 'react';
 import front from '../../assets/front.jpg';
 import VehicleDisplay from './VehicleDisplay';
 import BrowseCar from './BrowseCar';
+import Hosts from './Hosts';
 const Home = () => {
   return (
     <>
@@ -10,6 +11,7 @@ const Home = () => {
     </div>
     <VehicleDisplay/>
     <BrowseCar/>
+    <Hosts/>
     </>
   );
 };

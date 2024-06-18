@@ -38,14 +38,14 @@ const BrowseCar = () => {
           <div className="relative flex justify-center items-center">
             <img src={images[currentIndex].src} alt={images[currentIndex].alt} className="rounded-lg max-w-full"/>
             <div className="absolute top-2 left-12 right-4 flex space-x-2">
-              <button type="button" className="p-2  text-slate-700 rounded-full hover:bg-slate-100 transition" onClick={prevSlide}>
+              <button type="button" className="p-2 text-slate-700 rounded-full hover:bg-transparent transition" onClick={prevSlide}>
                 <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                   viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"/>
                 </svg>
                 <span className="sr-only">Previous</span>
               </button>
-              <button type="button" className="p-2 text-slate-700 rounded-full hover:bg-slate-100 transition" onClick={nextSlide}>
+              <button type="button" className="p-2 text-slate-700 rounded-full hover:bg-transparent transition" onClick={nextSlide}>
                 <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                   viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"/>
