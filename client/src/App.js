@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import "./App.css";
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Navbar from './component/NavBar/Navbar'
 import Home from './pages/Home/Home';
 import About from './pages/About/About';
@@ -11,7 +11,7 @@ import NoPage from './pages/NoPage/NoPage';
 function App() { 
   const[showLogin,setShowLogin] = useState(true);
   return (   
-    <BrowserRouter>
+    <>
     {showLogin?<Login setShowLogin={setShowLogin}/>:<></>} 
     <div>
     <Navbar setShowLogin={setShowLogin}/> 
@@ -24,7 +24,7 @@ function App() {
           <Route path="*" element={<NoPage/>}/>
         </Routes>  
     </div> 
-    </BrowserRouter> 
+    </> 
   );
 }
 export default App;

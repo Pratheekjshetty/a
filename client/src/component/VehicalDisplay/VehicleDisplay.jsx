@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import './VehicalDisplay.css'
 import { car_list } from '../../assets/assets';
 
-const VehicleDisplay = () => {
+const VehicleDisplay = ({category,setCategory}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   useEffect(() => {
@@ -38,16 +39,15 @@ const VehicleDisplay = () => {
           <h2 className="absolute top-0 mt-4 ml-4 mr-4 font-bold text-lg">Browse by make</h2>
           <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {getVisibleImages().map((image, index) => (
-              <div
+              <div onClick={()=>setCategory(prev=>prev===image.car_name?"All":image.car_name)}
                 key={index}
                 className='transition-opacity duration-700 ease-in-out opacity-100 m-4'
                 style={{ width: '20rem', height: '12.5rem' }}>
-                <img
-                  src={image.car_image}
-                  className="w-full h-full object-cover rounded-2xl border-slate-400 border-4"
-                  alt={image.alt} />
+                <div className="car_menu">
+                  <img className={category===image.car_name?"active":""}src={image.car_image} alt={image.alt} />
+                </div>
                 <p className='font-bold'>{image.car_name}</p>
-              </div>
+                </div>
             ))}
           </div>
           <button type="button" className="absolute left-4 z-30 flex items-center justify-center p-2 bg-indigo-600 text-white rounded-full cursor-pointer group focus:outline-none" onClick={prevSlide}>
@@ -63,6 +63,7 @@ const VehicleDisplay = () => {
             <span className="sr-only">Next</span>
           </button>
         </div>
+        <hr className='my-2.5 mx-2 h-0.5 bg-gray-200 border-none'/>
       </div>
     </div>
   );
