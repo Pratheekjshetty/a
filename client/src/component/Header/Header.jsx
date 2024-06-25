@@ -1,8 +1,10 @@
 import React from 'react'
-
+import front from '../../assets/front.jpg';
 const Header = () => {
   return (
-    <div>Header</div>
+    <div>
+      <img className="" src={front} alt="Front" style={{ height: '600px', width: '100%' }} />
+    </div>
   )
 }
 

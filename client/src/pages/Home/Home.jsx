@@ -1,14 +1,12 @@
 import React  from 'react';
-import front from '../../assets/front.jpg';
-import VehicleDisplay from './VehicleDisplay';
-import BrowseCar from './BrowseCar';
-import Hosts from './Hosts';
+import Header from '../../component/Header/Header';
+import VehicleDisplay from '../../component/VehicalDisplay/VehicleDisplay';
+import BrowseCar from '../../component/BrowseCars/BrowseCar';
+import Hosts from '../../component/Hosts/Hosts';
 const Home = () => {
   return (
     <>
-    <div>
-      <img className="" src={front} alt="Front" style={{ height: '600px', width: '100%' }} />
-    </div>
+    <Header/>
     <VehicleDisplay/>
     <BrowseCar/>
     <Hosts/>

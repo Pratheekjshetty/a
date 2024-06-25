@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import './Login.css'
 import cross_icon from '../../assets/cross_icon.png'
+import upload_area from '../../assets/upload_area.png'
 const Login = ({setShowLogin}) => {
+    const [image,setImage] = useState(false);
     const[currState,setCurrState]=useState("Login")
   return (
     <div className='login'>
@@ -11,7 +13,12 @@ const Login = ({setShowLogin}) => {
                 <img onClick={()=>setShowLogin(false)}src={cross_icon} alt="Cross"/>
             </div>
             <div className="login-inputs">
-                {currState==="Login"?<></>:<><input type="text" placeholder='Your Name' required/>
+                {currState==="Login"?<></>:<>
+                <center>
+                    <label htmlFor='image'><img className='rounded-lg' src={image?URL.createObjectURL(image):upload_area} alt=''/></label>
+                    <input onChange={(e)=>setImage(e.target.files[0])} type="file" id="image" hidden required/>
+                </center>
+                <input type="text" placeholder='Your Name' required/>
                 <input type="number" placeholder='Phone Number' required/></>}  
                 <input type="email" placeholder='Your Email'required/>
                 <input type="password" placeholder='Password'required/>

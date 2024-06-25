@@ -11,38 +11,38 @@ export const assets = {
     benz,bmw,ford,jeep,nissan,subaro,tesla,toyota,
  }
 
-export const menu_list = [
+export const car_list = [
     {
-        menu_name: "Benz",
-        menu_image: benz
+        car_name: "Benz",
+        car_image: benz
     },
     {
-        menu_name: "BMW",
-        menu_image: bmw
+        car_name: "BMW",
+        car_image: bmw
     },
     {
-        menu_name: "Ford",
-        menu_image: ford
+        car_name: "Ford",
+        car_image: ford
     },
     {
-        menu_name: "Jeep",
-        menu_image: jeep
+        car_name: "Jeep",
+        car_image: jeep
     },
     {
-        menu_name: "Nissan",
-        menu_image: nissan
+        car_name: "Nissan",
+        car_image: nissan
     },
     {
-        menu_name: "Subaro",
-        menu_image: subaro
+        car_name: "Subaro",
+        car_image: subaro
     },
     {
-        menu_name: "Tesla",
-        menu_image: tesla
+        car_name: "Tesla",
+        car_image: tesla
     },
     {
-        menu_name: "Toyota",
-        menu_image: toyota
+        car_name: "Toyota",
+        car_image: toyota
     }]
 
 export const vehicle_list = [

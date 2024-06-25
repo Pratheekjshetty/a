@@ -1,22 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import benz from '../../assets/vehicle/benz.png';
-import bmw from '../../assets/vehicle/bmw.png';
-import ford from '../../assets/vehicle/ford.png';
-import jeep from '../../assets/vehicle/jeep.png';
-import nissan from '../../assets/vehicle/nissan.png';
-import subaro from '../../assets/vehicle/subaro.png';
-import tesla from '../../assets/vehicle/tesla.png';
-import toyota from '../../assets/vehicle/toyota.png';
-const images = [
-  { src: benz, alt: 'Benz', value: 'Benz' },
-  { src: bmw, alt: 'BMW', value: 'BMW' },
-  { src: ford, alt: 'Ford', value: 'Ford' },
-  { src: jeep, alt: 'Jeep', value: 'Jeep' },
-  { src: nissan, alt: 'Nissan', value: 'Nissan' },
-  { src: subaro, alt: 'Subaru', value: 'Subaru' },
-  { src: tesla, alt: 'Tesla', value: 'Tesla' },
-  { src: toyota, alt: 'Toyota', value: 'Toyota' },
-];
+import { car_list } from '../../assets/assets';
+
 const VehicleDisplay = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -26,11 +10,11 @@ const VehicleDisplay = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
   const prevSlide = () => {
-    const index = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
+    const index = currentIndex === 0 ? car_list.length - 1 : currentIndex - 1;
     setCurrentIndex(index);
   };
   const nextSlide = () => {
-    const index = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
+    const index = currentIndex === car_list.length - 1 ? 0 : currentIndex + 1;
     setCurrentIndex(index);
   };
   const getVisibleImages = () => {
@@ -42,7 +26,7 @@ const VehicleDisplay = () => {
     } else {
       visibleImagesCount = 1;
     }
-    return Array.from({ length: visibleImagesCount }, (_, i) => images[(currentIndex + i) % images.length]);
+    return Array.from({ length: visibleImagesCount }, (_, i) => car_list[(currentIndex + i) % car_list.length]);
   };
   return (
     <div className='flex justify-center text-center flex-col'>
@@ -59,10 +43,10 @@ const VehicleDisplay = () => {
                 className='transition-opacity duration-700 ease-in-out opacity-100 m-4'
                 style={{ width: '20rem', height: '12.5rem' }}>
                 <img
-                  src={image.src}
+                  src={image.car_image}
                   className="w-full h-full object-cover rounded-2xl border-slate-400 border-4"
                   alt={image.alt} />
-                <p className='font-bold'>{image.value}</p>
+                <p className='font-bold'>{image.car_name}</p>
               </div>
             ))}
           </div>
