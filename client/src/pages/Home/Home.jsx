@@ -5,6 +5,7 @@ import BrowseCar from '../../component/BrowseCars/BrowseCar';
 import Hosts from '../../component/Hosts/Hosts';
 import CarDisplay from '../../component/CarDisplay/CarDisplay';
 import Footer from '../../component/Footer/Footer';
+import AppDownload from '../../component/AppDownload/AppDownlad';
 const Home = () => {
   const [category,setCategory] =useState("All");
   return (
@@ -14,6 +15,7 @@ const Home = () => {
     <CarDisplay category={category}/>
     <BrowseCar/>
     <Hosts/>
+    <AppDownload/>
     <Footer/>
     </div>
   );
