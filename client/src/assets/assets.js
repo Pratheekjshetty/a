@@ -1,11 +1,9 @@
 import benz from './vehicle/benz.png';
 import bmw from './vehicle/bmw.png';
 import ford from './vehicle/ford.png';
-import jeep from './vehicle/jeep.png';
 import nissan from './vehicle/nissan.png';
 import subaro from './vehicle/subaro.png';
 import tesla from './vehicle/tesla.png';
-import toyota from './vehicle/toyota.png';
 
 import car_1 from './cars/car_1.jpg'
 import car_2 from './cars/car_2.jpg'
@@ -19,14 +17,14 @@ import car_9 from './cars/car_9.jpg'
 import car_10 from './cars/car_10.jpg'
 import car_11 from './cars/car_11.jpg'
 import car_12 from './cars/car_12.jpg'
-import car_17 from './cars/car_17.jpg'
-import car_18 from './cars/car_18.jpg'
-import car_19 from './cars/car_19.jpg'
-import car_20 from './cars/car_20.jpg'
+import car_13 from './cars/car_13.jpg'
+import car_14 from './cars/car_14.jpg'
+import car_15 from './cars/car_15.jpg'
+import car_16 from './cars/car_16.jpg'
 
 
 export const assets = {
-    benz,bmw,ford,jeep,nissan,subaro,tesla,toyota,
+    benz,bmw,ford,nissan,subaro,tesla,
  }
 
 export const car_list = [
@@ -43,10 +41,6 @@ export const car_list = [
         car_image: ford
     },
     {
-        car_name: "Jeep",
-        car_image: jeep
-    },
-    {
         car_name: "Nissan",
         car_image: nissan
     },
@@ -57,11 +51,7 @@ export const car_list = [
     {
         car_name: "Tesla",
         car_image: tesla
-    },
-    {
-        car_name: "Toyota",
-        car_image: toyota
-    }]
+    },]
 
 export const vehicle_list = [
     {
@@ -163,7 +153,7 @@ export const vehicle_list = [
     },{
         _id: "17",
         name: "Nissan",
-        image: car_17,
+        image: car_13,
         price: 200,
         location:"Puttur",
         description: "A leading manufacturer of luxury vehicles and motorcycles, celebrated for its sporty driving dynamics and cutting-edge design.",
@@ -171,7 +161,7 @@ export const vehicle_list = [
     },{
         _id: "18",
         name: "Nissan",
-        image: car_18,
+        image: car_14,
         price: 200,
         location:"Manglore",
         description: "A leading manufacturer of luxury vehicles and motorcycles, celebrated for its sporty driving dynamics and cutting-edge design.",
@@ -179,7 +169,7 @@ export const vehicle_list = [
     },{
         _id: "19",
         name: "Nissan",
-        image: car_19,
+        image: car_15,
         price: 200,
         location:"Bantwal",
         description: "A leading manufacturer of luxury vehicles and motorcycles, celebrated for its sporty driving dynamics and cutting-edge design.",
@@ -187,7 +177,7 @@ export const vehicle_list = [
     },{
         _id: "20",
         name: "Nissan",
-        image: car_20,
+        image: car_16,
         price: 200,
         location:"Manglore",
         description: "A leading manufacturer of luxury vehicles and motorcycles, celebrated for its sporty driving dynamics and cutting-edge design.",
