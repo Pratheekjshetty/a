@@ -11,6 +11,9 @@ module.exports = {
         '100%': { opacity: '1' },
       },
     },
+    colors: {
+      customGray: 'rgb(50, 50, 50)',
+    },
     },
   },
   plugins: [],

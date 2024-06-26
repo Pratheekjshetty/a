@@ -9,8 +9,12 @@ const CarDisplay = ({category}) => {
       <h2 className='text-xl font-semibold'>Top Cars near you</h2>
       <div className='grid mt-8 gap-x-13 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
         {vehicle_list.map((item,index)=>{
-          return <CarItem key={index} id={item._id} name={item.name} price={item.price} 
-          location={item.location} description={item.description} image={item.image}/>
+          if(category==='All' || category===item.category){
+            return (
+              <CarItem key={index} id={item._id} name={item.name} price={item.price} location={item.location} description={item.description} image={item.image}/>
+            ) 
+          }
+          return null;
         })}
       </div>
     </div>

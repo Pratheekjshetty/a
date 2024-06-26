@@ -21,6 +21,10 @@ import car_13 from './cars/car_13.jpg'
 import car_14 from './cars/car_14.jpg'
 import car_15 from './cars/car_15.jpg'
 import car_16 from './cars/car_16.jpg'
+import car_17 from './cars/car_17.jpg'
+import car_18 from './cars/car_18.jpg'
+import car_19 from './cars/car_19.jpg'
+import car_20 from './cars/car_20.jpg'
 
 
 export const assets = {
@@ -124,7 +128,7 @@ export const vehicle_list = [
         image: car_9,
         price: 200,
         location:"Puttur",
-        description: "A luxury automotive brand known for its high-end vehicles, innovative technology, and exceptional performance.",
+        description: "Renowned American automaker known for reliable and innovative vehicles.",
         category: "Ford"
     },{
         _id: "10",
@@ -132,7 +136,7 @@ export const vehicle_list = [
         image: car_10,
         price: 200,
         location:"Bantwal",
-        description: "A luxury automotive brand known for its high-end vehicles, innovative technology, and exceptional performance.",
+        description: "Renowned American automaker known for reliable and innovative vehicles.",
         category: "Ford"
     },{
         _id: "11",
@@ -140,7 +144,7 @@ export const vehicle_list = [
         image: car_11,
         price: 200,
         location:"Manglore",
-        description: "A luxury automotive brand known for its high-end vehicles, innovative technology, and exceptional performance.",
+        description: "Renowned American automaker known for reliable and innovative vehicles.",
         category: "Ford"
     },{
         _id: "12",
@@ -148,40 +152,72 @@ export const vehicle_list = [
         image: car_12,
         price: 200,
         location:"Manglore",
-        description: "A luxury automotive brand known for its high-end vehicles, innovative technology, and exceptional performance.",
+        description: "Renowned American automaker known for reliable and innovative vehicles.",
         category: "Ford"
     },{
-        _id: "17",
+        _id: "13",
         name: "Nissan",
         image: car_13,
         price: 200,
         location:"Puttur",
-        description: "A leading manufacturer of luxury vehicles and motorcycles, celebrated for its sporty driving dynamics and cutting-edge design.",
+        description: "Japanese car manufacturer famous for its versatile and efficient vehicles.",
         category: "Nissan"
     },{
-        _id: "18",
+        _id: "14",
         name: "Nissan",
         image: car_14,
         price: 200,
         location:"Manglore",
-        description: "A leading manufacturer of luxury vehicles and motorcycles, celebrated for its sporty driving dynamics and cutting-edge design.",
+        description: "Japanese car manufacturer famous for its versatile and efficient vehicles.",
         category: "Nissan"
     },{
-        _id: "19",
+        _id: "15",
         name: "Nissan",
         image: car_15,
         price: 200,
         location:"Bantwal",
-        description: "A leading manufacturer of luxury vehicles and motorcycles, celebrated for its sporty driving dynamics and cutting-edge design.",
+        description: "Japanese car manufacturer famous for its versatile and efficient vehicles.",
         category: "Nissan"
     },{
-        _id: "20",
+        _id: "16",
         name: "Nissan",
         image: car_16,
         price: 200,
         location:"Manglore",
-        description: "A leading manufacturer of luxury vehicles and motorcycles, celebrated for its sporty driving dynamics and cutting-edge design.",
+        description: "Japanese car manufacturer famous for its versatile and efficient vehicles.",
         category: "Nissan"
+    },{
+        _id: "17",
+        name: "Subaro",
+        image: car_17,
+        price: 200,
+        location:"Manglore",
+        description: "Japanese automaker recognized for its all-wheel-drive and safety features.",
+        category: "Subaro"
+    },{
+        _id: "18",
+        name: "Subaro",
+        image: car_18,
+        price: 200,
+        location:"Manglore",
+        description: "Japanese automaker recognized for its all-wheel-drive and safety features.",
+        category: "Subaro"
+    },{
+        _id: "19",
+        name: "Tesla",
+        image: car_19,
+        price: 200,
+        location:"Manglore",
+        description: "American electric vehicle pioneer known for high-tech, eco-friendly cars.",
+        category: "Tesla"
+    },{
+        _id: "20",
+        name: "Tesla",
+        image: car_20,
+        price: 200,
+        location:"Manglore",
+        description: "American electric vehicle pioneer known for high-tech, eco-friendly cars.",
+        category: "Tesla"
     },
 
 ]
