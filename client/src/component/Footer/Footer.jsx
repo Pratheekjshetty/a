@@ -6,7 +6,7 @@ import linkedin_icon from '../../assets/linkedin_icon.png'
 const Footer = () => {
   return (
     <div className='text-white bg-customGray flex flex-col items-center gap-5 px-8vw py-5 pt-20 mt-24' id='footer'>
-        <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-20 px-32">
+        <div className="w-full grid grid-cols-1 md:grid-cols-2fr-1fr-1fr gap-20 px-32">
         <div className="flex flex-col items-start gap-5">
             <img className='rounded-full border border-none bg-white w-16'src={logo} alt="" width={100}/>
             <p>Welcome to Festly App, where we bring the best flavors from local restaurants right to your doorstep. Discover a world of delicious options and enjoy convenient 
