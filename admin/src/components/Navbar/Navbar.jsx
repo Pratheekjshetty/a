@@ -6,7 +6,7 @@ const Navbar = () => {
   return (
     <div className='flex justify-between items-center p-[2px_4%] bg-blue-300 h-24'>
         <img className='w-[200px]'src={logo} width={100} alt="" />
-        <img className='w-[40px]'src={profile_image} alt="" />
+        <img className='w-[60px] rounded-full'src={profile_image} alt="" />
     </div>
   )
 }
