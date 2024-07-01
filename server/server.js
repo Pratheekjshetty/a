@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import connectDB from './src/helper/db.js'
+import carRouter from '../server/src/routers/carRoutes.js'
 import userRouter from '../server/src/routers/userRoutes.js'
 import 'dotenv/config'
 
@@ -16,6 +17,8 @@ app.use(cors())
 connectDB();
 
 //api endpoints
+app.use('/api/car',carRouter)
+app.use('/images',express.static('uploads'))
 app.use("/api/user",userRouter)
 
 app.get("/",(req,res)=>{
