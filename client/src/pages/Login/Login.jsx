@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext,useState } from 'react'
 import './Login.css'
 import cross_icon from '../../assets/cross_icon.png'
-import upload_area from '../../assets/upload_area.png'
+// import upload_area from '../../assets/upload_area.png'
+// import axios from 'axios'
 const Login = ({setShowLogin}) => {
-    const [image,setImage] = useState(false);
+
+    // const [image,setImage] = useState(false);
     const[currState,setCurrState]=useState("Login")
   return (
     <div className='login'>
@@ -14,10 +16,10 @@ const Login = ({setShowLogin}) => {
             </div>
             <div className="login-inputs">
                 {currState==="Login"?<></>:<>
-                <center>
+                {/* <center>
                     <label htmlFor='image'><img className='rounded-lg' src={image?URL.createObjectURL(image):upload_area} alt=''/></label>
                     <input onChange={(e)=>setImage(e.target.files[0])} type="file" id="image" hidden required/>
-                </center>
+                </center> */}
                 <input type="text" placeholder='Your Name' required/>
                 <input type="number" placeholder='Phone Number' required/></>}  
                 <input type="email" placeholder='Your Email'required/>
