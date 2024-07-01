@@ -1,9 +1,22 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import logo from '../../assets/logo.png'
-import { Link } from 'react-router-dom';
+import profile_icon from '../../assets/profile_icon.png'
+import logout_icon from '../../assets/logout_icon.png'
+import { Link, useNavigate } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa';
+import { StoreContext } from '../../context/StoreContext';
 
 const Navbar = ({setShowLogin}) => {
+
+const{token,setToken}=useContext(StoreContext);
+
+const navigate = useNavigate(); 
+
+const logout = () =>{
+    localStorage.removeItem("token");
+    setToken("");
+    navigate("/")
+}
 const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 return (
   <div className="bg-blue-300">
@@ -24,9 +37,16 @@ return (
         <div className="relative hidden sm:block">
           <input type="text" placeholder="Search" className="p-2 rounded-full text-blue-900 placeholder-blue-900 border border-blue-900 focus:outline-none"/>
         </div>
-        <button className='bg-white text-blue-900 rounded-full p-2 cursor-pointer transition duration-500 hover:bg-blue-700 hover:text-white' onClick={()=>setShowLogin(true)}>
-          Sign In
-        </button>
+        {!token?(
+          <button className='bg-white text-blue-900 rounded-full p-2 cursor-pointer transition duration-500 hover:bg-blue-700 hover:text-white' onClick={()=>setShowLogin(true)}>Sign In</button>)
+        :(<div className='relative group'>
+        <img src={profile_icon} alt='Profile Icon'/>
+        <ul className="absolute hidden right-0 z-[1] group-hover:flex flex-col gap-3 bg-orange-200 px-8 py-3 border border-blue-400 rounded-md outline outline-2 outline-white list-none">
+            <li className='flex content-center gap-2 cursor-pointer hover:text-orange-400'><img className="w-5" src={profile_icon} alt=""/><p className='font-normal'>Profile</p></li>
+            <hr/>
+            <li className='flex content-center gap-2 cursor-pointer hover:text-orange-400' onClick={logout}><img className="w-5" src={logout_icon} alt=""/><p className='font-normal'>Logout</p></li>
+        </ul>
+    </div>)}
         <div className="lg:hidden">
           <FaBars className="text-white text-2xl cursor-pointer" onClick={() => setIsMobileMenuOpen(true)}/>
         </div>
