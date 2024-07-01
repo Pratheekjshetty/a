@@ -61,8 +61,8 @@ const Add = ({url}) => {
             <p>Car description</p>
             <textarea className='p-3 border border-black text-sm' onChange={onChangeHandler} value={data.description} name='description' rows="6" placeholder='Write content here' required></textarea>
           </div>
-          <div className="flex gap-7">
-            <div className="flex-col">
+          <div className="flex gap-7 w-custom">
+            <div className="flex-col w-[198px]">
               <p>Car category</p>
               <select className='p-2 border border-black text-sm' onChange={onChangeHandler} name="category" >
                 <option value="Benz">Benz</option>
@@ -73,7 +73,7 @@ const Add = ({url}) => {
                 <option value="Tesla">Tesla</option>
               </select>
             </div>
-            <div className="flex-col">
+            <div className="flex-col w-[198px]">
               <p>Car location</p>
               <select className='p-2 border border-black text-sm' onChange={onChangeHandler} name="location" >
                 <option value="Manglore">Manglore</option>
@@ -87,7 +87,7 @@ const Add = ({url}) => {
               <p>Car price</p>
               <input className='p-2 border border-black text-sm' onChange={onChangeHandler} value={data.price} type="number" name='price' placeholder='Rs.200'/>
             </div>
-          </div>
+          </div><br/>
           <button type='submit' className='w-custom border border-none p-3 bg-[green] text-white cursor-pointer'>ADD</button>
       </form>
     </div>

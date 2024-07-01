@@ -3,6 +3,7 @@ import './Login.css'
 import cross_icon from '../../assets/cross_icon.png'
 import { StoreContext } from '../../context/StoreContext'
 // import upload_area from '../../assets/upload_area.png'
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import axios from 'axios'
 
 const Login = ({setShowLogin}) => {
@@ -14,12 +15,16 @@ const Login = ({setShowLogin}) => {
         phone:"",
         email:"",
         password:""
-    })
+    });
+    const [showPassword, setShowPassword] = useState(false);
     const onChangeHandler =(event)=>{
         const name = event.target.name;
         const value = event.target.value;
         setData(data=>({...data,[name]:value}))
     }
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+      };
     const onLogin =async(event) =>{
         event.preventDefault()
         let newUrl = url;
@@ -55,7 +60,12 @@ const Login = ({setShowLogin}) => {
                 <input name='name' onChange={onChangeHandler} value={data.name} type="text" placeholder='Your Name' required/>
                 <input name='phone' onChange={onChangeHandler} value={data.phone} type="number" placeholder='Phone Number' required/></>}  
                 <input name='email' onChange={onChangeHandler} value={data.email} type="email" placeholder='Your Email'required/>
-                <input name='password' onChange={onChangeHandler} value={data.password} type="password" placeholder='Password'required/>
+                <div style={{ position: 'relative', display: 'inline-block', width: '100%' }}>
+                    <input name='password' onChange={onChangeHandler} value={data.password} type={showPassword?"text":"password"} placeholder='Password'required style={{ width: '100%', paddingRight: '40px' }}/>
+                    <span onClick={togglePasswordVisibility} style={{position: 'absolute',right: 10,top: '50%',transform: 'translateY(-50%)',cursor: 'pointer'}}>
+                        {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </span>
+                </div>  
             </div>
             <button type='submit'>{currState==="Sign Up"?"Sign Up":"Login"}</button>
             <div className="login-condition">
