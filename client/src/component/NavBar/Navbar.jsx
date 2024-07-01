@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import logo from '../../assets/logo.png'
 import profile_icon from '../../assets/profile_icon.png'
+import booking_icon from '../../assets/booking_icon.png'
 import logout_icon from '../../assets/logout_icon.png'
 import { Link, useNavigate } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa';
@@ -43,6 +44,8 @@ return (
         <img src={profile_icon} alt='Profile Icon'/>
         <ul className="absolute hidden right-0 z-[1] group-hover:flex flex-col gap-3 bg-orange-200 px-8 py-3 border border-blue-400 rounded-md outline outline-2 outline-white list-none">
             <li className='flex content-center gap-2 cursor-pointer hover:text-orange-400'><img className="w-5" src={profile_icon} alt=""/><p className='font-normal'>Profile</p></li>
+            <hr/>
+            <li className='flex content-center gap-2 cursor-pointer hover:text-orange-400'><img className="w-5" src={booking_icon} alt=""/><p className='font-normal'>Booking</p></li>
             <hr/>
             <li className='flex content-center gap-2 cursor-pointer hover:text-orange-400' onClick={logout}><img className="w-5" src={logout_icon} alt=""/><p className='font-normal'>Logout</p></li>
         </ul>

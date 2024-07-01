@@ -4,11 +4,10 @@ import cross_icon from '../../assets/cross_icon.png'
 import { StoreContext } from '../../context/StoreContext'
 // import upload_area from '../../assets/upload_area.png'
 import axios from 'axios'
-const Login = ({setShowLogin}) => {
 
+const Login = ({setShowLogin}) => {
     // const [image,setImage] = useState(false);
-    const {url,setToken} = useContext(StoreContext
-    )
+    const {url,setToken} = useContext(StoreContext)
     const[currState,setCurrState]=useState("Login")
     const [data,setData] = useState({
         name:"",

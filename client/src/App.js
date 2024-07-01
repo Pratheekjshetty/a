@@ -6,10 +6,14 @@ import Home from './pages/Home/Home';
 import About from './pages/About/About';
 import Booking from './pages/Booking/Booking';
 import Contact from './pages/Contact/Contact'
-import Login from './pages/Login/Login'
+import Login from './component/Login/Login'
 import NoPage from './pages/NoPage/NoPage';
+
 function App() { 
-  const[showLogin,setShowLogin] = useState(true);
+  const[showLogin,setShowLogin] = useState(false);
+  // const handleLoginSuccess = () => {
+  //   setShowLogin(false);
+  // };
   return (   
     <>
     {showLogin?<Login setShowLogin={setShowLogin}/>:<></>} 
