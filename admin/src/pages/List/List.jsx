@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import './List.css';
+import { FaTrash } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
 const List = ({ url }) => {
@@ -70,7 +71,8 @@ const List = ({ url }) => {
             <p>{item.category}</p>
             <p>{item.location}</p>
             <p>Rs.{item.price}</p>
-            <p onClick={() => removeCar(item._id)} className='cursor'>x</p>
+            <p onClick={() => removeCar(item._id)} className='cursor'><FaTrash/></p>
+            {/* <p onClick={() => editCar(item._id)} className='cursor'><FaEdit/></p> */}
           </div>
         ))}
       </div>
@@ -91,4 +93,3 @@ const List = ({ url }) => {
 }
 
 export default List;
-

@@ -3,6 +3,7 @@ import './App.css';
 import Navbar from './components/Navbar/Navbar';
 import Sidebar from './components/Sidebar/Sidebar';
 import { Route, Routes } from 'react-router-dom';
+import Home from './pages/Home/Home';
 import Add from './pages/Add/Add';
 import List from './pages/List/List';
 import Booking from './pages/Booking/Booking';
@@ -18,6 +19,7 @@ function App() {
       <div className='app-content'>
         <Sidebar/>
         <Routes>
+          <Route path='/' element={<Home url={url}/>}/>
           <Route path='/add' element={<Add url={url}/>}/>
           <Route path='/list' element={<List url={url} />}/>
           <Route path='/booking' element={<Booking url={url}/>}/>
