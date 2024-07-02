@@ -1,16 +1,18 @@
-import React from 'react'
-import axios from 'axios'
+import React,{ useState } from 'react'
 import upload_area from '../../assets/upload_area.png'
+import axios from 'axios'
 import { toast } from 'react-toastify'
-import { useState } from 'react';
+
 const Add = ({url}) => {
+
+  // const url = 'http://localhost:3005';
   const [image,setImage] = useState(false);
   const [data,setData] = useState({
     name:"",
     description:"",
     price:"",
-    category:"",
-    location:""
+    category:"Benz",
+    location:"Manglore"
   })
   const onChangeHandler =(event)=>{
     const name = event.target.name;
@@ -26,7 +28,7 @@ const Add = ({url}) => {
     formData.append("category",data.category)
     formData.append("location",data.location)
     formData.append("image",image)
-    const response =await axios.post(`${url}/api/food/add`,formData);
+    const response =await axios.post(`${url}/api/car/add`,formData);
     if(response.data.success){
       setData({
         name:"",
@@ -40,7 +42,6 @@ const Add = ({url}) => {
     }
     else{
       toast.error(response.data.message)
-
     }
   }
   return (
@@ -49,7 +50,7 @@ const Add = ({url}) => {
           <div className="flex-col">
             <p>Upload Image</p>
             <label htmlFor='image'>
-              <img className='w-30' src={image?URL.createObjectURL(image):upload_area} alt=''/>
+              <img className='w-32' src={image?URL.createObjectURL(image):upload_area} alt=''/>
             </label>
             <input onChange={(e)=>setImage(e.target.files[0])} type="file" id='image' hidden required/>
           </div>
