@@ -30,7 +30,7 @@ return (
         <ul className='flex flex-row space-x-4'>
           <li className="hidden lg:block cursor-pointer p-4"><Link to='/'>Home</Link></li>
           <li className="hidden lg:block cursor-pointer p-4"><Link to='/about'>About</Link></li>
-          <li className="hidden lg:block cursor-pointer p-4"> <Link to='/booking'>Booking</Link></li>
+          <li className="hidden lg:block cursor-pointer p-4"> <Link to='/mybooking'>Booking</Link></li>
           <li className="hidden lg:block cursor-pointer p-4"> <Link to='/contact'>Contact</Link></li>
         </ul>
       </div>
@@ -66,7 +66,7 @@ return (
               <Link to='/about' onClick={() => setIsMobileMenuOpen(false)}>About</Link>
             </li>
             <li className="cursor-pointer p-2">
-              <Link to='/booking' onClick={() => setIsMobileMenuOpen(false)}>Booking</Link>
+              <Link to='/mybooking' onClick={() => setIsMobileMenuOpen(false)}>Booking</Link>
             </li>
             <li className="cursor-pointer p-2">
               <Link to='/contact' onClick={() => setIsMobileMenuOpen(false)}>Contact</Link>
