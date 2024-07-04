@@ -7,7 +7,7 @@ import 'dotenv/config'
 
 //app config
 const app=express()
-const port=3005
+const port=4001
 
 //middleware
 app.use(express.json())
