@@ -5,6 +5,7 @@ import { StoreContext } from '../../context/StoreContext'
 // import upload_area from '../../assets/upload_area.png'
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 const Login = ({setShowLogin}) => {
     // const [image,setImage] = useState(false);
@@ -16,6 +17,8 @@ const Login = ({setShowLogin}) => {
         email:"",
         password:""
     });
+    const navigate = useNavigate();
+
     const [showPassword, setShowPassword] = useState(false);
     const onChangeHandler =(event)=>{
         const name = event.target.name;
@@ -38,7 +41,14 @@ const Login = ({setShowLogin}) => {
         if(response.data.success){
             setToken(response.data.token);
             localStorage.setItem("token",response.data.token)
-            setShowLogin(false)
+
+            if (response.data.role === 'admin') {
+                window.location.href = 'http://localhost:3003/';
+            }
+            else{
+                setShowLogin(false)
+                navigate('/');
+            }
         }
         else{
             alert(response.data.message);

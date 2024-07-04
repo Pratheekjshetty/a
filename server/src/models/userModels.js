@@ -6,7 +6,8 @@ const userSchema =new mongoose.Schema({
     phone:{type:String,required:true,},
     password:{type:String,required:true},
     // image:{type:[String],data:Buffer,required:true},
-    bookingData:{type:Object,default:{}}
+    bookingData:{type:Object,default:{}},
+    role: { type: String, required: true, default: 'user' }
 },{minimize:false})
 
 const userModel = mongoose.models.user || mongoose.model("user",userSchema);
