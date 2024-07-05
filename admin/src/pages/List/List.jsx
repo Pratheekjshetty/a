@@ -47,7 +47,10 @@ const List = ({ url }) => {
       description: car.description,
       price: car.price,
       category: car.category,
-      location: car.location
+      location: car.location,
+      color: car.color,
+      seats: car.seats,
+      model: car.model,
     });
     setImage(null); // Clear the image input
     setCurrentEditId(car._id);
@@ -73,7 +76,10 @@ const List = ({ url }) => {
     description: "",
     price: "",
     category: "Benz",
-    location: "Manglore"
+    location: "Manglore",
+    color: "",
+    seats: "",
+    model: "",
   });
 
   const onChangeHandler = (event) => {
@@ -91,6 +97,9 @@ const List = ({ url }) => {
     formData.append("price", Number(data.price));
     formData.append("category", data.category);
     formData.append("location", data.location);
+    formData.append("color", data.color);
+    formData.append("seats", data.seats);
+    formData.append("model", data.model);
     if (image) {
       formData.append("image", image);
     }
@@ -101,7 +110,10 @@ const List = ({ url }) => {
         description: "",
         price: "",
         category: "",
-        location: ""
+        location: "",
+        color: "",
+        seats: "",
+        model: "",
       });
       setImage(false);
       setIsEditMode(false);
@@ -121,7 +133,10 @@ const List = ({ url }) => {
       description: "",
       price: "",
       category: "Benz",
-      location: "Manglore"
+      location: "Manglore",
+      color: "",
+      seats: "",
+      model: "",
     });
     setImage(false);
   };
@@ -205,7 +220,23 @@ const List = ({ url }) => {
               <p>Car price</p>
               <input className='p-2 border border-black text-sm' onChange={onChangeHandler} value={data.price} type="number" name='price' placeholder='Rs.200' required />
             </div>
-          </div><br />
+          </div>
+          <div className="flex gap-7 w-custom">
+            <div className="flex-col w-[198px]">
+              <p>Color</p>
+              <input className='p-2 border border-black text-sm' onChange={onChangeHandler} value={data.color} type="text" name='color' placeholder='White' required/>
+            </div>
+            <div className="flex-col w-[198px]">
+              <p>Seats</p>
+              <input className='p-2 border border-black text-sm' onChange={onChangeHandler} value={data.seats} type="number" name='seats' placeholder='4' required/>
+            </div>
+          </div>
+          <div>
+            <div className="flex-col w-custom">
+              <p>Model</p>
+              <input className='p-2 border border-black text-sm' onChange={onChangeHandler} value={data.model} type="text" name='model' placeholder='Type here' required/>
+            </div>
+          </div><br/>
           <div className='flex gap-2 w-custom cursor-pointer'>
             <button className='flex-col w-[210px] border border-none p-3 bg-[green] text-white justify-center items-center' type='submit'>UPDATE</button>
             <button className='flex-col w-[210px] border border-none p-3 bg-[green] text-white justify-center items-center' type='button' onClick={handleCancel}>CANCEL</button>
