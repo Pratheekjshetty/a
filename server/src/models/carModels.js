@@ -7,6 +7,9 @@ const carSchema =new mongoose.Schema({
     image:{type:String, required:true},
     category:{type:String, required:true},
     location:{type:String,required:true},
+    color:{type:String,required:true},
+    seats:{type:Number,required:true},
+    model:{type:String,required:true},
 })
 
 const carModel=mongoose.models.car || mongoose.model("car",carSchema);
