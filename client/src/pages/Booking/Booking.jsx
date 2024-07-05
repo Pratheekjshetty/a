@@ -4,7 +4,7 @@ import { StoreContext } from '../../context/StoreContext';
 
 const Booking = () => {
   const location = useLocation();
-  const { id, name, price, location: carLocation, description, image } = location.state;
+  const { id, name, price, location: carLocation, description, image, model, color, seats } = location.state;
   const { url } = useContext(StoreContext);
   const [pickupDate, setPickupDate] = useState('');
   const [pickupTime, setPickupTime] = useState('');
@@ -39,7 +39,7 @@ const Booking = () => {
 
   const handleBookNow = () => {
     console.log({
-      id, name, price, carLocation, description, image,
+      id, name, price, carLocation, description, image, color,
       pickupDate, pickupTime, dropoffDate, dropoffTime,
       totalAmount
     });
@@ -56,22 +56,28 @@ const Booking = () => {
           <div className="w-full md:w-1/2 p-4 flex-grow">
             <h2 className="text-2xl font-bold mb-2">{name}</h2>
             <p className="text-gray-700 mb-2">{description}</p>
+            <span>Model:</span><span className='font-semibold'> {model}</span><br/>
+            <span>Color:</span><span className='font-semibold'> {color}</span><br/>
+            <span>No of seat:</span><span className='font-semibold'> {seats}</span><br/>
+            <span>Location:</span><span className='font-semibold'> {carLocation}</span>
           </div>
           <div className="w-full md:w-1/2 p-4 flex-grow">
-            <input type="date" className="w-full p-2 mb-2 border rounded" value={pickupDate} onChange={(e) => setPickupDate(e.target.value)}/>
-            <input type="time" className="w-full p-2 mb-2 border rounded" value={pickupTime} onChange={(e) => setPickupTime(e.target.value)}/>
-            <input type="date" className="w-full p-2 mb-2 border rounded" value={dropoffDate} onChange={(e) => setDropoffDate(e.target.value)}/>
-            <input type="time" className="w-full p-2 mb-2 border rounded" value={dropoffTime} onChange={(e) => setDropoffTime(e.target.value)}/>
-            <p>Total Hours: {totalHours}</p>
-            <p>Rent Per Hour: Rs. {price}</p>
+          <form>
+            <input type="date" className="w-full p-2 mb-2 border rounded" value={pickupDate} onChange={(e) => setPickupDate(e.target.value)} required/>
+            <input type="time" className="w-full p-2 mb-2 border rounded" value={pickupTime} onChange={(e) => setPickupTime(e.target.value)} required/>
+            <input type="date" className="w-full p-2 mb-2 border rounded" value={dropoffDate} onChange={(e) => setDropoffDate(e.target.value)} required/>
+            <input type="time" className="w-full p-2 mb-2 border rounded " value={dropoffTime} onChange={(e) => setDropoffTime(e.target.value)} required/>
+            <span>Total Hours:</span><span className='font-semibold'> {totalHours}</span><br/>
+            <span>Rent Per Hour: </span><span className='font-semibold'> ₹ {price}</span>
             <div className="flex items-center mb-4">
               <input type="checkbox" id="driverRequired" className="mr-2" checked={driverRequired} onChange={() => setDriverRequired(!driverRequired)}/>
-              <label htmlFor="driverRequired">Driver required (+Rs. 50)</label>
+              <label htmlFor="driverRequired">Driver required</label>
             </div>
-            <p>Total: Rs. {totalAmount}</p>
-            <button onClick={handleBookNow} className="bg-blue-500 text-white w-full p-2 rounded hover:bg-blue-400">
+            <span>Total:</span><span className='font-semibold'> ₹ {totalAmount}</span>
+            <button type='submit' onClick={handleBookNow} className="bg-blue-500 text-white w-full p-2 rounded hover:bg-blue-400">
               Book Now
             </button>
+          </form>
           </div>
         </div>
       </div>

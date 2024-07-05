@@ -12,7 +12,7 @@ const CarDisplay = ({category}) => {
           console.log(category,item.category);
           if(category==='All' || category===item.category){
             return (
-              <CarItem key={index} id={item._id} name={item.name} price={item.price} location={item.location} description={item.description} image={item.image}/>
+              <CarItem key={index} id={item._id} name={item.name} price={item.price} location={item.location} description={item.description} image={item.image} model={item.model} color={item.color} seats={item.seats}/>
             ) 
           }
           return null;
