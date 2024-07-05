@@ -196,8 +196,12 @@ const List = ({ url }) => {
           </div>
           <div className="flex gap-7 w-custom">
             <div className="flex-col w-[198px]">
+              <p>Color</p>
+              <input className='p-2 border border-black text-sm' onChange={onChangeHandler} value={data.color} type="text" name='color' placeholder='White' required/>
+            </div>
+            <div className="flex-col w-[198px]">
               <p>Car category</p>
-              <select className='p-2 border border-black text-sm' onChange={onChangeHandler} name="category" value={data.category}>
+              <select className='p-2 border border-black text-sm' onChange={onChangeHandler} name="category" required>
                 <option value="Benz">Benz</option>
                 <option value="BMW">BMW</option>
                 <option value="Ford">Ford</option>
@@ -206,29 +210,25 @@ const List = ({ url }) => {
                 <option value="Tesla">Tesla</option>
               </select>
             </div>
-            <div className="flex-col w-[198px]">
-              <p>Car location</p>
-              <select className='p-2 border border-black text-sm' onChange={onChangeHandler} name="location" value={data.location}>
-                <option value="Manglore">Manglore</option>
-                <option value="Puttur">Puttur</option>
-                <option value="Bantwal">Bantwal</option>
-              </select>
-            </div>
+          </div>  
+          <div className="flex-col w-custom">
+              <p>Car price</p>
+              <input className='p-2 border border-black text-sm' onChange={onChangeHandler} value={data.price} type="number" name='price' placeholder='Rs.200' required/>
           </div>
           <div>
-            <div className="flex-col w-custom">
-              <p>Car price</p>
-              <input className='p-2 border border-black text-sm' onChange={onChangeHandler} value={data.price} type="number" name='price' placeholder='Rs.200' required />
-            </div>
-          </div>
-          <div className="flex gap-7 w-custom">
-            <div className="flex-col w-[198px]">
-              <p>Color</p>
-              <input className='p-2 border border-black text-sm' onChange={onChangeHandler} value={data.color} type="text" name='color' placeholder='White' required/>
-            </div>
-            <div className="flex-col w-[198px]">
-              <p>Seats</p>
-              <input className='p-2 border border-black text-sm' onChange={onChangeHandler} value={data.seats} type="number" name='seats' placeholder='4' required/>
+            <div className="flex gap-7 w-custom">
+              <div className="flex-col w-[198px]">
+                <p>Seats</p>
+                <input className='p-2 border border-black text-sm' onChange={onChangeHandler} value={data.seats} type="number" name='seats' placeholder='4' required/>
+              </div>
+              <div className="flex-col w-[198px]">
+                <p>Car location</p>
+                <select className='p-2 border border-black text-sm' onChange={onChangeHandler} name="location" required>
+                  <option value="Manglore">Manglore</option>
+                  <option value="Puttur">Puttur</option>
+                  <option value="Bantwal">Bantwal</option>
+                </select>
+              </div>
             </div>
           </div>
           <div>
