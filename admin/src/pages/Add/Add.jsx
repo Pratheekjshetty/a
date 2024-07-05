@@ -12,7 +12,10 @@ const Add = ({url}) => {
     description:"",
     price:"",
     category:"Benz",
-    location:"Manglore"
+    location:"Manglore",
+    color:"",
+    model:"",
+    seats:"",
   })
   const onChangeHandler =(event)=>{
     const name = event.target.name;
@@ -27,6 +30,9 @@ const Add = ({url}) => {
     formData.append("price",Number(data.price))
     formData.append("category",data.category)
     formData.append("location",data.location)
+    formData.append("color",data.color)
+    formData.append("model",data.model)
+    formData.append("seats",data.seats)
     formData.append("image",image)
     const response =await axios.post(`${url}/api/car/add`,formData);
     if(response.data.success){
@@ -35,7 +41,10 @@ const Add = ({url}) => {
         description:"",
         price:"",
         category:"",
-        location:""
+        location:"",
+        color:"",
+        model:"",
+        seats:""
       })
       setImage(false)
       toast.success(response.data.message)
@@ -65,7 +74,7 @@ const Add = ({url}) => {
           <div className="flex gap-7 w-custom">
             <div className="flex-col w-[198px]">
               <p>Car category</p>
-              <select className='p-2 border border-black text-sm' onChange={onChangeHandler} name="category" >
+              <select className='p-2 border border-black text-sm' onChange={onChangeHandler} name="category" required>
                 <option value="Benz">Benz</option>
                 <option value="BMW">BMW</option>
                 <option value="Ford">Ford</option>
@@ -76,7 +85,7 @@ const Add = ({url}) => {
             </div>
             <div className="flex-col w-[198px]">
               <p>Car location</p>
-              <select className='p-2 border border-black text-sm' onChange={onChangeHandler} name="location" >
+              <select className='p-2 border border-black text-sm' onChange={onChangeHandler} name="location" required>
                 <option value="Manglore">Manglore</option>
                 <option value="Puttur">Puttur</option>
                 <option value="Bantwal">Bantwal</option>
@@ -86,7 +95,23 @@ const Add = ({url}) => {
           <div>
             <div className="flex-col w-custom">
               <p>Car price</p>
-              <input className='p-2 border border-black text-sm' onChange={onChangeHandler} value={data.price} type="number" name='price' placeholder='Rs.200'/>
+              <input className='p-2 border border-black text-sm' onChange={onChangeHandler} value={data.price} type="number" name='price' placeholder='Rs.200' required/>
+            </div>
+          </div>
+          <div className="flex gap-7 w-custom">
+            <div className="flex-col w-[198px]">
+              <p>Color</p>
+              <input className='p-2 border border-black text-sm' onChange={onChangeHandler} value={data.color} type="text" name='color' placeholder='White' required/>
+            </div>
+            <div className="flex-col w-[198px]">
+              <p>Seats</p>
+              <input className='p-2 border border-black text-sm' onChange={onChangeHandler} value={data.seats} type="number" name='seats' placeholder='4' required/>
+            </div>
+          </div>
+          <div>
+            <div className="flex-col w-custom">
+              <p>Model</p>
+              <input className='p-2 border border-black text-sm' onChange={onChangeHandler} value={data.model} type="text" name='model' placeholder='Type here' required/>
             </div>
           </div><br/>
           <button type='submit' className='w-custom border border-none p-3 bg-[green] text-white cursor-pointer'>ADD</button>
