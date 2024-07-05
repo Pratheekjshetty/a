@@ -9,6 +9,9 @@ const addCar = async(req,res)=>{
         price:req.body.price,
         category:req.body.category,
         location:req.body.location,
+        color:req.body.color,
+        seats:req.body.seats,
+        model:req.body.model,
         image:image_filename
     })
     try{
@@ -70,6 +73,9 @@ const editCar = async (req, res) => {
         car.price = req.body.price || car.price;
         car.category = req.body.category || car.category;
         car.location = req.body.location || car.location;
+        car.color = req.body.color || car.color;
+        car.seats = req.body.seats || car.seats;
+        car.model = req.body.model || car.model;
         await car.save();
         res.json({ success: true, message: "Car Updated" });
     } catch (err) {
