@@ -2,9 +2,9 @@ import React, { useRef, useState }  from 'react';
 import Header from '../../component/Header/Header';
 import VehicleDisplay from '../../component/VehicalDisplay/VehicleDisplay';
 import BrowseCar from '../../component/BrowseCars/BrowseCar';
-import Hosts from '../../component/Hosts/Hosts';
 import CarDisplay from '../../component/CarDisplay/CarDisplay';
 import AppDownload from '../../component/AppDownload/AppDownlad';
+import Apply from '../../component/Apply/Apply';
 const Home = () => {
   const [category,setCategory] =useState("All");
   const carDisplayRef = useRef(null);
@@ -19,7 +19,7 @@ const Home = () => {
         <CarDisplay category={category} />
     </div>
     <BrowseCar carDisplayRef={carDisplayRef}/>
-    <Hosts/>
+    <Apply/>
     <AppDownload/>
     </div>
   );

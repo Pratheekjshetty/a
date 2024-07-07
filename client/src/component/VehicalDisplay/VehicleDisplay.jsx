@@ -39,7 +39,7 @@ const VehicleDisplay = ({category,setCategory,carDisplayRef}) => {
     return images;
   };
   return (
-    <div className='flex justify-center text-center flex-col'>
+    <div className='flex justify-center text-center flex-col bg-blue-50'>
       <h1 className='m-8 font-bold text-4xl'>Endless Options</h1>
       <p>With our extensive range of cars, finding a ride anytime, anywhere has never been easier.</p><br />
       <center><button onClick={scrollToCarDisplay} className='bg-indigo-600 text-white p-2 rounded-lg text-md w-44'>Explore Cars</button></center>
