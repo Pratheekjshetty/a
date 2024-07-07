@@ -9,9 +9,12 @@ const Home = () => {
   const [category,setCategory] =useState("All");
   const carDisplayRef = useRef(null);
   const vehicleDisplayRef = useRef(null);
+  const homeDisplayRef =useRef(null);
   return (
     <div>
-    <Header/>
+    <div ref={homeDisplayRef}>
+      <Header carDisplayRef={carDisplayRef}/>
+    </div>
     <div ref={vehicleDisplayRef}>
       <VehicleDisplay category={category} setCategory={setCategory} carDisplayRef={carDisplayRef}/>
     </div>
