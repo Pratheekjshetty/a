@@ -10,6 +10,7 @@ import Login from './component/Login/Login'
 import NoPage from './pages/NoPage/NoPage';
 import Booking from './pages/Booking/Booking';
 import Footer from './component/Footer/Footer';
+import CarDisplay from './component/CarDisplay/CarDisplay';
 
 function App() { 
   const[showLogin,setShowLogin] = useState(false);
@@ -28,6 +29,7 @@ function App() {
           <Route path='/contact' element={<Contact/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/booking' element={<Booking/>}/>
+          <Route path="/car-display" element={<CarDisplay />} />
           <Route path="*" element={<NoPage/>}/>
         </Routes>  
     </div>

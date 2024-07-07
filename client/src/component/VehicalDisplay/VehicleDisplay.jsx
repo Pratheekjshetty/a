@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import './VehicalDisplay.css'
 import { car_list } from '../../assets/assets';
 
-const VehicleDisplay = ({category,setCategory}) => {
+const VehicleDisplay = ({category,setCategory,carDisplayRef}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
   useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
+    if (typeof window === 'undefined') return;
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -18,6 +21,11 @@ const VehicleDisplay = ({category,setCategory}) => {
     const index = currentIndex === car_list.length - 1 ? 0 : currentIndex + 1;
     setCurrentIndex(index);
   };
+  const scrollToCarDisplay = () => {
+    if (carDisplayRef && carDisplayRef.current) {
+      carDisplayRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   const getVisibleImages = () => {
     let visibleImagesCount;
     if (windowWidth >= 1024) {
@@ -27,13 +35,14 @@ const VehicleDisplay = ({category,setCategory}) => {
     } else {
       visibleImagesCount = 1;
     }
-    return Array.from({ length: visibleImagesCount }, (_, i) => car_list[(currentIndex + i) % car_list.length]);
+    const images = Array.from({ length: visibleImagesCount }, (_, i) => car_list[(currentIndex + i) % car_list.length]);
+    return images;
   };
   return (
     <div className='flex justify-center text-center flex-col'>
       <h1 className='m-8 font-bold text-4xl'>Endless Options</h1>
       <p>With our extensive range of cars, finding a ride anytime, anywhere has never been easier.</p><br />
-      <center><button className='bg-indigo-600 text-white p-2 rounded-lg text-md w-44'>Explore Cars</button></center>
+      <center><button onClick={scrollToCarDisplay} className='bg-indigo-600 text-white p-2 rounded-lg text-md w-44'>Explore Cars</button></center>
       <div id="controls-carousel" className="relative w-full" data-carousel="static"><br /><br />
         <div className="relative flex items-center justify-center overflow-hidden rounded-lg" style={{ height: '50vh' }}>
           <h2 className="absolute top-0 mt-4 ml-4 mr-4 font-bold text-lg">Browse by make</h2>

@@ -21,7 +21,7 @@ const images = [
     paragraph: "Navigate through scenic routes and winding roads with a car that's engineered for precision and performance. Find the perfect car to enjoy every curve and corner of your drive.",
   },
 ];
-const BrowseCar = () => {
+const BrowseCar = ({ carDisplayRef }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const prevSlide = () => {
     const index = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
@@ -30,6 +30,9 @@ const BrowseCar = () => {
   const nextSlide = () => {
     const index = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
     setCurrentIndex(index);
+  };
+  const scrollToCarDisplay = () => {
+    carDisplayRef.current.scrollIntoView({ behavior: "smooth" });
   };
   return (
     <div className="flex justify-center items-center min-h-screen bg-blue-300">
@@ -61,7 +64,7 @@ const BrowseCar = () => {
             <p className="text-md font-sans text-gray-600 mb-4">
               {images[currentIndex].paragraph}
             </p>
-            <center><button className='bg-indigo-600 text-white p-2 rounded-lg text-md w-40'>Browse Cars</button></center>
+            <center><button onClick={scrollToCarDisplay} className='bg-indigo-600 text-white p-2 rounded-lg text-md w-40' >Browse Cars</button></center>
           </div>
         </div>
       </div>
