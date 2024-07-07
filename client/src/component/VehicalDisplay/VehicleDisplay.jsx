@@ -39,7 +39,7 @@ const VehicleDisplay = ({category,setCategory,carDisplayRef}) => {
     return images;
   };
   return (
-    <div className='flex justify-center text-center flex-col bg-blue-50'>
+    <div className='flex justify-center text-center flex-col'>
       <h1 className='m-8 font-bold text-4xl'>Endless Options</h1>
       <p>With our extensive range of cars, finding a ride anytime, anywhere has never been easier.</p><br />
       <center><button onClick={scrollToCarDisplay} className='bg-indigo-600 text-white p-2 rounded-lg text-md w-44'>Explore Cars</button></center>
@@ -72,7 +72,7 @@ const VehicleDisplay = ({category,setCategory,carDisplayRef}) => {
             <span className="sr-only">Next</span>
           </button>
         </div>
-        <hr className='my-2.5 mx-2 h-0.5 bg-gray-200 border-none'/>
+        <hr className='my-2.5 mx-2 h-0.5 bg-gray-300 border-none'/>
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ const CarItem = ({id,name,price,location,description,image,model,color,seats}) =
     navigate('/booking', { state: { id, name, price, location, description, image, model, color, seats } });
   };
   return (
-    <div className="w-full mx-auto rounded shadow-lg animate-fadeIn duration-2000" id="car_item">
+    <div className="w-full mx-auto rounded shadow-lg animate-fadeIn duration-2000 " id="car_item">
         <img className='w-full rounded-md'src={url+"/images/"+image} alt=""/>
         <div className='p-2.5'>
             <div className='flex justify-between items-center mb-2.5'>
