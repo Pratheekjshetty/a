@@ -12,9 +12,15 @@ const Footer = () => {
             <p>Welcome to Voyager, where we bring the best car rental experience right to your fingertips. Discover a wide range of vehicles and enjoy convenient booking 
                 with every rental. Renting a car from your favorite local providers has never been easier. Our mission is to make car rentals quick, easy, and enjoyable.</p>
             <div className='flex flex-row'>
-                <img className="w-10 mr-4" src={facebook_icon} alt="" />
-                <img className="w-10 mr-4" src={twitter_icon} alt="" />
-                <img className="w-10 mr-4" src={linkedin_icon} alt="" />
+            <a href="https://www.facebook.com/voyagerapp" target="_blank" rel="noopener noreferrer">
+              <img className="w-10 mr-4" src={facebook_icon} alt="Facebook" />
+            </a>
+            <a href="https://twitter.com/voyagerapp" target="_blank" rel="noopener noreferrer">
+              <img className="w-10 mr-4" src={twitter_icon} alt="Twitter" />
+            </a>
+            <a href="https://www.linkedin.com/voyagerapp" target="_blank" rel="noopener noreferrer">
+              <img className="w-10 mr-4" src={linkedin_icon} alt="LinkedIn" />
+            </a>
             </div>
         </div>
         <div className="flex flex-col items-start gap-5">
