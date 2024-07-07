@@ -5,7 +5,7 @@ const userSchema =new mongoose.Schema({
     email:{type:String,required:true,unique:true},
     phone:{type:String,required:true,},
     password:{type:String,required:true},
-    // image:{type:[String],data:Buffer,required:true},
+    image:{type:String,required:true},
     bookingData:{type:Object,default:{}},
     role: { type: String, required: true, default: 'user' }
 },{minimize:false})

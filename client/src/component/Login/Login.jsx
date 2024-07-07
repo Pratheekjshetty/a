@@ -2,13 +2,13 @@ import React, { useContext,useState } from 'react'
 import './Login.css'
 import cross_icon from '../../assets/cross_icon.png'
 import { StoreContext } from '../../context/StoreContext'
-// import upload_area from '../../assets/upload_area.png'
+import upload_area from '../../assets/upload_area.png'
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 
 const Login = ({setShowLogin}) => {
-    // const [image,setImage] = useState(false);
+    const [image,setImage] = useState(null);
     const {url,setToken} = useContext(StoreContext)
     const[currState,setCurrState]=useState("Login")
     const [data,setData] = useState({
@@ -18,26 +18,45 @@ const Login = ({setShowLogin}) => {
         password:""
     });
     const navigate = useNavigate();
-
     const [showPassword, setShowPassword] = useState(false);
     const onChangeHandler =(event)=>{
         const name = event.target.name;
         const value = event.target.value;
-        setData(data=>({...data,[name]:value}))
-    }
+        setData(data=>({...data,[name]:value}));
+    };
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
       };
     const onLogin =async(event) =>{
         event.preventDefault()
         let newUrl = url;
+        const formData = new FormData();
+
         if (currState==="Login"){
-            newUrl += "/api/user/login"
+            newUrl += "/api/user/login";
+            formData.append("email", data.email);
+            formData.append("password", data.password);
         }
         else{
-            newUrl += "/api/user/register"
+            newUrl += "/api/user/register";
+            formData.append("name", data.name);
+            formData.append("phone", data.phone);
+            formData.append("email", data.email);
+            formData.append("password", data.password);
+            formData.append("image", image);
         }
-        const response = await axios.post(newUrl,data);
+
+        formData.forEach((value, key) => {
+            console.log(key, value);
+        });
+
+        try {
+        const response = await axios.post(newUrl, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+
         if(response.data.success){
             setToken(response.data.token);
             localStorage.setItem("token",response.data.token)
@@ -53,7 +72,12 @@ const Login = ({setShowLogin}) => {
         else{
             alert(response.data.message);
         }
+    }catch(error){
+        console.error("Error during login/register:", error);
+        alert("An error occurred. Please try again.");
     }
+};
+
   return (
     <div className='login'>
         <form onSubmit={onLogin} className='login-container'>
@@ -63,10 +87,10 @@ const Login = ({setShowLogin}) => {
             </div>
             <div className="login-inputs">
                 {currState==="Login"?<></>:<>
-                {/* <center>
-                    <label htmlFor='image'><img className='rounded-lg' src={image?URL.createObjectURL(image):upload_area} alt=''/></label>
+                <center>
+                    <label htmlFor='image'><img className=' profile-image rounded-lg' src={image?URL.createObjectURL(image):upload_area} alt=''/></label>
                     <input onChange={(e)=>setImage(e.target.files[0])} type="file" id="image" hidden required/>
-                </center> */}
+                </center>
                 <input name='name' onChange={onChangeHandler} value={data.name} type="text" placeholder='Your Name' required/>
                 <input name='phone' onChange={onChangeHandler} value={data.phone} type="number" placeholder='Phone Number' required/></>}  
                 <input name='email' onChange={onChangeHandler} value={data.email} type="email" placeholder='Your Email'required/>
