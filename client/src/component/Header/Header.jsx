@@ -19,10 +19,10 @@ const Header = ({carDisplayRef}) => {
         <center><button onClick={scrollToCarDisplay} className='bg-white text-indigo-600 p-2 rounded-lg text-md w-44 mt-8'>View Cars</button></center>
       </div>
       <img
-        className="w-full object-cover"
+        className="w-full object-cover rounded-xl"
         src={front}
         alt="Front"
-        style={{ height: '700px' }}
+        style={{ height: '600px'}}
       />
     </div>
   );
