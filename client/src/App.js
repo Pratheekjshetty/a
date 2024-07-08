@@ -7,6 +7,7 @@ import About from './pages/About/About';
 import Blogs from './pages/Blogs/Blogs';
 import Contact from './pages/Contact/Contact'
 import Login from './component/Login/Login'
+import GetProfile from './component/GetProfile/GetProfile';
 import EditProfile from './component/EditProfile/EditProfile';
 import MyBooking from './component/MyBooking/MyBooking';
 import CarDisplay from './component/CarDisplay/CarDisplay';
@@ -31,6 +32,7 @@ function App() {
           <Route path='/blogs' element={<Blogs/>}/>
           <Route path='/contact' element={<Contact/>}/>
           <Route path='/login' element={<Login/>}/>
+          <Route path='/get-profile' element={<GetProfile url={url}/>}/>
           <Route path='/edit-profile' element={<EditProfile url={url}/>}/>
           <Route path='/mybooking' element={<MyBooking/>}/>
           <Route path='/booking' element={<Booking/>}/>
