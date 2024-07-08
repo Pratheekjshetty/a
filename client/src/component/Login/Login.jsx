@@ -8,6 +8,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 
 const Login = ({setShowLogin}) => {
+
     const [image,setImage] = useState(false);
     const {url,setToken} = useContext(StoreContext)
     const[currState,setCurrState]=useState("Login")
@@ -17,7 +18,9 @@ const Login = ({setShowLogin}) => {
         email:"",
         password:""
     });
+
     const navigate = useNavigate();
+
     const [showPassword, setShowPassword] = useState(false);
     const onChangeHandler =(event)=>{
         const name = event.target.name;
@@ -45,6 +48,7 @@ const Login = ({setShowLogin}) => {
             formData.append("password", data.password);
             formData.append("image", image);
         }
+        
         try {
         const response = await axios.post(newUrl, formData, {
             headers: {

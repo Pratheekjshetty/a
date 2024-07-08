@@ -36,7 +36,7 @@ const logout = () =>{
 }
 return (
   <div className="bg-blue-300">
-    <nav  className='flex flex-col'>
+    <nav className='flex flex-col'>
       <div className="max-w-[1170px] text-white mx-auto flex justify-between items-center py-8 font-bold h-24 ">
       <div className="flex gap-10 items-center">
         <div className="px-1 cursor-pointer">
