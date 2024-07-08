@@ -45,7 +45,7 @@ return (
         <ul className='flex flex-row space-x-4'>
           <li className="hidden lg:block cursor-pointer p-4"><Link to='/'>Home</Link></li>
           <li className="hidden lg:block cursor-pointer p-4"><Link to='/about'>About</Link></li>
-          <li className="hidden lg:block cursor-pointer p-4"> <Link to='/mybooking'>Booking</Link></li>
+          <li className="hidden lg:block cursor-pointer p-4"> <Link to='/blogs'>Blogs</Link></li>
           <li className="hidden lg:block cursor-pointer p-4"> <Link to='/contact'>Contact</Link></li>
         </ul>
       </div>
@@ -61,7 +61,7 @@ return (
         <ul className="absolute hidden right-0 z-[1] group-hover:flex flex-col gap-3 bg-orange-200 px-8 py-3 border border-blue-400 rounded-md outline outline-2 outline-white list-none">
             <li className='flex content-center gap-2 cursor-pointer hover:text-orange-400'><img className="w-5" src={profile_icon} alt=""/><p className='font-normal'>Profile</p></li>
             <hr/>
-            <li className='flex content-center gap-2 cursor-pointer hover:text-orange-400'><img className="w-5" src={booking_icon} alt=""/><p className='font-normal'>Booking</p></li>
+            <li className='flex content-center gap-2 cursor-pointer hover:text-orange-400' onClick={()=>navigate('/mybooking')}><img className="w-5" src={booking_icon} alt=""/><p className='font-normal'>Booking</p></li>
             <hr/>
             <li className='flex content-center gap-2 cursor-pointer hover:text-orange-400' onClick={logout}><img className="w-5" src={logout_icon} alt=""/><p className='font-normal'>Logout</p></li>
         </ul>
@@ -82,7 +82,7 @@ return (
               <Link to='/about' onClick={() => setIsMobileMenuOpen(false)}>About</Link>
             </li>
             <li className="cursor-pointer p-2">
-              <Link to='/mybooking' onClick={() => setIsMobileMenuOpen(false)}>Booking</Link>
+              <Link to='/blogs' onClick={() => setIsMobileMenuOpen(false)}>Blogs</Link>
             </li>
             <li className="cursor-pointer p-2">
               <Link to='/contact' onClick={() => setIsMobileMenuOpen(false)}>Contact</Link>
