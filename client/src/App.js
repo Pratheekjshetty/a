@@ -15,6 +15,7 @@ import Footer from './component/Footer/Footer';
 import NoPage from './pages/NoPage/NoPage';
 
 function App() { 
+  const url ="http://localhost:4001"
   const[showLogin,setShowLogin] = useState(false);
   // const handleLoginSuccess = () => {
   //   setShowLogin(false);
@@ -23,14 +24,14 @@ function App() {
     <>
     {showLogin?<Login setShowLogin={setShowLogin}/>:<></>} 
     <div>
-    <Navbar setShowLogin={setShowLogin}/> 
+    <Navbar setShowLogin={setShowLogin} /> 
         <Routes>
           <Route path="/" element={<Home/>}/>
           <Route path='/about' element={<About/>}/>
           <Route path='/blogs' element={<Blogs/>}/>
           <Route path='/contact' element={<Contact/>}/>
           <Route path='/login' element={<Login/>}/>
-          <Route path='/edit-profile' element={<EditProfile/>}/>
+          <Route path='/edit-profile' element={<EditProfile url={url}/>}/>
           <Route path='/mybooking' element={<MyBooking/>}/>
           <Route path='/booking' element={<Booking/>}/>
           <Route path="/car-display" element={<CarDisplay />} />

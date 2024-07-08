@@ -107,4 +107,73 @@ const registerUser =async(req,res)=>{
     }
 }
 
-export {loginUser,registerUser}
+//edit user
+const editUser = async (req, res) => {
+    const { name, phone, password } = req.body;
+    const userId = req.userId;
+
+    try {
+
+        // find the user by userId
+        const user = await userModel.findById(userId);
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+        // validate phone number
+        if (phone && !validator.isMobilePhone(phone)) {
+            return res.status(400).json({ success: false, message: "Please enter a valid phone" });
+        }
+
+        // validate and hash password if provided
+        if (password) {
+            if (password.length < 8) {
+                return res.status(400).json({ success: false, message: "Please enter a strong password" });
+            }
+            const salt = await bcrypt.genSalt(10);
+            user.password = await bcrypt.hash(password, salt);
+        }
+
+        // update the user's details
+        if (name) user.name = name;
+        if (phone) user.phone = phone;
+
+        // update image if provided
+        if (req.file) {
+            // delete the old image if exists
+            if (user.image && fs.existsSync(user.image)) {
+                fs.unlinkSync(user.image);
+            }
+            user.image = req.file.path;
+        }
+
+        const updatedUser = await user.save();
+
+        // Include the updated image URL in the response
+        const imageURL = updatedUser.image ? path.join('user-uploads', path.basename(updatedUser.image)) : null;
+
+        res.json({ success: true, message: "User updated successfully", user: { name: updatedUser.name, phone: updatedUser.phone, image: imageURL } });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ success: false, message: "Error updating user" });
+    }
+};
+//get user
+const getUser = async (req, res) => {
+    try {
+        const userId = req.userId; // Assuming userId is set by authMiddleware
+        const user = await userModel.findById(userId).select('-password'); // Exclude password from selection
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+
+        // Include the image URL in the response
+        const imageURL = user.image ? path.join('user-uploads', path.basename(user.image)) : null;
+
+        res.json({ success: true, user: { name: user.name, email: user.email, phone: user.phone, image: imageURL } });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ success: false, message: 'Error fetching user details' });
+    }
+};
+export {loginUser,registerUser,editUser,getUser}

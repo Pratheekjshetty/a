@@ -12,7 +12,7 @@ const __dirname = path.dirname(__filename);
 
 //app config
 const app=express()
-const port=4001
+const port=process.env.PORT || 4001;
 
 //middleware
 app.use(express.json())
@@ -22,8 +22,8 @@ app.use(cors())
 connectDB();
 
 //api endpoints
-app.use('/api/car',carRouter)
 app.use('/images',express.static('uploads'))
+app.use('/api/car',carRouter)
 app.use('/user-uploads', express.static(path.join(__dirname, 'user-uploads')))
 app.use("/api/user",userRouter)
 

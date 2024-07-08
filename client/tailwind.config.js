@@ -4,7 +4,7 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {
+    extend: {     
       keyframes: {
       fadeIn: {
         '0%': { opacity: '0' },
@@ -13,6 +13,9 @@ module.exports = {
     },
     colors: {
       customGray: 'rgb(50, 50, 50)',
+    },
+    width: {
+      'custom': 'max(40%, 280px)',
     },
     gridTemplateColumns: {
       '2fr-1fr-1fr': '2fr 1fr 1fr',
