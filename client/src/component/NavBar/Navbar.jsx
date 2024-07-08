@@ -56,8 +56,8 @@ return (
         {!token?(
           <button className='bg-white text-blue-900 rounded-full p-2 cursor-pointer transition duration-500 hover:bg-blue-700 hover:text-white' onClick={()=>setShowLogin(true)}>Sign In</button>)
         :(<div className='relative group'>{userImage ? (
-        <img src={userImage} alt='Profile Icon'className='w-8 h-8 rounded-full' onError={handleImageError}/>
-        ) : (  <img src={profile_icon} alt="Profile Icon" className="w-8 h-8 rounded-full"/>)}
+        <img src={userImage} alt='Profile Icon'className='w-[60px] rounded-full' onError={handleImageError}/>
+        ) : (  <img src={profile_icon} alt="Profile Icon" className="w-[60px] rounded-full"/>)}
         <ul className="absolute hidden right-0 z-[1] group-hover:flex flex-col gap-3 bg-orange-200 px-8 py-3 border border-blue-400 rounded-md outline outline-2 outline-white list-none">
             <li className='flex content-center gap-2 cursor-pointer hover:text-orange-400'><img className="w-5" src={profile_icon} alt=""/><p className='font-normal'>Profile</p></li>
             <hr/>
