@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext,useState, useEffect  } from 'react'
 import logo from '../../assets/logo.png'
 import profile_icon from '../../assets/profile_icon.png'
 import booking_icon from '../../assets/booking_icon.png'
@@ -10,15 +10,30 @@ import { StoreContext } from '../../context/StoreContext';
 const Navbar = ({setShowLogin}) => {
 
 const{token,setToken}=useContext(StoreContext);
-
 const navigate = useNavigate(); 
+const [userImage, setUserImage] = useState(null);
+const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+useEffect(() => {
+  const storedImage = localStorage.getItem('userImage');
+  if (storedImage) {
+    setUserImage(`http://localhost:4001/${storedImage}`); // Set userImage state to the stored image path
+  }else {
+    setUserImage(profile_icon); // Set default profile icon if no image path found
+  }
+}, [token]);
+
+const handleImageError = () => {
+  setUserImage(null); // Set userImage state to null on image load error
+};
 
 const logout = () =>{
     localStorage.removeItem("token");
+    localStorage.removeItem("userImage");
     setToken("");
-    navigate("/")
+    setUserImage(null); // Clear userImage state on logout
+    navigate("/");
 }
-const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 return (
   <div className="bg-blue-300">
     <nav  className='flex flex-col'>
@@ -40,8 +55,9 @@ return (
         </div>
         {!token?(
           <button className='bg-white text-blue-900 rounded-full p-2 cursor-pointer transition duration-500 hover:bg-blue-700 hover:text-white' onClick={()=>setShowLogin(true)}>Sign In</button>)
-        :(<div className='relative group'>
-        <img src={profile_icon} alt='Profile Icon'/>
+        :(<div className='relative group'>{userImage ? (
+        <img src={userImage} alt='Profile Icon'className='w-8 h-8 rounded-full' onError={handleImageError}/>
+        ) : (  <img src={profile_icon} alt="Profile Icon" className="w-8 h-8 rounded-full"/>)}
         <ul className="absolute hidden right-0 z-[1] group-hover:flex flex-col gap-3 bg-orange-200 px-8 py-3 border border-blue-400 rounded-md outline outline-2 outline-white list-none">
             <li className='flex content-center gap-2 cursor-pointer hover:text-orange-400'><img className="w-5" src={profile_icon} alt=""/><p className='font-normal'>Profile</p></li>
             <hr/>

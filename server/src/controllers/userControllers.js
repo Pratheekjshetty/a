@@ -11,7 +11,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 //Ensure the upload directory exists
-const uploadDir = path.join(__dirname, '..', 'user-uploads');
+const uploadDir = path.join(__dirname, '../..', 'user-uploads');
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir);
 }
@@ -38,7 +38,10 @@ const loginUser =async(req,res)=>{
 
         //create a token before login
         const token =createToken(user._id);
-        res.json({success:true, token, role:user.role})
+        // include the image URL in the response
+        const imageURL = user.image ? path.join('user-uploads', path.basename(user.image)) : null;
+
+        res.json({success:true, token, role:user.role,image: imageURL});
 
     }catch(err){
         console.log(err);
@@ -94,7 +97,9 @@ const registerUser =async(req,res)=>{
 
         const user = await  newUser.save()
         const token = createToken(user._id)
-        res.json({success:true, token, role: user.role})
+        // include the image URL in the response
+        const imageURL = user.image ? path.join('user-uploads', path.basename(user.image)) : null;
+        res.json({success:true, token, role: user.role,image: imageURL})
 
     }catch(err){
         console.log(err);

@@ -8,7 +8,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 
 const Login = ({setShowLogin}) => {
-    const [image,setImage] = useState(null);
+    const [image,setImage] = useState(false);
     const {url,setToken} = useContext(StoreContext)
     const[currState,setCurrState]=useState("Login")
     const [data,setData] = useState({
@@ -45,21 +45,16 @@ const Login = ({setShowLogin}) => {
             formData.append("password", data.password);
             formData.append("image", image);
         }
-
-        formData.forEach((value, key) => {
-            console.log(key, value);
-        });
-
         try {
         const response = await axios.post(newUrl, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         });
-
-        if(response.data.success){
+        if (response.data.success) {
             setToken(response.data.token);
-            localStorage.setItem("token",response.data.token)
+            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("userImage", response.data.image);
 
             if (response.data.role === 'admin') {
                 window.open('http://localhost:3003/', '_blank');
@@ -72,12 +67,11 @@ const Login = ({setShowLogin}) => {
         else{
             alert(response.data.message);
         }
-    }catch(error){
-        console.error("Error during login/register:", error);
-        alert("An error occurred. Please try again.");
+    } catch (error) {
+        console.error('Login/Register error:', error);
+        alert('Failed to login/register. Please check your details and try again.');
     }
 };
-
   return (
     <div className='login'>
         <form onSubmit={onLogin} className='login-container'>
