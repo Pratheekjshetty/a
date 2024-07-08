@@ -7,6 +7,7 @@ import About from './pages/About/About';
 import Blogs from './pages/Blogs/Blogs';
 import Contact from './pages/Contact/Contact'
 import Login from './component/Login/Login'
+import EditProfile from './component/EditProfile/EditProfile';
 import MyBooking from './component/MyBooking/MyBooking';
 import CarDisplay from './component/CarDisplay/CarDisplay';
 import Booking from './pages/Booking/Booking';
@@ -29,6 +30,7 @@ function App() {
           <Route path='/blogs' element={<Blogs/>}/>
           <Route path='/contact' element={<Contact/>}/>
           <Route path='/login' element={<Login/>}/>
+          <Route path='/edit-profile' element={<EditProfile/>}/>
           <Route path='/mybooking' element={<MyBooking/>}/>
           <Route path='/booking' element={<Booking/>}/>
           <Route path="/car-display" element={<CarDisplay />} />
