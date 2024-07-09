@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import upload_area from '../../assets/upload_area1.png'
+import getprofile from '../../assets/getprofile.jpg'
 import { toast } from 'react-toastify';
 
 const GetProfile = ({ url }) => {
@@ -126,9 +127,10 @@ const GetProfile = ({ url }) => {
   if (!user) return <div>No User details available</div>;
 
   return (
-    <div className='flex flex-row justify-center '>
+    <div className='flex flex-row justify-center' style={{ backgroundImage: `url(${getprofile})`,backgroundSize: 'cover',backgroundPosition: 'center',
+        }}>
     {!isEditing ? (
-    <div className='w-[80%] mx-10 mt-12 text-[#474747] text-base bg-blue-100 p-4 rounded-md flex flex-col lg:w-[30%] lg:mx-20'>
+    <div className='w-[80%] mx-10 my-20 text-[#474747] text-base bg-blue-100 p-4 rounded-md flex flex-col 2xl:w-[25%] lg:w-[30%] md:w-[45%] sm:w-[60%] lg:mx-20'>
       <div className="flex justify-center items-center m-4">
           {user.image && <img className='w-32 rounded-full border border-blue-500' src={`${url}/${user.image}`} alt="User Profile" />}
       </div>
@@ -146,7 +148,7 @@ const GetProfile = ({ url }) => {
       </div>
     </div>
     ) : (
-    <div className='w-[80%] mx-10  mt-12 text-[#474747] text-base bg-blue-200 p-4 rounded-md flex flex-col lg:w-[30%] lg:mx-20'>
+    <div className='w-[80%] mx-10 my-20 text-[#474747] text-base bg-blue-200 p-4 rounded-md flex flex-col 2xl:w-[25%] lg:w-[30%] md:w-[45%] sm:w-[60%] lg:mx-20'>
     <form onSubmit={handleSubmit}>
       <div className="flex justify-center items-center m-4">
           <label htmlFor='image'>
