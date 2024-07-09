@@ -33,7 +33,6 @@ function App() {
           <Route path='/about' element={<About/>}/>
           <Route path='/blogs' element={<Blogs/>}/>
           <Route path='/contact' element={<Contact/>}/>
-          <Route path='/login' element={<Login/>}/>
           <Route path='/get-profile' element={<GetProfile url={url}/>}/>
           <Route path='/mybooking' element={<MyBooking/>}/>
           <Route path='/booking' element={<Booking/>}/>

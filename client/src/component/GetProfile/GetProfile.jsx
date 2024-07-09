@@ -127,8 +127,7 @@ const GetProfile = ({ url }) => {
   if (!user) return <div>No User details available</div>;
 
   return (
-    <div className='flex flex-row justify-center' style={{ backgroundImage: `url(${getprofile})`,backgroundSize: 'cover',backgroundPosition: 'center',
-        }}>
+    <div className='flex flex-row justify-center' style={{ backgroundImage: `url(${getprofile})`,backgroundSize: 'cover',backgroundPosition: 'center',}}>
     {!isEditing ? (
     <div className='w-[80%] mx-10 my-20 text-[#474747] text-base bg-blue-100 p-4 rounded-md flex flex-col 2xl:w-[25%] lg:w-[30%] md:w-[45%] sm:w-[60%] lg:mx-20'>
       <div className="flex justify-center items-center m-4">
