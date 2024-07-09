@@ -13,6 +13,7 @@ import GetProfile from './component/GetProfile/GetProfile';
 import MyBooking from './component/MyBooking/MyBooking';
 import CarDisplay from './component/CarDisplay/CarDisplay';
 import Booking from './pages/Booking/Booking';
+import Rent from './pages/Rent/Rent';
 import Footer from './component/Footer/Footer';
 import NoPage from './pages/NoPage/NoPage';
 
@@ -36,6 +37,7 @@ function App() {
           <Route path='/get-profile' element={<GetProfile url={url}/>}/>
           <Route path='/mybooking' element={<MyBooking/>}/>
           <Route path='/booking' element={<Booking/>}/>
+          <Route path='/rent' element={<Rent/>}/>
           <Route path="/car-display" element={<CarDisplay />} />
           <Route path="*" element={<NoPage/>}/>
         </Routes>  

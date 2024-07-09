@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { StoreContext } from '../../context/StoreContext';
+import { useNavigate } from 'react-router-dom';
 
 const Booking = () => {
   const location = useLocation();
@@ -12,7 +13,10 @@ const Booking = () => {
   const [dropoffTime, setDropoffTime] = useState('');
   const [driverRequired, setDriverRequired] = useState(false);
   const [totalHours, setTotalHours] = useState(0);
+  const [subtotal, setSubtotal] = useState(0);
+  const [driverFee, setDriverFee] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
+  const navigate=useNavigate();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -29,7 +33,10 @@ const Booking = () => {
     const hours = calculateTotalHours();
     setTotalHours(hours);
     const driverCost = driverRequired ? 50 : 0;
+    const subtotalAmount = hours * price;
     const total = hours * price + driverCost;
+    setSubtotal(subtotalAmount.toFixed(2));
+    setDriverFee(driverCost.toFixed(2));
     setTotalAmount(total.toFixed(2));
   }, [calculateTotalHours, driverRequired, price]);
 
@@ -39,16 +46,18 @@ const Booking = () => {
 
   const handleBookNow = () => {
     console.log({
-      id, name, price, carLocation, description, image, color,
-      pickupDate, pickupTime, dropoffDate, dropoffTime,
-      totalAmount
+      id, name, price, carLocation, description, image,model, color,
+      seats,pickupDate, pickupTime, dropoffDate, dropoffTime,
+      subtotal,driverFee,totalAmount
     });
-    // Add booking logic here
+    navigate('/rent', { state: { id, name, price, carLocation, description, image, model, color, seats,
+      pickupDate, pickupTime, dropoffDate, dropoffTime,subtotal,driverFee,totalAmount
+     } });  
   };
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
-      <div className="w-full max-w-6xl mx-auto p-4 bg-white shadow-none rounded-lg mt-4">
+      <div className="w-full max-w-5xl mx-auto p-4 bg-white shadow-none rounded-lg my-4 ">
         <div className="w-full h-auto md:h-96">
           <img src={url + "/images/" + image} alt={name} className="w-full h-full object-contain" />
         </div>
@@ -63,18 +72,22 @@ const Booking = () => {
           </div>
           <div className="w-full md:w-1/2 p-4 flex-grow">
           <form>
-            <input type="date" className="w-full p-2 mb-2 border rounded" value={pickupDate} onChange={(e) => setPickupDate(e.target.value)} required/>
-            <input type="time" className="w-full p-2 mb-2 border rounded" value={pickupTime} onChange={(e) => setPickupTime(e.target.value)} required/>
-            <input type="date" className="w-full p-2 mb-2 border rounded" value={dropoffDate} onChange={(e) => setDropoffDate(e.target.value)} required/>
-            <input type="time" className="w-full p-2 mb-2 border rounded " value={dropoffTime} onChange={(e) => setDropoffTime(e.target.value)} required/>
+            <input type="date" className="w-full p-2 mb-2 border rounded outline-blue-500" value={pickupDate} onChange={(e) => setPickupDate(e.target.value)} required/>
+            <input type="time" className="w-full p-2 mb-2 border rounded outline-blue-500" value={pickupTime} onChange={(e) => setPickupTime(e.target.value)} required/>
+            <input type="date" className="w-full p-2 mb-2 border rounded outline-blue-500" value={dropoffDate} onChange={(e) => setDropoffDate(e.target.value)} required/>
+            <input type="time" className="w-full p-2 mb-2 border rounded outline-blue-500" value={dropoffTime} onChange={(e) => setDropoffTime(e.target.value)} required/>
             <span>Total Hours:</span><span className='font-semibold'> {totalHours}</span><br/>
-            <span>Rent Per Hour: </span><span className='font-semibold'> ₹ {price}</span>
-            <div className="flex items-center mb-4">
+            <span>Rent Per Hour: </span><span className='font-semibold'> ₹ {price}</span><br/>
+            <p>SubTotal:<span className='font-semibold'>₹ {subtotal}</span></p>
+            <hr className="border-0 bg-gray-400 my-5" style={{ height:'0.5px'}}/>
+            <div className="flex items-center mb-2">
               <input type="checkbox" id="driverRequired" className="mr-2" checked={driverRequired} onChange={() => setDriverRequired(!driverRequired)}/>
               <label htmlFor="driverRequired">Driver required</label>
             </div>
+            <p>Driver Fee: <span className='font-semibold'>₹ {driverFee}</span></p>
+            <hr className="border-0 bg-gray-400 my-5" style={{ height:'0.5px'}}/>
             <span>Total:</span><span className='font-semibold'> ₹ {totalAmount}</span>
-            <button type='submit' onClick={handleBookNow} className="bg-blue-500 text-white w-full p-2 rounded hover:bg-blue-400">
+            <button type='submit' onClick={handleBookNow} className="text-sm bg-blue-500 text-white w-full p-2 rounded hover:bg-blue-400 mt-5">
               Book Now
             </button>
           </form>

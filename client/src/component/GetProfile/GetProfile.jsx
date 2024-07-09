@@ -157,19 +157,19 @@ const GetProfile = ({ url }) => {
       </div>
       <div className='m-4'>
         <p><strong>Name:</strong></p>
-        <input className='ml-2 p-2 border border-none text-sm' type="text" name='name' value={formData.name} onChange={handleInputChange} placeholder='Sooraj Jain'/>
+        <input className='ml-2 p-2 border border-none text-sm outline-blue-500' type="text" name='name' value={formData.name} onChange={handleInputChange} placeholder='Sooraj Jain'/>
       </div>
       <div className='m-4'>
         <p><strong>Email:</strong></p>
-        <input className='ml-2 p-2 border border-none text-sm' type="email" name='email' value={formData.email} readOnly/>
+        <input className='ml-2 p-2 border border-none text-sm outline-blue-500' type="email" name='email' value={formData.email} readOnly/>
       </div>
       <div className='m-4'>
         <p><strong>Phone:</strong></p>
-        <input className='ml-2 p-2 border border-none text-sm' type="tel" name='phone' value={formData.phone} onChange={handleInputChange} placeholder='Enter your phone number'/>
+        <input className='ml-2 p-2 border border-none text-sm outline-blue-500' type="tel" name='phone' value={formData.phone} onChange={handleInputChange} placeholder='Enter your phone number'/>
       </div>
       <div className='m-4'>
         <p><strong>Password:</strong></p>
-        <input className='ml-2 p-2 border border-none text-sm' type="password" name='password' value={formData.password} onChange={handleInputChange} placeholder='Enter new password'/>
+        <input className='ml-2 p-2 border border-none text-sm outline-blue-500' type="password" name='password' value={formData.password} onChange={handleInputChange} placeholder='Enter new password'/>
       </div>
       <div className='flex justify-center items-center m-4 gap-4'>
         <button className='bg-blue-600 text-white px-4 py-2 rounded-md' type='submit'>Update</button>
