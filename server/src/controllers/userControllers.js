@@ -109,15 +109,18 @@ const registerUser =async(req,res)=>{
 
 //edit user
 const editUser = async (req, res) => {
-    const { name, phone, password } = req.body;
+    const { name, phone, email, password } = req.body;
     const userId = req.userId;
 
     try {
-
         // find the user by userId
         const user = await userModel.findById(userId);
         if (!user) {
             return res.status(404).json({ success: false, message: "User not found" });
+        }
+        // validate email
+        if(!validator.isEmail(email)){
+            return res.status(400).json({success:false,message:"Please enter a valid email"})
         }
         // validate phone number
         if (phone && !validator.isMobilePhone(phone)) {
@@ -135,6 +138,7 @@ const editUser = async (req, res) => {
 
         // update the user's details
         if (name) user.name = name;
+        if (email) user.email = email;
         if (phone) user.phone = phone;
 
         // update image if provided
@@ -151,7 +155,7 @@ const editUser = async (req, res) => {
         // Include the updated image URL in the response
         const imageURL = updatedUser.image ? path.join('user-uploads', path.basename(updatedUser.image)) : null;
 
-        res.json({ success: true, message: "User updated successfully", user: { name: updatedUser.name, phone: updatedUser.phone, image: imageURL } });
+        res.json({ success: true, message: "User updated successfully", user: { name: updatedUser.name, phone: updatedUser.phone,email: updatedUser.email, image: imageURL } });
     } catch (err) {
         console.log(err);
         res.status(500).json({ success: false, message: "Error updating user" });

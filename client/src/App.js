@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import "./App.css";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Route, Routes } from 'react-router-dom';
 import Navbar from './component/NavBar/Navbar'
 import Home from './pages/Home/Home';
@@ -23,6 +25,7 @@ function App() {
   // };
   return (   
     <>
+    <ToastContainer />
     {showLogin?<Login setShowLogin={setShowLogin}/>:<></>} 
     <div>
     <Navbar setShowLogin={setShowLogin} /> 
