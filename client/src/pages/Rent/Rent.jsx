@@ -48,7 +48,6 @@ const Rent = () => {
 
   const rentBooking =async(event)=>{
     event.preventDefault();
-
     let rentData = {
         address: data,
         caritem: car,
@@ -104,10 +103,10 @@ const Rent = () => {
     };
     useEffect(()=>{
         if(!token){
-          navigate('/mybooking')
+          navigate('/')
         }
         else if(totalAmount===0){
-          navigate("/mybooking")
+          navigate("/")
         }
       },[token,totalAmount,navigate])
   return (
