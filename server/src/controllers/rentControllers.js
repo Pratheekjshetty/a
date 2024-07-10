@@ -1,0 +1,1 @@
+import rentModel from "../models/rentModels";
