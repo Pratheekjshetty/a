@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const rentSchema =new mongoose.Schema({
     userId:{type:String,required:true},
-    car:{type:Object, required:true},
+    caritem:{type:Object, required:true},
     amount:{type:Number, required:true},
     address:{type:Object, required:true},
     pickupdate:{type:Date,required:true},
