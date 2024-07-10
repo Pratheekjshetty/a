@@ -9,6 +9,7 @@ import About from './pages/About/About';
 import Blogs from './pages/Blogs/Blogs';
 import Contact from './pages/Contact/Contact'
 import Login from './component/Login/Login'
+import Verify from './pages/Verify/Verify';
 import GetProfile from './component/GetProfile/GetProfile';
 import MyBooking from './component/MyBooking/MyBooking';
 import CarDisplay from './component/CarDisplay/CarDisplay';
@@ -35,6 +36,7 @@ function App() {
           <Route path='/blogs' element={<Blogs/>}/>
           <Route path='/contact' element={<Contact/>}/>
           <Route path='/get-profile' element={<GetProfile url={url}/>}/>
+          <Route path='/verify'element={<Verify/>}/>
           <Route path='/mybooking' element={<MyBooking/>}/>
           <Route path='/booking' element={<Booking/>}/>
           <Route path='/rent' element={<Rent/>}/>

@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from 'react'
-import './Verify.css'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { StoreContext } from '../../context/StoreContext';
 import axios from 'axios';
@@ -11,7 +10,7 @@ const Verify = () => {
     const navigate = useNavigate();
     useEffect(()=>{
         const verifyPayment = async() =>{
-            const response = await axios.post(url+"/api/order/verify",{success,rentId});
+            const response = await axios.post(url+"/api/book/verify",{success,rentId});
             if (response.data.success){
                 navigate("/mybooking")
             }
@@ -22,7 +21,7 @@ const Verify = () => {
         verifyPayment();
     },[success, rentId, url, navigate])
   return (
-    <div className='verify'>
+    <div className='min-h-[60vh] grid'>
         <div className='w-12 h-12 self-center border-4 border-gray-400 border-t-blue-500 rounded-full animate-rotate'>
         </div>
     </div>
