@@ -1,25 +1,128 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
+import { StoreContext } from '../../context/StoreContext';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Rent = () => {
-    const location = useLocation();
+  const location = useLocation();
+  const navigate = useNavigate();
   const {
-    subtotal, driverFee, totalAmount,
-    pickupDate, pickupTime, dropoffDate, dropoffTime
+    id, name, price, carLocation, description, image, model, color, seats,
+    subtotal, driverFee, totalAmount,pickupDate, pickupTime, dropoffDate, dropoffTime
   } = location.state;
+
+  const {token,url}= useContext(StoreContext);
+
+  const [data, setData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    from:"",
+    to:"",
+    street: "",
+    city: "",
+    state: "",
+    zipcode: "",
+    country: "",
+  });
+
+  const onChangeHandler = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setData(data => ({ ...data, [name]: value }));
+  };
+
+  const car = {
+    id: id,
+    name: name,
+    price: price,
+    carLocation: carLocation,
+    description: description,
+    image: image,
+    model: model,
+    color: color,
+    seats: seats,
+  };
+
+  const rentBooking =async(event)=>{
+    event.preventDefault();
+
+    let rentData = {
+        address: data,
+        caritem: car,
+        amount: totalAmount,
+        userId: token.userId,
+        pickupdate: pickupDate,
+        dropoffdate: dropoffDate,
+        pickuptime: pickupTime,
+        dropofftime: dropoffTime,
+        };
+
+      try{
+        let response = await axios.post(url + "/api/book/rent", rentData, { headers: { token } });
+    
+        if(response.data.success){
+            const { rentId, amount, currency, success_url, cancel_url } = response.data;
+            const options = {
+                key: process.env.REACT_APP_RAZORPAY_KEY_ID,
+                amount: amount,
+                currency: currency,
+                name: "Your Company Name",
+                description: "Test Transaction",
+                order_id: rentId,
+                handler: function (response) {
+                  window.location.href = `${success_url}&payment_id=${response.razorpay_payment_id}`;
+                },
+                prefill: {
+                  name: `${data.firstName} ${data.lastName}`,
+                  email: data.email,
+                  contact: data.phone,
+                },
+                notes: {
+                  address: `${data.street}, ${data.city}, ${data.state}, ${data.zipcode}, ${data.country}`,
+                },
+                theme: {
+                  color: "#3399cc",
+                },
+              };
+
+              const rzp1 = new window.Razorpay(options);
+              rzp1.on('payment.failed', function (response) {
+                window.location.href = `${cancel_url}&error=${response.error.description}`;
+              });
+              rzp1.open();
+            } else {
+              alert("Error");
+            }
+      }
+      catch(err){
+        console.error("Error placing order:", err);
+        alert("Error placing order. Please try again.");
+      }
+    };
+    useEffect(()=>{
+        if(!token){
+          navigate('/mybooking')
+        }
+        else if(totalAmount===0){
+          navigate("/mybooking")
+        }
+      },[token,totalAmount,navigate])
   return (
-    <form className='flex flex-wrap justify-between items-start gap-[50px] my-24 mx-20'>
+    <form onSubmit={rentBooking} className='flex flex-wrap justify-between items-start gap-[50px] my-24 mx-20'>
         <div className='flex-1 p-[2.5] w-full max-w-[max(30%,500px)]'>
             <p className='text-[30px] font-semibold mb-[50px]'>Booking Information</p>
             <div className='flex gap-[10px]'>
-                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="fname" type='text' placeholder='First name' required/>
-                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="lname" type='text' placeholder='Last name' required/>
+                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="firstname" type='text' onChange={onChangeHandler} placeholder='First name' required/>
+                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="lastname" type='text' onChange={onChangeHandler} placeholder='Last name' required/>
             </div>
-            <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="email" type='email' placeholder='Email address' required/>
-            <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="phone" type='tel' placeholder='Phone' required/>
+            <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="email" type='email' onChange={onChangeHandler} placeholder='Email address' required/>
+            <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="phone" type='tel' onChange={onChangeHandler} placeholder='Phone' required/>
             <div className='flex gap-[10px]'>
-                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="from" type='text' placeholder='From place' required/>
-                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="to" type='text' placeholder='To place' required/>
+                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="from" type='text' onChange={onChangeHandler} placeholder='From place' required/>
+                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="to" type='text' onChange={onChangeHandler} placeholder='To place' required/>
             </div>
             <div className='flex gap-[10px]'>
                 <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="pickupdate" type='date' value={pickupDate} placeholder='PickUpDate' readOnly/>
@@ -29,14 +132,14 @@ const Rent = () => {
                 <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="pickuptime" type='time' value={pickupTime} placeholder='PickUpTime' readOnly/>
                 <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="dropofftime" type='time' value={dropoffTime} placeholder='DropOffTime' readOnly/>
             </div>
-            <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="street" type='text' placeholder='Street address' required/>
+            <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="street" type='text' onChange={onChangeHandler} placeholder='Street address' required/>
             <div className='flex gap-[10px]'>
-                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="city" type='text' placeholder='City' required/>
-                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="state" type='text' placeholder='State' required/>
+                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="city" type='text' onChange={onChangeHandler} placeholder='City' required/>
+                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="state" type='text' onChange={onChangeHandler} placeholder='State' required/>
             </div>
             <div className='flex gap-[10px]'>
-                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="zipcode" type='text' placeholder='Zip code' required/>
-                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="country" type='text' placeholder='Country' required/>
+                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="zipcode" type='text' onChange={onChangeHandler} placeholder='Zip code' required/>
+                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="country" type='text' onChange={onChangeHandler} placeholder='Country' required/>
             </div>
         </div>
         <div className='flex-1 p-[2.5] w-full max-w-[max(30%,500px)]'>

@@ -1,8 +1,11 @@
 import express from 'express'
 import cors from 'cors'
+import dotenv from 'dotenv';
+dotenv.config();
 import connectDB from './src/helper/db.js'
 import carRouter from '../server/src/routers/carRoutes.js'
 import userRouter from '../server/src/routers/userRoutes.js'
+import rentRouter from '../server/src/routers/rentRouters.js'
 import 'dotenv/config'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -26,6 +29,8 @@ app.use('/images',express.static('uploads'))
 app.use('/api/car',carRouter)
 app.use('/user-uploads', express.static(path.join(__dirname, 'user-uploads')))
 app.use("/api/user",userRouter)
+app.use("/api/book",rentRouter)
+
 
 app.get("/",(req,res)=>{
     res.send("Api Working")

@@ -1,6 +1,8 @@
-import rentModel from "../models/rentModels";
-import userModel from "../models/userModels"
+import rentModel from "../models/rentModels.js";
+import userModel from "../models/userModels.js";
 import Razorpay from "razorpay";
+import dotenv from 'dotenv';
+dotenv.config();
 
 const razorpay = new Razorpay({
     key_id: process.env.RAZORPAY_KEY_ID,
@@ -21,17 +23,17 @@ const rentBooking =async(req,res)=>{
             pickuptime:req.body.pickuptime,
             dropofftime:req.body.dropofftime,
         })
-        await newOrder.save();
+        await newRent.save();
         await userModel.findByIdAndUpdate(req.body.userId,{bookingData:{}});
         const amountInPaise = req.body.amount * 100;
 
         const options = {
             amount: amountInPaise, 
             currency: "INR",
-            receipt: newOrder._id.toString(),
+            receipt: newRent._id.toString(),
         };
 
-        const rent = await razorpay.rents.create(options);
+        const rent = await razorpay.orders.create(options);
 
         res.json({
             success: true,
@@ -48,11 +50,12 @@ const rentBooking =async(req,res)=>{
         res.json({ success: false, message: "Rent Booking Error" });
 
     }
-}
+};
+
 const verifyBooking = async(req,res)=>{
     const{rentId,success}=req.body;
     try{
-        if(success=="true"){
+        if(success==="true"){
             await rentModel.findByIdAndUpdate(rentId,{payment:true});
             res.json({success:true,message:"Paid"})
         }
