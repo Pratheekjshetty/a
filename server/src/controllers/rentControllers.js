@@ -75,7 +75,7 @@ const verifyBooking = async(req,res)=>{
 const userBooking = async(req,res)=>{
     try{
         const booking=await rentModel.find({userId:req.body.userId});
-        res.json({succes:true,data:booking})
+        res.json({success:true,data:booking})
     }
     catch(err){
         console.log(err);
@@ -87,7 +87,7 @@ const userBooking = async(req,res)=>{
 const listBooking = async(req,res)=>{
     try{
         const booking=await rentModel.find({});
-        res.json({succes:true,data:booking})
+        res.json({success:true,data:booking})
     }
     catch(err){
         console.log(err);
