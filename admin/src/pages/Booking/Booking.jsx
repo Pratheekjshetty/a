@@ -22,6 +22,23 @@ const Booking = ({url}) => {
       console.error(err);
     }
   },[url]);
+  const statusHandler = async (event,rentId)=>{
+    try {
+      const response = await axios.post(url + "/api/book/status", {
+        rentId,
+        status: event.target.value
+      });
+      if (response.data.success) {
+        await fetchAllBooking();
+        toast.success(response.data.message)
+      } else {
+        toast.error("Failed to update order status");
+      }
+    } catch (error) {
+      toast.error("An error occurred while updating order status");
+      console.error(error);
+    }
+  };
   useEffect(()=>{
     fetchAllBooking();
   },[fetchAllBooking])
@@ -51,10 +68,10 @@ const Booking = ({url}) => {
               <p>₹ {rent.amount}.00</p>
               <p>{formatDate(rent.pickupdate)}</p>
               <p>{formatDate(rent.dropoffdate)}</p>
-              <select style={{ width: 'max(10vw, 120px)'}} className='bg-blue-200 border border-blue-500 p-2 outline-none'>
-                <option value="booked">Booked</option>
-                <option value="unbooked">Unbooked</option>
-                <option value="reached">Reached</option>   
+              <select style={{ width: 'max(10vw, 120px)'}} className='bg-blue-200 border border-blue-500 p-2 outline-none'onChange={(event)=>statusHandler(event,rent._id)} value={rent.status}>
+                <option value="Car Booked">Car Booked</option>
+                <option value="Car Unbooked">Car Unbooked</option>
+                <option value="Car Reached Destination">Car Reached Destination</option>   
               </select>
             </div>
           ) 
