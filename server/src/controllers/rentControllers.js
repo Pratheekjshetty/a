@@ -94,4 +94,16 @@ const listBooking = async(req,res)=>{
         res.json({success:false,message:"Error"})
     }
 }
-export {rentBooking,verifyBooking,userBooking,listBooking}
+
+//updating car status
+const updateStatus = async (req,res)=>{
+    try{
+        await rentModel.findByIdAndUpdate(req.body.rentId,{status:req.body.status})
+        res.json({success:true,message:"Status Updated"})
+    }
+    catch(err){
+        console.log(err);
+        res.json({success:false,message:"Error"}) 
+    }
+}
+export {rentBooking,verifyBooking,userBooking,listBooking,updateStatus}
