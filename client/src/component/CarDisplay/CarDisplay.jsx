@@ -3,7 +3,7 @@ import { StoreContext } from '../../context/StoreContext'
 import CarItem from '../CarItem/CarItem'
 
 const CarDisplay = ({category}) => {
-    const {vehicle_list} = useContext(StoreContext)
+    const {vehicle_list} = useContext(StoreContext);
   return (
     <div className='bg-blue-50'>
     <div className='m-8 'id='car_display'>
