@@ -52,6 +52,7 @@ const rentBooking =async(req,res)=>{
     }
 };
 
+//verify booking
 const verifyBooking = async(req,res)=>{
     const{rentId,success}=req.body;
     try{
@@ -70,4 +71,27 @@ const verifyBooking = async(req,res)=>{
     }
 }
 
-export {rentBooking,verifyBooking}
+//listing booking for users
+const userBooking = async(req,res)=>{
+    try{
+        const booking=await rentModel.find({userId:req.body.userId});
+        res.json({succes:true,data:booking})
+    }
+    catch(err){
+        console.log(err);
+        res.json({success:false,message:"Error"})
+    }
+}
+
+//listing booking for admin
+const listBooking = async(req,res)=>{
+    try{
+        const booking=await rentModel.find({});
+        res.json({succes:true,data:booking})
+    }
+    catch(err){
+        console.log(err);
+        res.json({success:false,message:"Error"})
+    }
+}
+export {rentBooking,verifyBooking,userBooking,listBooking}
