@@ -44,15 +44,14 @@ const Booking = () => {
     calculateTotal();
   }, [pickupDate, pickupTime, dropoffDate, dropoffTime, driverRequired, calculateTotal]);
 
-  const handleBookNow = () => {
-    console.log({
-      id, name, price, carLocation, description, image,model, color,
-      seats,pickupDate, pickupTime, dropoffDate, dropoffTime,
-      subtotal,driverFee,totalAmount
-    });
-    navigate('/rent', { state: { id, name, price, carLocation, description, image, model, color, seats,
-      pickupDate, pickupTime, dropoffDate, dropoffTime,subtotal,driverFee,totalAmount
-     } });  
+  const handleBookNow = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    if (form.checkValidity()) {
+      navigate('/rent', { state: { id, name, price, carLocation, description, image, model, color, seats, pickupDate, pickupTime, dropoffDate, dropoffTime, subtotal, driverFee, totalAmount } });
+    } else {
+      form.reportValidity();
+    }  
   };
 
   return (
@@ -71,7 +70,7 @@ const Booking = () => {
             <span>Location:</span><span className='font-semibold'> {carLocation}</span>
           </div>
           <div className="w-full md:w-1/2 p-4 flex-grow">
-          <form>
+          <form onSubmit={handleBookNow}>
             <input type="date" className="w-full p-2 mb-2 border rounded outline-blue-500" value={pickupDate} onChange={(e) => setPickupDate(e.target.value)} required/>
             <input type="time" className="w-full p-2 mb-2 border rounded outline-blue-500" value={pickupTime} onChange={(e) => setPickupTime(e.target.value)} required/>
             <input type="date" className="w-full p-2 mb-2 border rounded outline-blue-500" value={dropoffDate} onChange={(e) => setDropoffDate(e.target.value)} required/>
@@ -87,7 +86,7 @@ const Booking = () => {
             <p>Driver Fee: <span className='font-semibold'>₹ {driverFee}</span></p>
             <hr className="border-0 bg-gray-400 my-5" style={{ height:'0.5px'}}/>
             <span>Total:</span><span className='font-semibold'> ₹ {totalAmount}</span>
-            <button type='submit' onClick={handleBookNow} className="text-sm bg-blue-500 text-white w-full p-2 rounded hover:bg-blue-400 mt-5">
+            <button type='submit' className="text-sm bg-blue-500 text-white w-full p-2 rounded hover:bg-blue-400 mt-5">
               Book Now
             </button>
           </form>

@@ -5,7 +5,12 @@ const CarItem = ({id,name,price,location,description,image,model,color,seats}) =
   const {url}=useContext(StoreContext);
   const navigate=useNavigate();
   const handleBooking = () => {
-    navigate('/booking', { state: { id, name, price, location, description, image, model, color, seats } });  
+    const token = localStorage.getItem('token');
+    if (token) {
+    navigate('/booking', { state: { id, name, price, location, description, image, model, color, seats } }); 
+  } else {
+    alert('Please sign in to continue.');
+  } 
   };
   return (
     <div className="w-full mx-auto rounded shadow-lg animate-fadeIn duration-2000 " id="car_item">
