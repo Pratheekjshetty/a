@@ -114,14 +114,14 @@ const Rent = () => {
         <div className='flex-1 p-[2.5] w-full max-w-[max(30%,500px)]'>
             <p className='text-[30px] font-semibold mb-[50px]'>Booking Information</p>
             <div className='flex gap-[10px]'>
-                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="firstname" type='text' onChange={onChangeHandler} placeholder='First name' required/>
-                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="lastname" type='text' onChange={onChangeHandler} placeholder='Last name' required/>
+                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="firstName" type='text' onChange={onChangeHandler} value={data.firstName}  placeholder='First name' required/>
+                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="lastName" type='text' onChange={onChangeHandler} value={data.lastName}  placeholder='Last name' required/>
             </div>
-            <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="email" type='email' onChange={onChangeHandler} placeholder='Email address' required/>
-            <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="phone" type='tel' onChange={onChangeHandler} placeholder='Phone' required/>
+            <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="email" type='email' onChange={onChangeHandler} value={data.email}  placeholder='Email address' required/>
+            <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="phone" type='tel' onChange={onChangeHandler} value={data.phone}  placeholder='Phone' required/>
             <div className='flex gap-[10px]'>
-                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="from" type='text' onChange={onChangeHandler} placeholder='From place' required/>
-                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="to" type='text' onChange={onChangeHandler} placeholder='To place' required/>
+                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="from" type='text' onChange={onChangeHandler} value={data.from}  placeholder='From place' required/>
+                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="to" type='text' onChange={onChangeHandler} value={data.to}  placeholder='To place' required/>
             </div>
             <div className='flex gap-[10px]'>
                 <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="pickupdate" type='date' value={pickupDate} placeholder='PickUpDate' readOnly/>
@@ -131,14 +131,14 @@ const Rent = () => {
                 <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="pickuptime" type='time' value={pickupTime} placeholder='PickUpTime' readOnly/>
                 <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="dropofftime" type='time' value={dropoffTime} placeholder='DropOffTime' readOnly/>
             </div>
-            <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="street" type='text' onChange={onChangeHandler} placeholder='Street address' required/>
+            <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="street" type='text' onChange={onChangeHandler} value={data.street}  placeholder='Street address' required/>
             <div className='flex gap-[10px]'>
-                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="city" type='text' onChange={onChangeHandler} placeholder='City' required/>
-                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="state" type='text' onChange={onChangeHandler} placeholder='State' required/>
+                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="city" type='text' onChange={onChangeHandler} value={data.city}  placeholder='City' required/>
+                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="state" type='text' onChange={onChangeHandler} value={data.state}  placeholder='State' required/>
             </div>
             <div className='flex gap-[10px]'>
-                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="zipcode" type='text' onChange={onChangeHandler} placeholder='Zip code' required/>
-                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="country" type='text' onChange={onChangeHandler} placeholder='Country' required/>
+                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="zipcode" type='text' onChange={onChangeHandler} value={data.zipcode}  placeholder='Zip code' required/>
+                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="country" type='text' onChange={onChangeHandler} value={data.country}  placeholder='Country' required/>
             </div>
         </div>
         <div className='flex-1 p-[2.5] w-full max-w-[max(30%,500px)]'>

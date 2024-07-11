@@ -58,12 +58,10 @@ const verifyBooking = async(req,res)=>{
         if(success=="true"){
             await rentModel.findByIdAndUpdate(rentId,{payment:true});
             res.json({success:true,message:"Paid"})
-            console.log("success")
         }
         else{
             await rentModel.findByIdAndDelete(rentId);
             res.json({success:false,message:"Not Paid"})
-            console.log("fail")
         }
     }
     catch(err){
