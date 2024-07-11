@@ -17,6 +17,7 @@ import Booking from './pages/Booking/Booking';
 import Rent from './pages/Rent/Rent';
 import Footer from './component/Footer/Footer';
 import NoPage from './pages/NoPage/NoPage';
+import Driver from './pages/Driver/Driver';
 
 function App() { 
   const url ="http://localhost:4001"
@@ -41,6 +42,7 @@ function App() {
           <Route path='/booking' element={<Booking/>}/>
           <Route path='/rent' element={<Rent/>}/>
           <Route path="/car-display" element={<CarDisplay />} />
+          <Route path="/apply-driver" element={<Driver/>}/>
           <Route path="*" element={<NoPage/>}/>
         </Routes>  
     </div>

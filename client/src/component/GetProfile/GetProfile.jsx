@@ -14,6 +14,7 @@ const GetProfile = ({ url }) => {
     email: '',
     phone: '',
     password: '',
+    role: '',
   });
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(upload_area);
@@ -141,6 +142,9 @@ const GetProfile = ({ url }) => {
       </div>
       <div className='m-4'>
         <p><strong>Phone:</strong> {user.phone}</p>
+      </div>
+      <div className='m-4'>
+        <p><strong>Role:</strong> {user.role}</p>
       </div>
       <div className='flex justify-center items-center m-4'>
         <button className='bg-blue-600 text-white px-4 py-2 rounded-md' onClick={() => setIsEditing(true)}>Edit Profile</button>
