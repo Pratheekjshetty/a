@@ -4,4 +4,5 @@
 }
 .car_menu img{
     border-radius: 20px;
+    cursor: pointer;
 }

@@ -48,8 +48,7 @@ const VehicleDisplay = ({category,setCategory,carDisplayRef}) => {
           <h2 className="absolute top-0 mt-4 ml-4 mr-4 font-bold text-lg">Browse by make</h2>
           <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {getVisibleImages().map((image, index) => (
-              <div onClick={()=>setCategory(prev=>prev===image.car_name?"All":image.car_name)}
-                key={index}
+              <div onClick={()=>setCategory(prev=>prev===image.car_name?"All":image.car_name)} key={index}
                 className='transition-opacity duration-700 ease-in-out opacity-100 m-4'
                 style={{ width: '20rem', height: '12.5rem' }}>
                 <div className="car_menu">

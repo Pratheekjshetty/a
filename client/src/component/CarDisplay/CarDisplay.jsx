@@ -2,12 +2,28 @@ import React, { useContext } from 'react'
 import { StoreContext } from '../../context/StoreContext'
 import CarItem from '../CarItem/CarItem'
 
-const CarDisplay = ({category}) => {
+const CarDisplay = ({category,setCategory}) => {
     const {vehicle_list} = useContext(StoreContext);
+
+    const handleSelectChange = (e) => {
+      setCategory(e.target.value);
+    };
   return (
     <div className='bg-blue-50'>
     <div className='m-8 'id='car_display'>
       <h2 className='text-xl font-semibold'>Top Cars near you</h2>
+      <div>
+          <select value={category} onChange={handleSelectChange}>
+            <option value="All">All</option>
+            <option value="Benz">Benz</option>
+            <option value="BMW">BMW</option>
+            <option value="Ford">Ford</option>
+            <option value="Nissan">Nissan</option>
+            <option value="Ford">Ford</option>
+            <option value="Subaro">Subaro</option>
+            <option value="Tesla">Tesla</option>
+          </select>
+        </div>
       <div className='grid mt-8 gap-x-13 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
         {vehicle_list.map((item,index)=>{
           console.log(category,item.category);

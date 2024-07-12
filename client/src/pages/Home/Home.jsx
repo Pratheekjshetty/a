@@ -19,7 +19,7 @@ const Home = () => {
       <VehicleDisplay category={category} setCategory={setCategory} carDisplayRef={carDisplayRef}/>
     </div>
     <div ref={carDisplayRef}>
-        <CarDisplay category={category} />
+        <CarDisplay category={category} setCategory={setCategory}/>
     </div>
     <BrowseCar carDisplayRef={carDisplayRef}/>
     <Apply/>
