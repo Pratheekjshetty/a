@@ -3,8 +3,10 @@ import { StoreContext } from '../../context/StoreContext';
 import CarItem from '../CarItem/CarItem';
 
 const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPriceRange }) => {
-    const { vehicle_list } = useContext(StoreContext);
+    const { vehicle_list, bookingList } = useContext(StoreContext);
     const [filterType, setFilterType] = useState('');
+    const [pickupDate, setPickupDate] = useState('');
+    const [dropoffDate, setDropoffDate] = useState('');
 
     const handleCategoryChange = (e) => {
         setCategory(e.target.value);
@@ -22,10 +24,35 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
         setFilterType(e.target.value);
     };
 
+    const handlePickupDateChange = (e) => {
+        setPickupDate(e.target.value);
+    };
+
+    const handleDropoffDateChange = (e) => {
+        setDropoffDate(e.target.value);
+    };
+
     const isPriceInRange = (price, range) => {
         if (range === 'All') return true;
         const [min, max] = range.split('-').map(Number);
         return price >= min && price <= max;
+    };
+
+    const isDateAvailable = (carId) => {
+        if (!pickupDate || !dropoffDate) return true;
+
+        const pickupDateTime = new Date(pickupDate).getTime();
+        const dropoffDateTime = new Date(dropoffDate).getTime();
+
+        return !bookingList.some(booking => {
+            const bookingPickupDate = new Date(booking.pickupDate).getTime();
+            const bookingDropoffDate = new Date(booking.dropoffDate).getTime();
+            return booking.carItemId === carId && (
+                (pickupDateTime >= bookingPickupDate && pickupDateTime <= bookingDropoffDate) ||
+                (dropoffDateTime >= bookingPickupDate && dropoffDateTime <= bookingDropoffDate) ||
+                (pickupDateTime <= bookingPickupDate && dropoffDateTime >= bookingDropoffDate)
+            );
+        });
     };
 
     const renderFilterOptions = () => {
@@ -78,13 +105,18 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
                     </select>
                     {filterType && renderFilterOptions()}
                 </div>
+                <div className='flex items-center mt-4'>
+                    <input type="date" value={pickupDate} onChange={handlePickupDateChange} className='bg-blue-300 w-32 rounded-md px-1 ml-1' placeholder="Pickup Date"/>
+                    <input type="date" value={dropoffDate} onChange={handleDropoffDateChange} className='bg-blue-300 w-32 rounded-md px-1 ml-4' placeholder="Dropoff Date"/>
+                </div>
                 <div className='grid mt-8 gap-x-13 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
                     {vehicle_list.map((item, index) => {
                         const matchesCategory = category === 'All' || category === item.category;
                         const matchesSeats = seats === 'All' || seats === String(item.seats);
                         const matchesPrice = isPriceInRange(item.price, priceRange);
+                        const available = isDateAvailable(item._id);
 
-                        if (matchesCategory && matchesSeats && matchesPrice) {
+                        if (matchesCategory && matchesSeats && matchesPrice && available) {
                             return (
                                 <CarItem
                                     key={index}
