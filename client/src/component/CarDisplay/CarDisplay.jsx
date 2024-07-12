@@ -84,6 +84,15 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
         }
     };
 
+    const filteredVehicles = vehicle_list.filter(item => {
+        const matchesCategory = category === 'All' || category === item.category;
+        const matchesSeats = seats === 'All' || seats === String(item.seats);
+        const matchesPrice = isPriceInRange(item.price, priceRange);
+        const notBooked = !isCarBooked(item._id);
+
+        return matchesCategory && matchesSeats && matchesPrice && notBooked;
+    });
+
     return (
         <div className='bg-blue-50'>
             <div className='m-8' id='car_display'>
@@ -101,6 +110,12 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
                     <input type="date" value={pickupDate} onChange={handlePickupDateChange} className='bg-blue-300 w-32 rounded-md px-1 ml-1' placeholder="Pickup Date"/>
                     <input type="date" value={dropoffDate} onChange={handleDropoffDateChange} className='bg-blue-300 w-32 rounded-md px-1 ml-1' placeholder="Dropoff Date" />
                 </div>
+                {filteredVehicles.length === 0 ? (
+                    <>
+                    <p className='mt-8 mb-4 text-3xl text-center font-semibold md:text-4xl text-red-500'>No cars found</p>
+                    <p className="mb-4 text-lg text-center font-light text-gray-500 dark:text-gray-400">Sorry, we can't find any cars that match your criteria.</p>
+                    </>
+                ) : (
                 <div className='grid mt-8 gap-x-13 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
                     {vehicle_list.map((item, index) => {
                         const matchesCategory = category === 'All' || category === item.category;
@@ -127,6 +142,7 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
                         return null;
                     })}
                 </div>
+                )}
             </div>
         </div>
     );
