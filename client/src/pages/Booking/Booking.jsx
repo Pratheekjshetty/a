@@ -32,7 +32,7 @@ const Booking = () => {
   const calculateTotal = useCallback(() => {
     const hours = calculateTotalHours();
     setTotalHours(hours);
-    const driverCost = driverRequired ? 50 : 0;
+    const driverCost = driverRequired ? 600 * Math.ceil(hours / 24) : 0;
     const subtotalAmount = hours * price;
     const total = hours * price + driverCost;
     setSubtotal(subtotalAmount.toFixed(2));
