@@ -38,20 +38,12 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
         return price >= min && price <= max;
     };
 
-    const isDateAvailable = (carId) => {
-        if (!pickupDate || !dropoffDate) return true;
-
-        const pickupDateTime = new Date(pickupDate).getTime();
-        const dropoffDateTime = new Date(dropoffDate).getTime();
-
-        return !bookingList.some(booking => {
-            const bookingPickupDate = new Date(booking.pickupDate).getTime();
-            const bookingDropoffDate = new Date(booking.dropoffDate).getTime();
-            return booking.carItemId === carId && (
-                (pickupDateTime >= bookingPickupDate && pickupDateTime <= bookingDropoffDate) ||
-                (dropoffDateTime >= bookingPickupDate && dropoffDateTime <= bookingDropoffDate) ||
-                (pickupDateTime <= bookingPickupDate && dropoffDateTime >= bookingDropoffDate)
-            );
+    const isCarBooked = (carId) => {
+        if (!pickupDate || !dropoffDate) return false;
+        return bookingList.some(booking => {
+            return booking.carItemId === carId && booking.status === "Car Booked" &&
+                new Date(pickupDate) <= new Date(booking.dropoffDate) &&
+                new Date(dropoffDate) >= new Date(booking.pickupDate);
         });
     };
 
@@ -59,7 +51,7 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
         switch (filterType) {
             case 'Category':
                 return (
-                    <select value={category} onChange={handleCategoryChange} className='bg-blue-300 w-32 rounded-md px-1 ml-4'>
+                    <select value={category} onChange={handleCategoryChange} className='bg-blue-300 w-32 rounded-md px-1 ml-1 mt-1'>
                         <option value="All">All</option>
                         <option value="Benz">Benz</option>
                         <option value="BMW">BMW</option>
@@ -71,7 +63,7 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
                 );
             case 'Seats':
                 return (
-                    <select value={seats} onChange={handleSeatsChange} className='bg-blue-300 w-32 rounded-md px-1 ml-4'>
+                    <select value={seats} onChange={handleSeatsChange} className='bg-blue-300 w-32 rounded-md px-1 ml-1 mt-1'>
                         <option value="All">All</option>
                         <option value="4">4 seats</option>
                         <option value="5">5 seats</option>
@@ -79,7 +71,7 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
                 );
             case 'Price':
                 return (
-                    <select value={priceRange} onChange={handlePriceChange} className='bg-blue-300 w-32 rounded-md px-1 ml-4'>
+                    <select value={priceRange} onChange={handlePriceChange} className='bg-blue-300 w-32 rounded-md px-1 ml-1 mt-1'>
                         <option value="All">All</option>
                         <option value="2000-3000">2k-3k</option>
                         <option value="3000-4000">3k-4k</option>
@@ -107,16 +99,16 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
                 </div>
                 <div className='flex items-center mt-4'>
                     <input type="date" value={pickupDate} onChange={handlePickupDateChange} className='bg-blue-300 w-32 rounded-md px-1 ml-1' placeholder="Pickup Date"/>
-                    <input type="date" value={dropoffDate} onChange={handleDropoffDateChange} className='bg-blue-300 w-32 rounded-md px-1 ml-4' placeholder="Dropoff Date"/>
+                    <input type="date" value={dropoffDate} onChange={handleDropoffDateChange} className='bg-blue-300 w-32 rounded-md px-1 ml-1' placeholder="Dropoff Date" />
                 </div>
                 <div className='grid mt-8 gap-x-13 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
                     {vehicle_list.map((item, index) => {
                         const matchesCategory = category === 'All' || category === item.category;
                         const matchesSeats = seats === 'All' || seats === String(item.seats);
                         const matchesPrice = isPriceInRange(item.price, priceRange);
-                        const available = isDateAvailable(item._id);
+                        const notBooked = !isCarBooked(item._id);
 
-                        if (matchesCategory && matchesSeats && matchesPrice && available) {
+                        if (matchesCategory && matchesSeats && matchesPrice && notBooked) {
                             return (
                                 <CarItem
                                     key={index}

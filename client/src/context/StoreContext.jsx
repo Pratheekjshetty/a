@@ -20,6 +20,7 @@ const StoreContextProvider = (props) => {
           carItemId: booking.caritem.id,
           pickupDate: booking.pickupdate,
           dropoffDate: booking.dropoffdate,
+          status:booking.status,
         }));
         setBookingList(bookingData);
       };
