@@ -8,6 +8,7 @@ import Apply from '../../component/Apply/Apply';
 const Home = () => {
   const [category,setCategory] =useState("All");
   const [seats,setSeats]=useState("All");
+  const [priceRange,setPriceRange]=useState("All");
   const carDisplayRef = useRef(null);
   const vehicleDisplayRef = useRef(null);
   const homeDisplayRef =useRef(null);
@@ -20,7 +21,7 @@ const Home = () => {
       <VehicleDisplay category={category} setCategory={setCategory} carDisplayRef={carDisplayRef}/>
     </div>
     <div ref={carDisplayRef}>
-        <CarDisplay category={category} setCategory={setCategory} seats={seats} setSeats={setSeats}/>
+        <CarDisplay category={category} setCategory={setCategory} seats={seats} setSeats={setSeats} priceRange={priceRange} setPriceRange={setPriceRange}/>
     </div>
     <BrowseCar carDisplayRef={carDisplayRef}/>
     <Apply/>
