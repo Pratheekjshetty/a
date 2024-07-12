@@ -7,7 +7,7 @@ const CarItem = ({id,name,price,location,description,image,model,color,seats}) =
   const handleBooking = () => {
     const token = localStorage.getItem('token');
     if (token) {
-    navigate('/booking', { state: { id, name, price, location, description, image, model, color, seats } }); 
+    navigate('/booking', { state: { id, name, price, location, description, image, model, color, seats, } }); 
   } else {
     alert('Please sign in to continue.');
   } 

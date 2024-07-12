@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const Booking = () => {
   const location = useLocation();
   const { id, name, price, location: carLocation, description, image, model, color, seats } = location.state;
-  const { url } = useContext(StoreContext);
+  const { url,bookingList } = useContext(StoreContext);
   const [pickupDate, setPickupDate] = useState('');
   const [pickupTime, setPickupTime] = useState('');
   const [dropoffDate, setDropoffDate] = useState('');
@@ -44,14 +44,32 @@ const Booking = () => {
     calculateTotal();
   }, [pickupDate, pickupTime, dropoffDate, dropoffTime, driverRequired, calculateTotal]);
 
+  const isCarBooked = useCallback(() => {
+    if (!pickupDate || !dropoffDate) return false;
+    return bookingList.some(booking => {
+      return booking.carItemId === id && booking.status === "Car Booked" &&
+        new Date(pickupDate) <= new Date(booking.dropoffDate) &&
+        new Date(dropoffDate) >= new Date(booking.pickupDate);
+    });
+  }, [bookingList, id, pickupDate, dropoffDate]);
+
   const handleBookNow = (event) => {
     event.preventDefault();
-    const form = event.target;
-    if (form.checkValidity()) {
-      navigate('/rent', { state: { id, name, price, carLocation, description, image, model, color, seats, pickupDate, pickupTime, dropoffDate, dropoffTime, subtotal, driverFee, totalAmount } });
+    if (isCarBooked()) {
+      alert("The car is already booked during the selected dates.");
     } else {
-      form.reportValidity();
-    }  
+      const form = event.target;
+      if (form.checkValidity()) {
+        navigate('/rent', {
+          state: {
+            id, name, price, carLocation, description, image, model, color, seats,
+            pickupDate, pickupTime, dropoffDate, dropoffTime, subtotal, driverFee, totalAmount
+          }
+        });
+      } else {
+        form.reportValidity();
+      }
+    }
   };
 
   return (
