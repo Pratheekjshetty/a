@@ -5,11 +5,11 @@ import twitter_icon from '../../assets/twitter_icon.png'
 import linkedin_icon from '../../assets/linkedin_icon.png'
 const Footer = () => {
   return (
-    <div className='text-white bg-customGray flex flex-col items-center gap-5 px-8vw py-5 pt-20 mt-0' id='footer'>
-        <div className="w-full grid grid-cols-1 md:grid-cols-2fr-1fr-1fr gap-20 px-32">
+    <div className='text-white bg-customGray flex flex-col items-center gap-5 py-5 pt-20 mt-0' id='footer'>
+        <div className="w-full grid grid-cols-1 lg:grid-cols-2fr-1fr-1fr gap-20 px-8 xs:px-16 sm:px-32">
         <div className="flex flex-col items-start gap-5">
             <img className='rounded-full border border-none bg-white w-16'src={logo} alt="" width={100}/>
-            <p>Welcome to Voyager, where we bring the best car rental experience right to your fingertips. Discover a wide range of vehicles and enjoy convenient booking 
+            <p className='text-sm '>Welcome to Voyager, where we bring the best car rental experience right to your fingertips. Discover a wide range of vehicles and enjoy convenient booking 
                 with every rental. Renting a car from your favorite local providers has never been easier. Our mission is to make car rentals quick, easy, and enjoyable.</p>
             <div className='flex flex-row'>
             <a href="https://www.facebook.com/voyagerapp" target="_blank" rel="noopener noreferrer">
