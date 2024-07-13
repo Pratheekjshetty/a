@@ -14,6 +14,13 @@ const Rent = () => {
 
   const {token,url}= useContext(StoreContext);
 
+  const [user, setUser] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: ''
+  });
+
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -27,6 +34,41 @@ const Rent = () => {
     zipcode: "",
     country: "",
   });
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      if (!token) {
+        return;
+      }
+      try {
+        const response = await axios.get(`${url}/api/user/get-user`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (response.data.success) {
+          const { name, email, phone } = response.data.user;
+
+          const splitName = name.split(' ');
+          const firstName = splitName[0];
+          const lastName = splitName.slice(1).join(' ');
+
+          setUser({ firstName, lastName, email, phone });
+          setData(data => ({
+            ...data,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            phone: phone
+          }));
+        }
+      } catch (err) {
+        console.error('Error fetching user details', err);
+      }
+    };
+
+    fetchUserDetails();
+  }, [token, url]);
 
   const onChangeHandler = (event) => {
     const name = event.target.name;
@@ -126,8 +168,8 @@ const Rent = () => {
                 <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="firstName" type='text' onChange={onChangeHandler} value={data.firstName}  placeholder='First name' required/>
                 <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="lastName" type='text' onChange={onChangeHandler} value={data.lastName}  placeholder='Last name' required/>
             </div>
-            <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="email" type='email' onChange={onChangeHandler} value={data.email}  placeholder='Email address' required/>
-            <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="phone" type='tel' onChange={onChangeHandler} value={data.phone}  placeholder='Phone' required/>
+            <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="email" type='email' onChange={onChangeHandler} value={user.email}  placeholder='Email address' readOnly/>
+            <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="phone" type='tel' onChange={onChangeHandler} value={user.phone}  placeholder='Phone' readOnly/>
             <div className='flex gap-[10px]'>
                 <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="from" type='text' onChange={onChangeHandler} value={data.from}  placeholder='From place' required/>
                 <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="to" type='text' onChange={onChangeHandler} value={data.to}  placeholder='To place' required/>
