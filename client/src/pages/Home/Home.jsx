@@ -12,6 +12,7 @@ const Home = () => {
   const carDisplayRef = useRef(null);
   const vehicleDisplayRef = useRef(null);
   const homeDisplayRef =useRef(null);
+  const applyDisplayRef =useRef(null);
   return (
     <div>
     <div ref={homeDisplayRef}>
@@ -24,7 +25,9 @@ const Home = () => {
         <CarDisplay category={category} setCategory={setCategory} seats={seats} setSeats={setSeats} priceRange={priceRange} setPriceRange={setPriceRange}/>
     </div>
     <BrowseCar carDisplayRef={carDisplayRef}/>
-    <Apply/>
+    <div ref={applyDisplayRef}>
+      <Apply carDisplayRef={carDisplayRef}/>
+    </div>
     <AppDownload/>
     </div>
   );

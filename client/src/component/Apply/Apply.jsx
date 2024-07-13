@@ -2,12 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import carrental from '../../assets/carrental.png';
 
-const Apply = () => {
+const Apply = ({carDisplayRef}) => {
 
   const handleBookRideClick = (event) => {
-    if (!localStorage.getItem('token')) {
-      event.preventDefault();
-      alert('Please log in to book a ride.');
+    if (carDisplayRef && carDisplayRef.current) {
+      carDisplayRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -24,7 +23,7 @@ const Apply = () => {
         />
         <div className="absolute top-0 left-0 m-4 p-4 bg-transparent rounded transform translate-x-8">
           <h2 className="text-xl font-bold">
-          <Link to="/book-ride" onClick={handleBookRideClick} className="text-blue-700">
+          <Link onClick={handleBookRideClick} className="text-blue-700">
               Book a Ride
           </Link>
           </h2>

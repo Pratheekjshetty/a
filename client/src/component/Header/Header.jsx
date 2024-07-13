@@ -1,7 +1,7 @@
 import React from 'react';
 import front from '../../assets/front.jpg';
 
-const Header = ({carDisplayRef}) => {
+const Header = ({carDisplayRef}) => {   
   const scrollToCarDisplay = () => {
     if (carDisplayRef && carDisplayRef.current) {
       carDisplayRef.current.scrollIntoView({ behavior: 'smooth' });
