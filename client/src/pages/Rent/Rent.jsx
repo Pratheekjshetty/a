@@ -48,6 +48,10 @@ const Rent = () => {
 
   const rentBooking =async(event)=>{
     event.preventDefault();
+    handlePayment();
+  };
+
+  const processRentBooking = async () => {
     let rentData = {
         address: data,
         caritem: car,
@@ -101,14 +105,19 @@ const Rent = () => {
         alert("Error placing order. Please try again.");
       }
     };
+
     useEffect(()=>{
-        if(!token){
-          navigate('/')
-        }
-        else if(totalAmount===0){
+        if(totalAmount===0){
           navigate("/")
         }
-      },[token,totalAmount,navigate])
+      },[totalAmount,navigate])
+      const handlePayment = () => {
+        if (token) {
+          processRentBooking();
+      } else {
+        alert('Please sign in to continue.');
+      }    
+      };
   return (
     <form onSubmit={rentBooking} className='flex flex-wrap justify-between items-start gap-[50px] my-24 mx-20'>
         <div className='flex-1 p-[2.5] w-full max-w-[max(30%,500px)]'>
@@ -158,7 +167,7 @@ const Rent = () => {
                     <b>Total</b>
                     <b className='font-semibold'>₹ {totalAmount}</b>
                 </div>
-                <button className='mt-4 text-sm bg-blue-500 text-white w-full p-2 rounded hover:bg-blue-400'>Proceed To Payment</button>
+                <button type='submit' className='mt-4 text-sm bg-blue-500 text-white w-full p-2 rounded hover:bg-blue-400'>Proceed To Payment</button>
             </div>
         </div>
     </form>
