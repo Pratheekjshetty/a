@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { StoreContext } from '../../context/StoreContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';   
 const CarItem = ({id,name,price,location,description,image,model,color,seats}) => {
   const {url}=useContext(StoreContext);
   const navigate=useNavigate();

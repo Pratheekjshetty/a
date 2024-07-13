@@ -2,10 +2,16 @@ import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { StoreContext } from '../../context/StoreContext';
 import axios from 'axios';
 import rental_icon from '../../assets/rental_icon.png'
+import { useNavigate } from 'react-router-dom';
 
 const MyBooking = () => {
     const {url,token} = useContext(StoreContext);
     const [data,setData] = useState([]);
+    const navigate=useNavigate();
+
+    const cancelBooking = () => {
+      navigate('/cancel-booking');
+    }
 
     const fetchBooking = useCallback(async ()=>{
       try{
@@ -39,7 +45,7 @@ const MyBooking = () => {
             <p>{formatDate(rent.pickupdate)}</p>
             <p>{formatDate(rent.dropoffdate)}</p>
             <p><span className='text-blue-500'>&#x25cf;</span> <b>{rent.status}</b></p>
-            <button onClick={fetchBooking} className='border border-none p-2 rounded-sm bg-red-200 cursor-pointer text-gray-500'>Cancel Booking</button>
+            <button onClick={cancelBooking} className='border border-none p-2 rounded-sm bg-red-200 cursor-pointer text-gray-500'>Cancel Booking</button>
           </div>
         )  
       })}
