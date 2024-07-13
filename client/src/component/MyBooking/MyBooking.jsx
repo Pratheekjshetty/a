@@ -39,7 +39,7 @@ const MyBooking = () => {
             <p>{formatDate(rent.pickupdate)}</p>
             <p>{formatDate(rent.dropoffdate)}</p>
             <p><span className='text-blue-500'>&#x25cf;</span> <b>{rent.status}</b></p>
-            <button onClick={fetchBooking} className='border border-none p-2 rounded-sm bg-blue-200 cursor-pointer text-gray-500'>Track Booking</button>
+            <button onClick={fetchBooking} className='border border-none p-2 rounded-sm bg-red-200 cursor-pointer text-gray-500'>Cancel Booking</button>
           </div>
         )  
       })}

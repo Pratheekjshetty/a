@@ -16,6 +16,7 @@ const Booking = () => {
   const [subtotal, setSubtotal] = useState(0);
   const [driverFee, setDriverFee] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [deliveryOption, setDeliveryOption] = useState('');
   const navigate=useNavigate();
 
   useEffect(() => {
@@ -32,13 +33,19 @@ const Booking = () => {
   const calculateTotal = useCallback(() => {
     const hours = calculateTotalHours();
     setTotalHours(hours);
-    const driverCost = driverRequired ? 600 * Math.ceil(hours / 24) : 0;
+    let driverCost = 0;
+    if (driverRequired) {
+      driverCost = 600 * Math.ceil(hours / 24);
+    }
+    else if (deliveryOption === 'yourLocation') {
+      driverCost += 600;
+    }
     const subtotalAmount = hours * price;
     const total = hours * price + driverCost;
     setSubtotal(subtotalAmount.toFixed(2));
     setDriverFee(driverCost.toFixed(2));
     setTotalAmount(total.toFixed(2));
-  }, [calculateTotalHours, driverRequired, price]);
+  }, [calculateTotalHours, driverRequired, price, deliveryOption]);
 
   useEffect(() => {
     calculateTotal();
@@ -72,6 +79,10 @@ const Booking = () => {
     }
   };
 
+  const handleRadioChange = (event) => {
+    setDeliveryOption(event.target.value);
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
       <div className="w-full max-w-5xl mx-auto p-4 bg-white shadow-none rounded-lg my-4 ">
@@ -101,6 +112,15 @@ const Booking = () => {
               <input type="checkbox" id="driverRequired" className="mr-2" checked={driverRequired} onChange={() => setDriverRequired(!driverRequired)}/>
               <label htmlFor="driverRequired">Driver required</label>
             </div>
+            {!driverRequired && (
+            <div>
+                <span>Choose car delivery option:</span><br/>
+                <input type="radio" id="branchLocation" name="deliveryOption" value="branch" onChange={handleRadioChange} required />
+                <label htmlFor="branchLocation">You come to our branch location</label><br/>
+                <input type="radio" id="yourLocation" name="deliveryOption" value="yourLocation" onChange={handleRadioChange} required />
+                <label htmlFor="yourLocation">Car needs to come to your location</label><br/>
+              </div>
+            )}
             <p>Driver Fee: <span className='font-semibold'>₹ {driverFee}</span></p>
             <hr className="border-0 bg-gray-400 my-5" style={{ height:'0.5px'}}/>
             <span>Total:</span><span className='font-semibold'> ₹ {totalAmount}</span>
