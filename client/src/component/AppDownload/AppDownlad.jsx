@@ -4,7 +4,7 @@ import app_store from '../../assets/app-store.png'
 
 const AppDownload = () => {
   return (
-    <div className='m-auto mt-6 flex flex-col justify-center items-center font-bold text:xl sm:text-2xl md:text-4xl py-10 mb-24' id='app-download'>
+    <div className='m-auto mt-6 flex flex-col justify-center items-center font-bold text:2xl sm:text-3xl md:text-4xl py-10 mb-24' id='app-download'>
         <p>For Better Experience Download </p>
         <p>Voyager App</p>
         <p className='text-lg'>Download our app using Playstore or Appstore</p>

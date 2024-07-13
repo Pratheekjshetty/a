@@ -51,7 +51,7 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
         switch (filterType) {
             case 'Category':
                 return (
-                    <select value={category} onChange={handleCategoryChange} className='bg-blue-300 w-32 rounded-md px-1 ml-1 mt-1'>
+                    <select value={category} onChange={handleCategoryChange} className='bg-blue-300 w-32 rounded-md px-1 ml-1 pt-1'>
                         <option value="All">All</option>
                         <option value="Benz">Benz</option>
                         <option value="BMW">BMW</option>
@@ -63,7 +63,7 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
                 );
             case 'Seats':
                 return (
-                    <select value={seats} onChange={handleSeatsChange} className='bg-blue-300 w-32 rounded-md px-1 ml-1 mt-1'>
+                    <select value={seats} onChange={handleSeatsChange} className='bg-blue-300 w-32 rounded-md px-1 ml-1 pt-1'>
                         <option value="All">All</option>
                         <option value="4">4 seats</option>
                         <option value="5">5 seats</option>
@@ -71,7 +71,7 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
                 );
             case 'Price':
                 return (
-                    <select value={priceRange} onChange={handlePriceChange} className='bg-blue-300 w-32 rounded-md px-1 ml-1 mt-1'>
+                    <select value={priceRange} onChange={handlePriceChange} className='bg-blue-300 w-32 rounded-md px-1 ml-1 pt-1'>
                         <option value="All">All</option>
                         <option value="2000-3000">2k-3k</option>
                         <option value="3000-4000">3k-4k</option>
@@ -97,8 +97,13 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
         <div className='bg-blue-50'>
             <div className='m-8' id='car_display'>
                 <h2 className='text-xl font-semibold'>Browse by Make</h2>
-                <div className='flex items-center'>
-                    <select value={filterType} onChange={handleFilterTypeChange} className='bg-blue-300 w-32 rounded-md px-1 ml-1 mt-1'>
+                <div className='flex flex-col md:flex-row'>
+                <div className='flex items-center mt-4'>
+                    <input type="date" value={pickupDate} onChange={handlePickupDateChange} className='bg-blue-300 w-32 rounded-md px-1 ml-1' placeholder="Pickup Date"/>
+                    <input type="date" value={dropoffDate} onChange={handleDropoffDateChange} className='bg-blue-300 w-32 rounded-md px-1 ml-1' placeholder="Dropoff Date" />
+                </div>
+                <div className='flex items-center mt-4'>
+                    <select value={filterType} onChange={handleFilterTypeChange} className='bg-blue-300 w-32 rounded-md px-1 pt-1 ml-1'>
                         <option value="">Select Filter</option>
                         <option value="Category">Category</option>
                         <option value="Seats">Seats</option>
@@ -106,9 +111,6 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
                     </select>
                     {filterType && renderFilterOptions()}
                 </div>
-                <div className='flex items-center mt-4'>
-                    <input type="date" value={pickupDate} onChange={handlePickupDateChange} className='bg-blue-300 w-32 rounded-md px-1 ml-1' placeholder="Pickup Date"/>
-                    <input type="date" value={dropoffDate} onChange={handleDropoffDateChange} className='bg-blue-300 w-32 rounded-md px-1 ml-1' placeholder="Dropoff Date" />
                 </div>
                 {filteredVehicles.length === 0 ? (
                     <>
