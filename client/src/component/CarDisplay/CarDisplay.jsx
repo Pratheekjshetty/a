@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { StoreContext } from '../../context/StoreContext';
 import CarItem from '../CarItem/CarItem';
 
-const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPriceRange }) => {
+const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPriceRange, location, setLocation }) => {
     const { vehicle_list, bookingList } = useContext(StoreContext);
     const [filterType, setFilterType] = useState('');
     const [pickupDate, setPickupDate] = useState('');
@@ -18,6 +18,10 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
 
     const handlePriceChange = (e) => {
         setPriceRange(e.target.value);
+    };
+
+    const handleLocationChange = (e) => {
+        setLocation(e.target.value);
     };
 
     const handleFilterTypeChange = (e) => {
@@ -79,6 +83,15 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
                         <option value="5000-6000">5k-6k</option>
                     </select>
                 );
+                case 'Location':
+                    return (
+                        <select value={location} onChange={handleLocationChange} className='bg-blue-300 w-32 rounded-md px-1 ml-1 pt-1'>
+                            <option value="All">All</option>
+                            <option value="Manglore">Manglore</option>
+                            <option value="Bantwal">Bantwal</option>
+                            <option value="Puttur">Puttur</option>
+                        </select>
+                    );
             default:
                 return null;
         }
@@ -88,9 +101,10 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
         const matchesCategory = category === 'All' || category === item.category;
         const matchesSeats = seats === 'All' || seats === String(item.seats);
         const matchesPrice = isPriceInRange(item.price, priceRange);
+        const matchesLocation = location === 'All' || location === item.location;
         const notBooked = !isCarBooked(item._id);
 
-        return matchesCategory && matchesSeats && matchesPrice && notBooked;
+        return matchesCategory && matchesSeats && matchesPrice && matchesLocation && notBooked;
     });
 
     return (
@@ -108,6 +122,7 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
                         <option value="Category">Category</option>
                         <option value="Seats">Seats</option>
                         <option value="Price">Price</option>
+                        <option value="Location">Location</option>
                     </select>
                     {filterType && renderFilterOptions()}
                 </div>
@@ -123,9 +138,10 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
                         const matchesCategory = category === 'All' || category === item.category;
                         const matchesSeats = seats === 'All' || seats === String(item.seats);
                         const matchesPrice = isPriceInRange(item.price, priceRange);
+                        const matchesLocation = location === 'All' || location === item.location;
                         const notBooked = !isCarBooked(item._id);
 
-                        if (matchesCategory && matchesSeats && matchesPrice && notBooked) {
+                        if (matchesCategory && matchesSeats && matchesPrice && matchesLocation && notBooked) {
                             return (
                                 <CarItem
                                     key={index}

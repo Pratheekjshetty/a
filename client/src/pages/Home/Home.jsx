@@ -9,6 +9,7 @@ const Home = () => {
   const [category,setCategory] =useState("All");
   const [seats,setSeats]=useState("All");
   const [priceRange,setPriceRange]=useState("All");
+  const [location,setLocation]=useState("All");
   const carDisplayRef = useRef(null);
   const vehicleDisplayRef = useRef(null);
   const homeDisplayRef =useRef(null);
@@ -22,7 +23,7 @@ const Home = () => {
       <VehicleDisplay category={category} setCategory={setCategory} carDisplayRef={carDisplayRef}/>
     </div>
     <div ref={carDisplayRef}>
-        <CarDisplay category={category} setCategory={setCategory} seats={seats} setSeats={setSeats} priceRange={priceRange} setPriceRange={setPriceRange}/>
+        <CarDisplay category={category} setCategory={setCategory} seats={seats} setSeats={setSeats} priceRange={priceRange} setPriceRange={setPriceRange} location={location} setLocation={setLocation}/>
     </div>
     <BrowseCar carDisplayRef={carDisplayRef}/>
     <div ref={applyDisplayRef}>
