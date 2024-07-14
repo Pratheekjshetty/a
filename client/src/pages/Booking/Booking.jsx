@@ -80,6 +80,13 @@ const Booking = () => {
     }
   };
 
+  const handleExploreBlog = (event) => {
+    navigate('/blogs', {
+      state: {
+        id, name, price, carLocation, description, image, model, color, seats}
+      });
+  }
+
   const handleRadioChange = (event) => {
     setDeliveryOption(event.target.value);
   };
@@ -97,7 +104,8 @@ const Booking = () => {
             <span>Model:</span><span className='font-semibold'> {model}</span><br/>
             <span>Color:</span><span className='font-semibold'> {color}</span><br/>
             <span>No of seat:</span><span className='font-semibold'> {seats}</span><br/>
-            <span>Location:</span><span className='font-semibold'> {carLocation}</span>
+            <span>Location:</span><span className='font-semibold'> {carLocation}</span><br/>
+            <button onClick={handleExploreBlog} className='text-sm bg-blue-500 text-white w-full p-2 rounded hover:bg-blue-400 mt-5'>Explore Blogs</button>
           </div>
           <div className="w-full md:w-1/2 p-4 flex-grow">
           <form onSubmit={handleBookNow}>
@@ -117,9 +125,9 @@ const Booking = () => {
             <div>
                 <span>Choose car delivery option:</span><br/>
                 <input type="radio" id="branchLocation" name="deliveryOption" value="branch" onChange={handleRadioChange} required />
-                <label htmlFor="branchLocation">You come to our branch location</label><br/>
+                <label htmlFor="branchLocation">Branch location</label><br/>
                 <input type="radio" id="yourLocation" name="deliveryOption" value="yourLocation" onChange={handleRadioChange} required />
-                <label htmlFor="yourLocation">Car needs to come to your location</label><br/>
+                <label htmlFor="yourLocation">Your location</label><br/>
               </div>
             )}
             <p>Driver Fee: <span className='font-semibold'>₹ {driverFee}</span></p>
