@@ -9,9 +9,13 @@ const MyBooking = () => {
     const [data,setData] = useState([]);
     const navigate=useNavigate();
 
-    const cancelBooking = () => {
-      navigate('/cancel-booking');
-    }
+    const handleCancelBookingClick = (isButtonActive) => {
+      if (isButtonActive) {
+        navigate('/cancel-booking');
+      } else {
+        alert('You can only cancel a booking up to 24 hours before the pickup time.');
+      }
+    };
 
     const fetchBooking = useCallback(async ()=>{
       try{
@@ -31,13 +35,25 @@ const MyBooking = () => {
       const options = { day: 'numeric', month: 'long', year: 'numeric' };
       return new Date(dateString).toLocaleDateString(undefined, options);
     };
+
+    const isButtonActive = (pickupDate, pickupTime) => {
+    const pickupDateTime = new Date(pickupDate);
+    const [hours, minutes] = pickupTime.split(':');
+    pickupDateTime.setHours(hours, minutes);
+
+    const currentTime = new Date();
+    const timeDifference = pickupDateTime - currentTime;
+    return timeDifference > 24 * 60 * 60 * 1000;
+    };
+    
   return (
     <div className='mx-20 my-12'>
       <h2 className='text-2xl font-bold'>My Booking</h2>
       <div className='flex flex-col gap-5 mt-7'>
-      {data.map((rent,index)=>{
+      {data.map((rent, index) => {
+          const buttonActive = isButtonActive(rent.pickupdate, rent.pickuptime);
         return(
-          <div className='grid grid-cols-[1fr_0.5fr_1fr_1fr_1fr_1fr_1fr_1fr] items-center gap-7 text-sm p-2.5 px-5 text-gray-500 border border-blue-500 md:grid-cols-[1fr_1fr_1fr_1fr] md-gap-4 lg:grid-cols-[1fr_0.5fr_1fr_1fr_1fr_1fr_1fr_1fr]'>
+          <div key={index} className='grid grid-cols-[1fr_0.5fr_1fr_1fr_1fr_1fr_1fr_1fr] items-center gap-7 text-sm p-2.5 px-5 text-gray-500 border border-blue-500 md:grid-cols-[1fr_1fr_1fr_1fr] md-gap-4 lg:grid-cols-[1fr_0.5fr_1fr_1fr_1fr_1fr_1fr_1fr]'>
             <img className='w-16' src={rental_icon} alt=""/>
             <p>{rent.caritem.name}</p>
             <img className='w-14' src={url+"/images/"+rent.caritem.image} alt="carImage"/>
@@ -45,7 +61,13 @@ const MyBooking = () => {
             <p>{formatDate(rent.pickupdate)}</p>
             <p>{formatDate(rent.dropoffdate)}</p>
             <p><span className='text-blue-500'>&#x25cf;</span> <b>{rent.status}</b></p>
-            <button onClick={cancelBooking} className='border border-none p-2 rounded-sm bg-red-200 cursor-pointer text-gray-500'>Cancel Booking</button>
+            <button
+                onClick={() => handleCancelBookingClick(buttonActive)}
+                className={`border border-none p-2 rounded-sm cursor-pointer text-gray-500 ${buttonActive ? 'bg-red-200' : 'bg-gray-300'}`}
+                disabled={!buttonActive}
+              >
+                Cancel Booking
+              </button>
           </div>
         )  
       })}
@@ -55,3 +77,5 @@ const MyBooking = () => {
 }
 
 export default MyBooking
+
+
