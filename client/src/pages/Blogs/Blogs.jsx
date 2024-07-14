@@ -1,8 +1,12 @@
 import React from 'react'
-
+import CarDisplay from '../../component/Blogs/CarDisplay/CarDisplay'
 const Blogs = () => {
   return (
-    <div>Blogs</div>
+    <div>
+    <div>
+        <CarDisplay/>
+    </div>
+    </div>
   )
 }
 
