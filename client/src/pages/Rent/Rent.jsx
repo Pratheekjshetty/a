@@ -9,7 +9,7 @@ const Rent = () => {
   const navigate = useNavigate();
   const {
     id, name, price, carLocation, description, image, model, color, seats,
-    subtotal, driverFee, totalAmount,pickupDate, pickupTime, dropoffDate, dropoffTime
+    subtotal, driverFee, totalAmount,pickupDate, pickupTime, dropoffDate, dropoffTime,deliveryOption,
   } = location.state;
 
   const {token,url}= useContext(StoreContext);
@@ -59,7 +59,8 @@ const Rent = () => {
             firstName: firstName,
             lastName: lastName,
             email: email,
-            phone: phone
+            phone: phone,
+            from: deliveryOption === 'branch' ? carLocation : ''
           }));
         }
       } catch (err) {
@@ -68,7 +69,7 @@ const Rent = () => {
     };
 
     fetchUserDetails();
-  }, [token, url]);
+  }, [token, url, deliveryOption, carLocation]);
 
   const onChangeHandler = (event) => {
     const name = event.target.name;

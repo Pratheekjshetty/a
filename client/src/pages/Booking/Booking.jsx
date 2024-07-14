@@ -70,7 +70,8 @@ const Booking = () => {
         navigate('/rent', {
           state: {
             id, name, price, carLocation, description, image, model, color, seats,
-            pickupDate, pickupTime, dropoffDate, dropoffTime, subtotal, driverFee, totalAmount
+            pickupDate, pickupTime, dropoffDate, dropoffTime, subtotal, driverFee, totalAmount,
+            deliveryOption
           }
         });
       } else {
