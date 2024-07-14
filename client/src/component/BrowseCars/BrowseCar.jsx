@@ -3,6 +3,7 @@ import download1 from "../../assets/browse/download1.png";
 import download2 from "../../assets/browse/download2.png";
 import download3 from "../../assets/browse/download3.png";
 import download4 from "../../assets/browse/download4.png";
+import { useNavigate } from 'react-router-dom';
 const images = [
   {
     src: download1,alt: "download1",value: "Find the perfect car to conquer the great outdoors",
@@ -31,8 +32,9 @@ const BrowseCar = ({ carDisplayRef }) => {
     const index = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
     setCurrentIndex(index);
   };
-  const scrollToCarDisplay = () => {
-    carDisplayRef.current.scrollIntoView({ behavior: "smooth" });
+  const navigate=useNavigate();
+  const handleBrowseBlogs = () => {
+    navigate('/blogs')
   };
   return (
     <div className="flex justify-center items-center min-h-screen bg-blue-300">
@@ -64,7 +66,7 @@ const BrowseCar = ({ carDisplayRef }) => {
             <p className="text-md font-sans text-gray-600 mb-4">
               {images[currentIndex].paragraph}
             </p>
-            <center><button onClick={scrollToCarDisplay} className='bg-indigo-600 text-white p-2 rounded-lg text-md w-40' >Browse Cars</button></center>
+            <center><button onClick={handleBrowseBlogs} className='bg-indigo-600 text-white p-2 rounded-lg text-md w-40' >Browse Blogs</button></center>
           </div>
         </div>
       </div>
