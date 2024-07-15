@@ -3,27 +3,19 @@ import cancelModel from '../models/cancelModels.js';
 const cancelBooking = async (req, res) => {
     try {
         const {
-            firstName,
-            lastName,
+            firstName,lastName,
             booking_id: bookingId,
-            email,
-            phone,
-            from,
-            to,
-            reason,
+            email,phone,
+            from,to,reason,
             booking_date: bookingDate,
             current_date: currentDate
         } = req.body;
 
         const newCancellation = new cancelModel({
-            firstName,
-            lastName,
+            firstName,lastName,
             bookingid: bookingId,
-            email,
-            phone,
-            from,
-            to,
-            reason,
+            email,phone,
+            from,to,reason,
             bookingdate: bookingDate,
             currentdate: currentDate
         });
@@ -36,4 +28,14 @@ const cancelBooking = async (req, res) => {
     }
 };
 
-export {cancelBooking}
+const getCancellations = async (req, res) => {
+    try {
+        const cancellations = await cancelModel.find({});
+        res.status(200).send(cancellations);
+    } catch (error) {
+        console.error('Error fetching cancellations:', error);
+        res.status(500).send({ message: 'Failed to fetch cancellations.' });
+    }
+};
+
+export {cancelBooking,getCancellations}
