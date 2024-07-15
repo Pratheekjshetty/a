@@ -7,7 +7,7 @@ import { toast } from 'react-toastify'
 const CancelBooking = () => {
   const location = useLocation();
   const { url } = useContext(StoreContext);
-    const { firstName, lastName, email, phone, bookingId, date } = location.state;
+    const { firstName, lastName, email, phone, from, to, bookingId, date } = location.state;
     const [reason, setReason] = useState('');
 
     const getFormatDate = (isoDate) => {
@@ -38,6 +38,8 @@ const CancelBooking = () => {
         booking_id: bookingId,
         email,
         phone,
+        from,
+        to,
         reason,
         booking_date: formatDate,
         current_date: currentDate
@@ -60,6 +62,10 @@ const CancelBooking = () => {
             <div className='flex gap-[10px]'>
                 <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="email" type='email' value={email} placeholder='Email address' readOnly/>
                 <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="phone" type='tel' value={phone} placeholder='Phone Number' readOnly/>
+            </div>
+            <div className='flex gap-[10px]'>
+                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="from" type='text' value={from} placeholder='From Place' readOnly/>
+                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="to" type='text' value={to} placeholder='To Place' readOnly/>
             </div>
             <textarea className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' rows="4" name="reason" placeholder='Reason for Cancellation' value={reason} onChange={(e) => setReason(e.target.value)} required></textarea>
             <div className='flex gap-[10px]'>

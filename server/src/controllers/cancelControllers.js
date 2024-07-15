@@ -8,6 +8,8 @@ const cancelBooking = async (req, res) => {
             booking_id: bookingId,
             email,
             phone,
+            from,
+            to,
             reason,
             booking_date: bookingDate,
             current_date: currentDate
@@ -19,6 +21,8 @@ const cancelBooking = async (req, res) => {
             bookingid: bookingId,
             email,
             phone,
+            from,
+            to,
             reason,
             bookingdate: bookingDate,
             currentdate: currentDate
