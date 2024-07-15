@@ -1,4 +1,5 @@
 import cancelModel from '../models/cancelModels.js';
+import rentModel from '../models/rentModels.js';
 
 const cancelBooking = async (req, res) => {
     try {
@@ -38,4 +39,17 @@ const getCancellations = async (req, res) => {
     }
 };
 
-export {cancelBooking,getCancellations}
+const updateCancellationStatus = async (req, res) => {
+    try {
+        const { rentId, status } = req.body;
+        await rentModel.findByIdAndUpdate(rentId, { status });
+        res.json({ success: true, message: 'Status updated successfully' });
+    }catch (error) {
+        console.error('Error updating cancellation status:', error);
+        res.status(500).send({ message: 'Failed to update cancellation status' });
+    }
+}
+
+
+
+export {cancelBooking,getCancellations,updateCancellationStatus}

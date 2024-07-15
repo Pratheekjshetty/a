@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import cancel_icon from '../../assets/cancel_icon.png'
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -6,18 +6,41 @@ import { toast } from 'react-toastify';
 const Cancel = ({url}) => {
     const [cancellations, setCancellations] = useState([]);
 
-    useEffect(() => {
-        const fetchCancellations = async () => {
-            try {
-                const response = await axios.get(`${url}/api/cancel/cancellations`);
-                setCancellations(response.data);
-            } catch (error) {
-                console.error('Error fetching cancellations:', error);
-                toast.error("Failed to fetch cancellation");
+    const fetchCancellations = useCallback(async () => {
+        try {
+            const response = await axios.get(`${url}/api/cancel/cancellations`);
+            if (response.data.success) {
+                setCancellations(response.data.data);
+            } else {
+                toast.error("Failed to fetch cancellations");
             }
-        };
-        fetchCancellations();
+        } catch (error) {
+            console.error('Error fetching cancellations:', error);
+            toast.error("An error occurred while fetching cancellations");
+        }
     }, [url]);
+
+    const statusHandler = async (event, cancelId) => {
+        try {
+            const response = await axios.post(`${url}/api/cancel/update-status`, {
+                cancelId,
+                status: "Car Unbooked"
+            });
+            if (response.data.success) {
+                await fetchCancellations();
+                toast.success(response.data.message);
+            } else {
+                toast.error("Failed to update cancellation status");
+            }
+        } catch (error) {
+            toast.error("An error occurred while updating cancellation status");
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
+        fetchCancellations();
+    }, [fetchCancellations]);
 
     const formatDate = (dateString) => {
         const options = { day: 'numeric', month: 'long', year: 'numeric' };
@@ -40,7 +63,7 @@ const Cancel = ({url}) => {
                         <p className='w-48'>{cancellation.reason}</p>
                         <p>{formatDate(cancellation.bookingdate)}</p>
                         <p>{formatDate(cancellation.currentdate)}</p>
-                        <button className='bg-blue-200 border border-blue-500 p-2 outline-none'>Accept</button>
+                        <button className='bg-blue-200 border border-blue-500 p-2 outline-none' onClick={(event) => statusHandler(event, cancellation._id)}>Accept</button>
                         <button className='bg-red-200 border border-red-500 p-2 outline-none'>Reject</button>
                     </div>
                 )
