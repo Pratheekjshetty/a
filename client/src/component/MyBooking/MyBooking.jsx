@@ -9,14 +9,21 @@ const MyBooking = () => {
     const [data, setData] = useState([]);
     const navigate = useNavigate();
 
-    const handleCancelBookingClick = (isButtonActive) => {
+    const handleCancelBookingClick = (isButtonActive,rent) => {
         if (isButtonActive) {
-            navigate('/cancel-booking');
+            navigate('/cancel-booking',{
+                  state: {
+                      firstName: rent.address.firstName,
+                      lastName: rent.address.lastName,
+                      email: rent.address.email,
+                      bookingId: rent._id,
+                      date: rent.date
+                  }
+              });
         } else {
             alert('You can only cancel a booking up to 24 hours before the pickup time.');
         }
     };
-
     const fetchBooking = useCallback(async () => {
         try {
             const response = await axios.post(url + "/api/book/userbooking", {}, { headers: { token } });
@@ -60,12 +67,7 @@ const MyBooking = () => {
                             <p>{formatDate(rent.pickupdate)}</p>
                             <p>{formatDate(rent.dropoffdate)}</p>
                             <p><span className='text-blue-500'>&#x25cf;</span> <b>{rent.status}</b></p>
-                            <button
-                                onClick={() => handleCancelBookingClick(buttonActive)}
-                                className={`border border-none p-2 rounded-sm cursor-pointer text-gray-500 ${buttonActive ? 'bg-red-200' : 'bg-gray-300'}`}
-                            >
-                                Cancel Booking
-                            </button>
+                            <button onClick={() => handleCancelBookingClick(buttonActive ,rent)} className={`border border-none p-2 rounded-sm cursor-pointer text-gray-500 ${buttonActive ? 'bg-red-200' : 'bg-gray-300'}`}> Cancel Booking </button>
                         </div>
                     );
                 })}
