@@ -16,6 +16,7 @@ const MyBooking = () => {
                       firstName: rent.address.firstName,
                       lastName: rent.address.lastName,
                       email: rent.address.email,
+                      phone: rent.address.phone,
                       bookingId: rent._id,
                       date: rent.date
                   }
