@@ -3,7 +3,6 @@ import rental_icon from '../../assets/rental_icon.png'
 import axios from 'axios';
 import {toast} from "react-toastify"
 
-
 const Booking = ({url}) => {
   const [booking,setBooking] =useState([]);
 
@@ -53,7 +52,7 @@ const Booking = ({url}) => {
       <div className='flex flex-col gap-5 mt-7'>
         {booking.map((rent,index)=>{
           return(
-            <div className='grid grid-cols-[1fr_3fr_1fr] items-center gap-7 text-sm p-2.5 px-5 text-gray-500 border border-blue-500 sm:grid-cols-[1fr_3fr_1fr_1fr] md:grid-cols-[1fr_3fr_1fr_1fr_1fr] md-gap-4 lg:grid-cols-[1fr_3fr_1fr_1fr_1fr_1fr_1fr] xl:grid-cols-[1fr_3fr_1fr_1fr_1fr_1fr_1fr_1fr]'>
+            <div className='grid grid-cols-[1fr_3fr_1fr] items-center gap-5 text-sm p-2.5 px-5 text-gray-500 border border-blue-500 sm:grid-cols-[1fr_3fr_1fr_1fr] md:grid-cols-[1fr_3fr_1fr_1fr_1fr] md-gap-4 lg:grid-cols-[1fr_3fr_1fr_1fr_1fr_1fr_1fr] xl:grid-cols-[1fr_2fr_1fr_1fr_1fr_1fr_1fr_1fr]'>
               <img className='w-16' src={rental_icon} alt=""/>
               <div>
                 <p className='mt-2 mb-1'>{rent.address.firstName+" "+rent.address.lastName}</p>
@@ -68,10 +67,9 @@ const Booking = ({url}) => {
               <p>₹ {rent.amount}.00</p>
               <p>{formatDate(rent.pickupdate)}</p>
               <p>{formatDate(rent.dropoffdate)}</p>
-              <select style={{ width: 'max(10vw, 120px)'}} className='bg-blue-200 border border-blue-500 p-2 outline-none'onChange={(event)=>statusHandler(event,rent._id)} value={rent.status}>
+              <select className='bg-blue-200 border border-blue-500 p-2 outline-none'onChange={(event)=>statusHandler(event,rent._id)} value={rent.status}>
                 <option value="Car Booked">Car Booked</option>
                 <option value="Car Unbooked">Car Unbooked</option>
-                <option value="Car Reached Destination">Car Reached Destination</option>   
               </select>
             </div>
           ) 

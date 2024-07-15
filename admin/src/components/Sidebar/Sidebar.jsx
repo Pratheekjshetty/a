@@ -2,6 +2,8 @@ import React from 'react'
 import './Sidebar.css'
 import add_icon from '../../assets/add_icon.png'
 import order_icon from '../../assets/order_icon.png'
+import car_icon from '../../assets/car.png'
+import cancel_icon from '../../assets/cancel.png'
 import { NavLink } from 'react-router-dom'
 
 const Sidebar = () => {
@@ -18,8 +20,12 @@ const Sidebar = () => {
                 <p className='hidden lg:block'>List Cars</p>
             </NavLink>
             <NavLink to='/booking' className="sidebar-option flex items-center gap-[12px] border border-gray-400 border-r-0 p-[8px_10px] rounded-[3px_0px_0px_3px] cursor-pointer bg-blue-100">
-                <img src={order_icon} alt="" />
+                <img src={car_icon} style={{ width: '30px' }} alt="" />
                 <p className='hidden lg:block'>Bookings</p>
+            </NavLink>
+            <NavLink to='/cancel' className="sidebar-option flex items-center gap-[12px] border border-gray-400 border-r-0 p-[8px_10px] rounded-[3px_0px_0px_3px] cursor-pointer bg-blue-100">
+                <img src={cancel_icon} alt="" style={{ width: '30px' }}/>
+                <p className='hidden lg:block'>Cancelation</p>
             </NavLink>
          </div>
     </div>

@@ -9,6 +9,7 @@ import List from './pages/List/List';
 import Booking from './pages/Booking/Booking';
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Cancel from './pages/Cancel/Cancel';
 
 function App() {
   const url ="http://localhost:4001"
@@ -23,6 +24,7 @@ function App() {
           <Route path='/add' element={<Add url={url}/>}/>
           <Route path='/list' element={<List url={url} />}/>
           <Route path='/booking' element={<Booking url={url}/>}/>
+          <Route path='/cancel' element={<Cancel url={url}/>}/>
         </Routes>
       </div>
     </div>
