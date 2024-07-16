@@ -56,4 +56,19 @@ const updateCancellationStatus = async (req, res) => {
     }
 };
 
-export { cancelBooking, getCancellations, updateCancellationStatus };
+const deleteCancellation = async (req, res) => {
+    try {
+        const { cancelId } = req.body;
+        const deletedCancellation = await cancelModel.findByIdAndDelete(cancelId);
+        if (!deletedCancellation) {
+            return res.status(404).json({ message: "Cancellation not found" });
+        }
+        res.status(200).json({ message: "Cancellation deleted successfully" });
+    } catch (error) {
+        console.error('Error deleting cancellation:', error);
+        res.status(500).send({ message: 'Failed to delete cancellation.' });
+    }
+};
+
+export { cancelBooking, getCancellations, updateCancellationStatus, deleteCancellation };
+  

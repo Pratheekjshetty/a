@@ -1,11 +1,12 @@
 import React, { useContext, useState } from 'react'
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { StoreContext } from '../../context/StoreContext';
 import axios from 'axios';
 import { toast } from 'react-toastify'
 
 const CancelBooking = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { url } = useContext(StoreContext);
     const { firstName, lastName, email, phone, from, to, bookingId, date } = location.state;
     const [reason, setReason] = useState('');
@@ -45,6 +46,7 @@ const CancelBooking = () => {
         current_date: currentDate
       });
       toast.success('Booking cancellation request submitted successfully!');
+      navigate('/mybooking');
     } catch (error) {
       console.error('There was an error submitting the form:', error);
       toast.error('Failed to submit cancellation request.');

@@ -30,10 +30,17 @@ const Cancel = ({ url }) => {
     };
 
     const handleReject = async (event, cancelId) => {
-        
-        toast.info("Reject functionality to be implemented.");
+        try {
+            event.preventDefault();
+            await axios.delete(`${url}/api/cancel/delete-cancellation`, { data: { cancelId } });
+            toast.success("Cancellation request rejected successfully");
+            fetchCancellations();
+        } catch (err) {
+            console.error('Error rejecting cancellation:', err);
+            toast.error("Failed to reject cancellation");
+        }
     };
-
+    
     useEffect(() => {
         fetchCancellations();
     }, [fetchCancellations]);
