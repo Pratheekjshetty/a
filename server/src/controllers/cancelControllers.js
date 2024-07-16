@@ -46,7 +46,7 @@ const updateCancellationStatus = async (req, res) => {
         if (!rentBooking) {
             return res.status(404).json({ message: "Booking not found" });
         }
-        rentBooking.status = "Car Unbooked";
+        rentBooking.status = "Car Cancelled";
         await rentBooking.save();
 
         res.status(200).json({ message: "Booking status updated successfully", rentBooking });

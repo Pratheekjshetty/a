@@ -69,7 +69,7 @@ const Booking = ({url}) => {
               <p>{formatDate(rent.dropoffdate)}</p>
               <select className='bg-blue-200 border border-blue-500 p-2 outline-none'onChange={(event)=>statusHandler(event,rent._id)} value={rent.status}>
                 <option value="Car Booked">Car Booked</option>
-                <option value="Car Unbooked">Car Unbooked</option>
+                <option value="Car Cancelled">Car Cancelled</option>
               </select>
             </div>
           ) 
