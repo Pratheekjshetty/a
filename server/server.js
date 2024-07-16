@@ -9,6 +9,8 @@ import rentRouter from '../server/src/routers/rentRouters.js'
 import cancelRouter from '../server/src/routers/cancelRoutes.js'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import cron from 'node-cron';
+import rentModel from './src/models/rentModels.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -36,6 +38,26 @@ app.use("/api/cancel",cancelRouter);
 app.get("/",(req,res)=>{
     res.send("Api Working")
 })
+
+cron.schedule('* * * * *', async () => {
+    const currentDateTime = new Date();
+
+    try {
+        const bookings = await rentModel.find({
+            dropoffdate: { $lte: currentDateTime },
+            dropofftime: { $lte: currentDateTime.toTimeString().split(' ')[0] },
+            status: "Car Booked"
+        });
+
+        for (const booking of bookings) {
+            await rentModel.findByIdAndUpdate(booking._id, { status: "Car Reached Destination" });
+        }
+
+        // console.log(`Updated status for ${bookings.length} bookings.`);
+    } catch (err) {
+        console.error("Error updating booking status:", err);
+    }
+});
 
 app.listen(port,()=>{
     console.log(`Server Started on http://localhost:${port}`)

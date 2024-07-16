@@ -10,7 +10,7 @@ const MyBooking = () => {
     const navigate = useNavigate();
 
     const handleCancelBookingClick = (isButtonActive,rent) => {
-        if (isButtonActive) {
+        if (isButtonActive && rent.status !== "Car Cancelled") {
             navigate('/cancel-booking',{
                   state: {
                       firstName: rent.address.firstName,
@@ -23,7 +23,9 @@ const MyBooking = () => {
                       date: rent.date
                   }
               });
-        } else {
+            } else if (rent.status === "Car Cancelled") {
+                alert('This booking has already been cancelled.');
+            }  else {
             alert('You can only cancel a booking up to 24 hours before the pickup time.');
         }
     };

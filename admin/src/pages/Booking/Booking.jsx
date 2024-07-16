@@ -58,7 +58,7 @@ const Booking = ({url}) => {
                 <p className='mt-2 mb-1'>{rent.address.firstName+" "+rent.address.lastName}</p>
                 <div className='mb-2'>
                   <p>{rent.address.street+","}</p>
-                  <p>{rent.address.city+", "+rent.address.state+", "+rent.address.country+", "+rent.address.pincode}</p>
+                  <p>{rent.address.city+", "+rent.address.state+", "+rent.address.country+", "+rent.address.zipcode}</p>
                 </div>
                 <p>{rent.address.phone}</p>
               </div>

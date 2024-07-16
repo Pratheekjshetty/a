@@ -22,7 +22,7 @@ const Verify = () => {
     },[success, rentId, url, navigate])
   return (
     <div className='min-h-[60vh] grid'>
-        <div className='w-12 h-12 self-center border-4 border-gray-400 border-t-blue-500 rounded-full animate-rotate'>
+        <div className='w-12 h-12 justify-center border-4 border-gray-400 border-t-blue-500 rounded-full animate-rotate'>
         </div>
     </div>
   )
