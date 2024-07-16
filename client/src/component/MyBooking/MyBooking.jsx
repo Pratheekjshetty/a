@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { StoreContext } from '../../context/StoreContext';
-import axios from 'axios';
+import axios from 'axios';   
 import rental_icon from '../../assets/rental_icon.png';
 import { useNavigate } from 'react-router-dom';
 
