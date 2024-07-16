@@ -47,8 +47,9 @@ function App() {
           <Route path="/cancel-booking" element={<CancelBooking/>}/>
           <Route path="*" element={<NoPage/>}/>
         </Routes>  
+      <Footer/> 
     </div>
-    <Footer/> 
+    
     </> 
   );
 }

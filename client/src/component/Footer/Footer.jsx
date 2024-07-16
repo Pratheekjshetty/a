@@ -1,9 +1,12 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import logo from '../../assets/logo.png'
 import facebook_icon from '../../assets/facebook_icon.png'
 import twitter_icon from '../../assets/twitter_icon.png'
 import linkedin_icon from '../../assets/linkedin_icon.png'
+
 const Footer = () => {
+  const navigate =useNavigate()
   return (
     <div className='text-white bg-customGray flex flex-col items-center gap-5 py-5 pt-20 mt-0' id='footer'>
         <div className="w-full grid grid-cols-1 lg:grid-cols-2fr-1fr-1fr gap-20 px-8 xs:px-16 sm:px-32">
@@ -26,9 +29,10 @@ const Footer = () => {
         <div className="flex flex-col items-start gap-5">
             <h2 className="text-2xl font-bold">Company</h2>
             <ul>
-                <li className='list-none mb-2.5 curser-pointer'>Home</li>
-                <li className='list-none mb-2.5 curser-pointer'>About Us</li>
-                <li className='list-none mb-2.5 curser-pointer'>Booking</li>
+                <li className='list-none mb-2.5 curser-pointer' onClick={() => navigate('/')}>Home</li>
+                <li className='list-none mb-2.5 curser-pointer' onClick={() => navigate('/about')}>About Us</li>
+                <li className='list-none mb-2.5 curser-pointer' onClick={() => navigate('/blogs')}>Blogs</li>
+                <li className='list-none mb-2.5 curser-pointer' onClick={() => navigate('/contact')}>Contact Us</li>
             </ul>
             <h2 className="text-2xl font-bold">Legal</h2>
             <ul>
