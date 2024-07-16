@@ -1,5 +1,5 @@
 import express from 'express';
-import { cancelBooking ,getCancellations ,updateCancellationStatus } from '../controllers/cancelControllers.js';
+import { cancelBooking, getCancellations, updateCancellationStatus } from '../controllers/cancelControllers.js';
 
 const cancelRouter = express.Router();
 

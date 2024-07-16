@@ -4,19 +4,19 @@ import rentModel from '../models/rentModels.js';
 const cancelBooking = async (req, res) => {
     try {
         const {
-            firstName,lastName,
+            firstName, lastName,
             booking_id: bookingId,
-            email,phone,
-            from,to,reason,
+            email, phone,
+            from, to, reason,
             booking_date: bookingDate,
             current_date: currentDate
         } = req.body;
 
         const newCancellation = new cancelModel({
-            firstName,lastName,
+            firstName, lastName,
             bookingid: bookingId,
-            email,phone,
-            from,to,reason,
+            email, phone,
+            from, to, reason,
             bookingdate: bookingDate,
             currentdate: currentDate
         });
@@ -41,15 +41,19 @@ const getCancellations = async (req, res) => {
 
 const updateCancellationStatus = async (req, res) => {
     try {
-        const { rentId, status } = req.body;
-        await rentModel.findByIdAndUpdate(rentId, { status });
-        res.json({ success: true, message: 'Status updated successfully' });
-    }catch (error) {
+        const { bookingid } = req.body;
+        const rentBooking = await rentModel.findById(bookingid);
+        if (!rentBooking) {
+            return res.status(404).json({ message: "Booking not found" });
+        }
+        rentBooking.status = "Car Unbooked";
+        await rentBooking.save();
+
+        res.status(200).json({ message: "Booking status updated successfully", rentBooking });
+    } catch (error) {
         console.error('Error updating cancellation status:', error);
-        res.status(500).send({ message: 'Failed to update cancellation status' });
+        res.status(500).send({ message: 'Failed to update booking status.' });
     }
-}
+};
 
-
-
-export {cancelBooking,getCancellations,updateCancellationStatus}
+export { cancelBooking, getCancellations, updateCancellationStatus };
