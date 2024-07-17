@@ -23,19 +23,42 @@ const Driver = () => {
                 <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="zipcode" type='text'  placeholder='Zip code' required/>
                 <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="country" type='text'   placeholder='Country' required/>
             </div>
-        </div>
-        <div className='flex-1 p-[2.5] w-full max-w-[max(30%,500px)]'>
-            <p className='text-[25px] font-semibold mb-[30px]'></p>
             <div className='flex gap-[10px]'>
                 <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="alemail" type='email' placeholder='Alternate Email' required/>
                 <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="alphone" type='tel' placeholder='Altenate Phone' required/>
             </div>
+        </div>
+        <div className='flex-1 p-[2.5] w-full max-w-[max(30%,500px)]'>
+            <p className='text-[25px] font-semibold mb-[30px]'>Additional Information</p>
             <div className='flex gap-[10px]'>
                 <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500 mt-3' name="adharnumber" type='number' placeholder='Adhar Number' required/>
             </div>
             <div className='flex gap-[10px]'>
                 <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500 mt-3' name="licencenumber" type='number' placeholder='Driving Licence' required/>
                 <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500 mt-3' name="expiredate" type='date' placeholder='Licence Expire Date' required onFocus={(e) => (e.target.type = 'date')} onBlur={(e) => (e.target.type = e.target.value ? 'date' : 'text')}/>
+            </div>
+            <div className='flex gap-[10px]'>
+                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500 mt-3' name="experience" type='text' placeholder='Years of Driving Experience' required />
+                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500 mt-3' name="reference" type='tel' placeholder='Reference Contact' required />
+            </div>
+            <div className='flex gap-[10px]'>
+                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500 mt-3' name="language" type='text' placeholder='Mother Tongue' required />
+                <select className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500 mt-3' name="availability" required>
+                    <option value="full-time">Full-time</option>
+                    <option value="part-time">Part-time</option>
+                </select>
+            </div>
+            <div className='flex gap-[10px]'>
+              <label className='mb-[15px] text-sm w-full'>
+                <span className='block mb-2'>Upload Driver's License:</span>
+                <input className='w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500 mt-3' name="driversLicense" type='file' accept="image/*" required />
+              </label>
+            </div>
+            <div className='flex gap-[10px]'>
+              <label className='mb-[15px] text-sm w-full'>
+                <span className='block mb-2'>Upload Proof of Address:</span>
+                <input className='w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500 mt-3' name="proofOfAddress" type='file' accept="image/*" required />
+              </label>
             </div>
             <button type='submit' className='mt-4 text-sm bg-blue-500 text-white w-full p-2 rounded hover:bg-blue-400'>Submit</button>
         </div>
