@@ -18,6 +18,7 @@ import Rent from './pages/Rent/Rent';
 import Footer from './component/Footer/Footer';
 import NoPage from './pages/NoPage/NoPage';
 import ApplyDriver from './pages/ApplyDriver/ApplyDriver';
+import Driver from './pages/Driver/Driver';
 import CancelBooking from './pages/CancelBooking/CancelBooking';
 
 function App() { 
@@ -44,6 +45,7 @@ function App() {
           <Route path='/rent' element={<Rent/>}/>
           <Route path="/car-display" element={<CarDisplay />} />
           <Route path="/apply-driver" element={<ApplyDriver/>}/>
+          <Route path="/driver" element={<Driver/>}/>
           <Route path="/cancel-booking" element={<CancelBooking/>}/>
           <Route path="*" element={<NoPage/>}/>
         </Routes>  

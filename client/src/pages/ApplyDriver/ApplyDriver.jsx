@@ -1,13 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { StoreContext } from '../../context/StoreContext';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const ApplyDriver = () => {
   const {token, url} = useContext(StoreContext);
+  const navigate = useNavigate();
 
   const [data, setData] = useState({
     name: ''
   });
+  const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -34,6 +37,18 @@ const ApplyDriver = () => {
 
     fetchUserDetails();
   }, [token, url]);
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
+
+  const handleConfirmClick = () => {
+    if (isChecked) {
+      navigate('/driver');
+    } else {
+      alert('Pleasr check the checkbox to continue');
+    }
+  };
 
   return (
     <div className='mx-20 my-12'>
@@ -99,12 +114,12 @@ const ApplyDriver = () => {
           </ol>
           <div className='mt-4'>
             <label className='flex items-start mt-5'>
-              <input type='checkbox' className='mt-1'/>
+              <input type='checkbox' className='mt-1' checked={isChecked} onChange={handleCheckboxChange}/>
               <span className='ml-2'>
                 I, <b>{data.name}</b>, have read and understood the terms and conditions for applying as a driver in the car rental app. I agree to abide by these terms and conditions and understand that any violation may result in the termination of my contract.
               </span>
             </label>
-            <center><button className='bg-blue-600 text-white p-2 rounded-lg text-md w-40 mt-4'>Confirm</button></center>
+            <center><button onClick={handleConfirmClick} className='bg-blue-600 text-white p-2 rounded-lg text-md w-40 mt-4'>Confirm</button></center>
           </div>
         </div> 
       </div>
