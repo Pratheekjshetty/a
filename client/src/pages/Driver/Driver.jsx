@@ -32,6 +32,8 @@ const Driver = () => {
         reference: "",
         language: "",
         availability: "",
+        driversLicense: "",
+        proofOfAddress: "",
       });
 
       useEffect(() => {
@@ -124,13 +126,13 @@ const Driver = () => {
             <div className='flex gap-[10px]'>
               <label className='mb-[15px] text-sm w-full'>
                 <span className='block mb-2'>Upload Driver's License:</span>
-                <input className='w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500 mt-3' name="driversLicense" type='file' accept="image/*" required />
+                <input className='w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500 mt-3' name="driversLicense" type='file' accept="image/*" onChange={onChangeHandler} value={data.driversLicense} required/>
               </label>
             </div>
             <div className='flex gap-[10px]'>
               <label className='mb-[15px] text-sm w-full'>
                 <span className='block mb-2'>Upload Proof of Address:</span>
-                <input className='w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500 mt-3' name="proofOfAddress" type='file' accept="image/*" required />
+                <input className='w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500 mt-3' name="proofOfAddress" type='file' accept="image/*" onChange={onChangeHandler} value={data.proofOfAddress} required/>
               </label>
             </div>
             <button type='submit' className='mt-4 text-sm bg-blue-500 text-white w-full p-2 rounded hover:bg-blue-400'>Submit</button>
