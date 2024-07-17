@@ -62,7 +62,9 @@ const Booking = () => {
 
   const handleBookNow = (event) => {
     event.preventDefault();
-    if (isCarBooked()) {
+    if (new Date(pickupDate) > new Date(dropoffDate)) {
+      alert("Pickup date cannot be later than Dropoff date.");
+    } else if (isCarBooked()) {
       alert("The car is already booked during the selected dates.");
     } else {
       const form = event.target;
