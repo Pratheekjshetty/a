@@ -41,19 +41,33 @@ app.get("/",(req,res)=>{
 
 cron.schedule('* * * * *', async () => {
     const currentDateTime = new Date();
+    const currentDate = currentDateTime.toISOString().split('T')[0];
+    const currentTime = currentDateTime.toTimeString().split(' ')[0];
 
     try {
-        const bookings = await rentModel.find({
-            dropoffdate: { $lte: currentDateTime },
-            dropofftime: { $lte: currentDateTime.toTimeString().split(' ')[0] },
+        // Update status to "Car Started"
+        const startedBookings = await rentModel.find({
+            pickupdate: { $lte: currentDateTime },
+            pickuptime: { $lte: currentTime },
             status: "Car Booked"
         });
 
-        for (const booking of bookings) {
+        for (const booking of startedBookings) {
+            await rentModel.findByIdAndUpdate(booking._id, { status: "Car Started" });
+        }
+
+        // Update status to "Car Reached Destination"
+        const reachedBookings = await rentModel.find({
+            dropoffdate: { $lte: currentDateTime },
+            dropofftime: { $lte: currentTime },
+            status: "Car Booked"
+        });
+
+        for (const booking of reachedBookings) {
             await rentModel.findByIdAndUpdate(booking._id, { status: "Car Reached Destination" });
         }
 
-        // console.log(`Updated status for ${bookings.length} bookings.`);
+        // console.log(`Updated status for ${startedBookings.length} started bookings and ${reachedBookings.length} reached bookings.`);
     } catch (err) {
         console.error("Error updating booking status:", err);
     }
