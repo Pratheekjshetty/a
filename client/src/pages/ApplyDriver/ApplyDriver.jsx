@@ -46,13 +46,17 @@ const ApplyDriver = () => {
     if (isChecked) {
       navigate('/driver');
     } else {
-      alert('Pleasr check the checkbox to continue');
+      alert('Please check the checkbox to continue');
     }
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className='mx-20 my-12'>
-      <h2 className='text-2xl font-bold'>Apply as Driver</h2>
+      <h2 className='text-2xl font-bold'>Terms and Conditions</h2>
       <div className='flex flex-col gap-5 mt-7'>
         <div className='grid items-center text-base p-2.5 px-5 text-gray-500 border border-blue-500 bg-blue-50'>
           <b>1. Eligibility Criteria</b>

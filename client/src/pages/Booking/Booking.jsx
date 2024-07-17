@@ -109,10 +109,10 @@ const Booking = () => {
           </div>
           <div className="w-full md:w-1/2 p-4 flex-grow">
           <form onSubmit={handleBookNow}>
-            <input type="date" className="w-full p-2 mb-2 border rounded outline-blue-500" value={pickupDate} onChange={(e) => setPickupDate(e.target.value)} required/>
-            <input type="time" className="w-full p-2 mb-2 border rounded outline-blue-500" value={pickupTime} onChange={(e) => setPickupTime(e.target.value)} required/>
-            <input type="date" className="w-full p-2 mb-2 border rounded outline-blue-500" value={dropoffDate} onChange={(e) => setDropoffDate(e.target.value)} required/>
-            <input type="time" className="w-full p-2 mb-2 border rounded outline-blue-500" value={dropoffTime} onChange={(e) => setDropoffTime(e.target.value)} required/>
+            <input type="date" className="w-full p-2 mb-2 border rounded outline-blue-500" placeholder='pickupDate' value={pickupDate} onChange={(e) => setPickupDate(e.target.value)} onFocus={(e) => (e.target.type = 'date')} onBlur={(e) => (e.target.type = e.target.value ? 'date' : 'text')} required/>
+            <input type="time" className="w-full p-2 mb-2 border rounded outline-blue-500" placeholder='pickupTime' value={pickupTime} onChange={(e) => setPickupTime(e.target.value)} onFocus={(e) => (e.target.type = 'time')} onBlur={(e) => (e.target.type = e.target.value ? 'time' : 'text')} required/>
+            <input type="date" className="w-full p-2 mb-2 border rounded outline-blue-500" placeholder='dropoffDate' value={dropoffDate} onChange={(e) => setDropoffDate(e.target.value)} onFocus={(e) => (e.target.type = 'date')} onBlur={(e) => (e.target.type = e.target.value ? 'date' : 'text')} required/>
+            <input type="time" className="w-full p-2 mb-2 border rounded outline-blue-500" placeholder='dropoffTime' value={dropoffTime} onChange={(e) => setDropoffTime(e.target.value)} onFocus={(e) => (e.target.type = 'time')} onBlur={(e) => (e.target.type = e.target.value ? 'time' : 'text')} required/>
             <span>Total Hours:</span><span className='font-semibold'> {totalHours}</span><br/>
             <span>Rent Per Hour: </span><span className='font-semibold'> ₹ {price}</span><br/>
             <p>SubTotal:<span className='font-semibold'>₹ {subtotal}</span></p>
