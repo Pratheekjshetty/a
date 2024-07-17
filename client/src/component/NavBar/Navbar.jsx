@@ -35,7 +35,7 @@ const logout = () =>{
     navigate("/");
 }
 return (
-  <div className="bg-blue-300">
+  <div className="Navbar bg-blue-300">
     <nav className='flex flex-col'>
       <div className="max-w-[1170px] text-white mx-auto flex justify-between items-center py-8 font-bold h-24 ">
       <div className="flex gap-10 items-center">
