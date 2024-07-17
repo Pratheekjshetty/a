@@ -29,11 +29,21 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
     };
 
     const handlePickupDateChange = (e) => {
-        setPickupDate(e.target.value);
+        const newPickupDate = e.target.value;
+        if (new Date(newPickupDate) > new Date(dropoffDate)) {
+            alert("Pickup date cannot be greater than dropoff date.");
+        } else {
+            setPickupDate(newPickupDate);
+        }
     };
 
     const handleDropoffDateChange = (e) => {
-        setDropoffDate(e.target.value);
+        const newDropoffDate = e.target.value;
+        if (new Date(pickupDate) > new Date(newDropoffDate)) {
+            alert("Dropoff date cannot be less than pickup date.");
+        } else {
+            setDropoffDate(newDropoffDate);
+        }
     };
 
     const isPriceInRange = (price, range) => {
@@ -113,8 +123,8 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
                 <h2 className='text-xl font-semibold'>Browse by Make</h2>
                 <div className='flex flex-col md:flex-row'>
                 <div className='flex items-center mt-4'>
-                    <input type="date" value={pickupDate} onChange={handlePickupDateChange} className='bg-blue-300 w-32 rounded-md px-1 ml-1' placeholder="Pickup Date"/>
-                    <input type="date" value={dropoffDate} onChange={handleDropoffDateChange} className='bg-blue-300 w-32 rounded-md px-1 ml-1' placeholder="Dropoff Date" />
+                    <input type="date" value={pickupDate} onChange={handlePickupDateChange} className='bg-blue-300 w-32 rounded-md px-1 ml-1' placeholder="Pickup Date" onFocus={(e) => (e.target.type = 'date')} onBlur={(e) => (e.target.type = e.target.value ? 'date' : 'text')}/>
+                    <input type="date" value={dropoffDate} onChange={handleDropoffDateChange} className='bg-blue-300 w-32 rounded-md px-1 ml-1' placeholder="Dropoff Date" onFocus={(e) => (e.target.type = 'date')} onBlur={(e) => (e.target.type = e.target.value ? 'date' : 'text')} />
                 </div>
                 <div className='flex items-center mt-4'>
                     <select value={filterType} onChange={handleFilterTypeChange} className='bg-blue-300 w-32 rounded-md px-1 pt-1 ml-1'>
