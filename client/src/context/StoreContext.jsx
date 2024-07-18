@@ -29,8 +29,9 @@ const StoreContextProvider = (props) => {
         async function loadData(){
             await fetchVehicleList();
             await fetchBookingList();
-            if(localStorage.getItem("token")){
-                setToken(localStorage.getItem("token")); 
+            const storedToken = localStorage.getItem("token");
+            if (storedToken) {
+                setToken(storedToken);
             }
         }
         loadData();
@@ -41,7 +42,7 @@ const StoreContextProvider = (props) => {
         bookingList,
         url,
         token,
-        setToken
+        setToken,
     }
     return(
         <StoreContext.Provider value={contextValue}>

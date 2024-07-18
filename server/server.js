@@ -34,7 +34,7 @@ app.use('/user-uploads', express.static(path.join(__dirname, 'user-uploads')))
 app.use("/api/user",userRouter)
 app.use("/api/book",rentRouter)
 app.use("/api/cancel",cancelRouter);
-app.use('/uploads', express.static('uploads'));
+app.use('/doc-uploads', express.static('doc-uploads'));
 app.use('/api/driver', driverRoutes);
 
 app.get("/",(req,res)=>{

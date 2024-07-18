@@ -52,30 +52,26 @@
 // export {applyDriver}
 // controllers/driverControllers.js
 // controllers/driverControllers.js
-import DriverModel from '../models/driverModels.js';
+import driverModel from '../models/driverModels.js';
 
 const applyDriver = async (req, res) => {
   console.log('Request Body:', req.body); 
   const {
     userId,
-    street,
-    city,
-    state,
-    zipcode,
-    country,
+    firstName,lastName,
+    email,phone,dob,
+    street,city,state,
+    zipcode,country,
+    alemail,alphone,
     adharnumber,
-    licencenumber,
-    expiredate,
-    experience,
-    reference,
-    language,
-    availability,
+    licencenumber,expiredate,
+    experience,reference,
+    language,availability,
     driversLicense,
     proofOfAddress,
   } = req.body;
 
-  const address = { street, city, state, zipcode, country };
-
+  const address = { firstName ,lastName ,email ,phone ,dob , street, city, state, zipcode, country, alemail, alphone };
   try {
     if (!userId) {
       return res
@@ -83,14 +79,14 @@ const applyDriver = async (req, res) => {
         .json({ success: false, message: 'User ID is required' });
     }
 
-    const existingDriver = await DriverModel.findOne({ userId });
+    const existingDriver = await driverModel.findOne({ userId });
     if (existingDriver) {
       return res
         .status(400)
         .json({ success: false, message: 'Driver already applied' });
     }
 
-    const driverData = new DriverModel({
+    const driverData = new driverModel({
       userId,
       address,
       adharnumber,

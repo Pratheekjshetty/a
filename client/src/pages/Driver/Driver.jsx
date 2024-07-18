@@ -194,7 +194,6 @@ const Driver = () => {
   });
 
   const [data, setData] = useState({
-    userId: '',
     firstName: '',
     lastName: '',
     email: '',
@@ -220,6 +219,9 @@ const Driver = () => {
 
   useEffect(() => {
     const fetchUserDetails = async () => {
+      if (!token) {
+        return;
+      }
       try {
         const response = await axios.get(`${url}/api/user/get-user`, {
           headers: {
@@ -228,8 +230,10 @@ const Driver = () => {
         });
         if (response.data.success) {
           const { name, email, phone } = response.data.user;
-          const [firstName, ...lastNameArray] = name.split(' ');
-          const lastName = lastNameArray.join(' ');
+
+          const splitName = name.split(' ');
+          const firstName = splitName[0];
+          const lastName = splitName.slice(1).join(' ');
 
           setUser({ firstName, lastName, email, phone });
           setData((prevData) => ({
