@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { StoreContext } from '../../context/StoreContext';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const Driver = () => {
     const {token,url}= useContext(StoreContext);
@@ -32,8 +33,8 @@ const Driver = () => {
         reference: "",
         language: "",
         availability: "",
-        driversLicense: "",
-        proofOfAddress: "",
+        driversLicense: null,
+        proofOfAddress: null,
       });
 
       useEffect(() => {
@@ -76,8 +77,41 @@ const Driver = () => {
         const value = event.target.value;
         setData(data => ({ ...data, [name]: value }));
       };
+
+      const onFileChangeHandler = (event) => {
+        const name = event.target.name;
+        const file = event.target.files[0];
+        setData(data => ({ ...data, [name]: file }));
+      };
+
+      const onSubmitHandler = async (event) => {
+        event.preventDefault();
+        try {
+          const formData = new FormData();
+          Object.keys(data).forEach(key => {
+              formData.append(key, data[key]);
+          });
+
+          const response = await axios.post(`${url}/api/driver/apply`, formData, {
+              headers: {
+                  'Content-Type': 'multipart/form-data',
+                  Authorization: `Bearer ${token}`,
+              },
+          });
+
+          if (response.data.success) {
+              toast.success('Application submitted successfully');
+          } else {
+              toast.error('Failed to submit application');
+          }
+        } catch (error) {
+          console.error('Error submitting application', error);
+          toast.error('Error submitting application');
+        }
+      };
+
   return (
-    <form  className='flex flex-wrap justify-between items-start gap-[50px] my-24 mx-20'>
+    <form onSubmit={onSubmitHandler} className='flex flex-wrap justify-between items-start gap-[50px] my-24 mx-20'>
         <div className='flex-1 p-[2.5] w-full max-w-[max(30%,500px)]'>
             <p className='text-[30px] font-semibold mb-[50px]'>Apply As a Driver</p>
             <div className='flex gap-[10px]'>
@@ -103,7 +137,7 @@ const Driver = () => {
                 <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="alphone" type='tel' placeholder='Altenate Phone' onChange={onChangeHandler} value={data.alphone} required/>
             </div>
         </div>
-        <div className='flex-1 p-[2.5] w-full max-w-[max(30%,500px)]'>
+        <div className='flex-1 p-[2.5] w-full max-w-[max(30%,500px)]'>  
             <p className='text-[25px] font-semibold mb-[30px]'>Additional Information</p>
             <div className='flex gap-[10px]'>
                 <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500 mt-3' name="adharnumber" type='number' placeholder='Adhar Number' onChange={onChangeHandler} value={data.adharnumber} required/>
@@ -126,13 +160,13 @@ const Driver = () => {
             <div className='flex gap-[10px]'>
               <label className='mb-[15px] text-sm w-full'>
                 <span className='block mb-2'>Upload Driver's License:</span>
-                <input className='w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500 mt-3' name="driversLicense" type='file' accept="image/*" onChange={onChangeHandler} value={data.driversLicense} required/>
+                <input className='w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500 mt-3' name="driversLicense" type='file' accept="image/*" onChange={onFileChangeHandler} required/>
               </label>
             </div>
             <div className='flex gap-[10px]'>
               <label className='mb-[15px] text-sm w-full'>
                 <span className='block mb-2'>Upload Proof of Address:</span>
-                <input className='w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500 mt-3' name="proofOfAddress" type='file' accept="image/*" onChange={onChangeHandler} value={data.proofOfAddress} required/>
+                <input className='w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500 mt-3' name="proofOfAddress" type='file' accept="image/*" onChange={onFileChangeHandler} required/>
               </label>
             </div>
             <button type='submit' className='mt-4 text-sm bg-blue-500 text-white w-full p-2 rounded hover:bg-blue-400'>Submit</button>

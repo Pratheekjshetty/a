@@ -11,7 +11,7 @@ const rentSchema =new mongoose.Schema({
     dropofftime:{type:String,required:true},
     status:{type:String, default:"Car Booked"},
     date:{type:Date, default:Date.now()},
-    payment:{type:Boolean, default:false},
+    payment:{type:Boolean, default:false},  
 })
 
 const rentModel = mongoose.models.rent || mongoose.model("rent",rentSchema);
