@@ -55,7 +55,7 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
     const isCarBooked = (carId) => {
         if (!pickupDate || !dropoffDate) return false;
         return bookingList.some(booking => {
-            return booking.carItemId === carId && booking.status === "Car Booked" &&
+            return booking.carItemId === carId && (booking.status === "Car Booked" || booking.status === "Car Started" || booking.status === "Car Reached Destination") &&
                 new Date(pickupDate) <= new Date(booking.dropoffDate) &&
                 new Date(dropoffDate) >= new Date(booking.pickupDate);
         });
