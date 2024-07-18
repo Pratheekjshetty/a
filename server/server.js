@@ -11,7 +11,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import cron from 'node-cron';
 import rentModel from './src/models/rentModels.js';
-import driverRouter from './src/routers/driverRoutes.js';
+import driverRoutes from '../server/src/routers/driverRoutes.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -34,7 +34,8 @@ app.use('/user-uploads', express.static(path.join(__dirname, 'user-uploads')))
 app.use("/api/user",userRouter)
 app.use("/api/book",rentRouter)
 app.use("/api/cancel",cancelRouter);
-app.use("/api/driver",driverRouter)
+app.use('/uploads', express.static('uploads'));
+app.use('/api/driver', driverRoutes);
 
 app.get("/",(req,res)=>{
     res.send("Api Working")
