@@ -52,6 +52,8 @@
 // export {applyDriver}
 // controllers/driverControllers.js
 // controllers/driverControllers.js
+import fs from 'fs';
+import path from 'path';
 import driverModel from '../models/driverModels.js';
 
 const applyDriver = async (req, res) => {
@@ -67,8 +69,6 @@ const applyDriver = async (req, res) => {
     licencenumber,expiredate,
     experience,reference,
     language,availability,
-    driversLicense,
-    proofOfAddress,
   } = req.body;
 
   const address = { firstName ,lastName ,email ,phone ,dob , street, city, state, zipcode, country, alemail, alphone };
@@ -86,6 +86,9 @@ const applyDriver = async (req, res) => {
         .json({ success: false, message: 'Driver already applied' });
     }
 
+    const driversLicense = req.files['driversLicense'][0];
+    const proofOfAddress = req.files['proofOfAddress'][0];
+
     const driverData = new driverModel({
       userId,
       address,
@@ -96,11 +99,14 @@ const applyDriver = async (req, res) => {
       reference,
       language,
       availability,
-      driversLicense: req.files['driversLicense'][0].path,
-      proofOfAddress: req.files['proofOfAddress'][0].path,
+      driversLicense: path.join('doc-uploads', `${Date.now()}-${driversLicense.originalname}`),
+      proofOfAddress: path.join('doc-uploads', `${Date.now()}-${proofOfAddress.originalname}`),
     });
 
     await driverData.save();
+
+    fs.writeFileSync(driverData.driversLicense, driversLicense.buffer);
+    fs.writeFileSync(driverData.proofOfAddress, proofOfAddress.buffer);
 
     res.status(201).json({
       success: true,

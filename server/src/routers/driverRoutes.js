@@ -5,15 +5,7 @@ import { authMiddleware } from '../middleware/auth2.js';
 
 const driverRouter = express.Router();
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'doc-uploads/');
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  },
-});
-
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 driverRouter.post('/apply', authMiddleware, upload.fields([
