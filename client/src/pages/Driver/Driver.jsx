@@ -187,6 +187,7 @@ const Driver = () => {
   const { token, url } = useContext(StoreContext);
 
   const [user, setUser] = useState({
+    userId:'',
     firstName: '',
     lastName: '',
     email: '',
@@ -194,6 +195,7 @@ const Driver = () => {
   });
 
   const [data, setData] = useState({
+    userId:'',
     firstName: '',
     lastName: '',
     email: '',
@@ -229,16 +231,16 @@ const Driver = () => {
           },
         });
         if (response.data.success) {
-          const { name, email, phone } = response.data.user;
+          const { userId, name, email, phone } = response.data.user;
 
           const splitName = name.split(' ');
           const firstName = splitName[0];
           const lastName = splitName.slice(1).join(' ');
 
-          setUser({ firstName, lastName, email, phone });
+          setUser({ userId, firstName, lastName, email, phone });
           setData((prevData) => ({
             ...prevData,
-            userId: token.userId,
+            userId,
             firstName,
             lastName,
             email,
@@ -275,7 +277,7 @@ const Driver = () => {
     event.preventDefault();
     try {
       const formData = new FormData();
-      Object.entries(data).forEach(([key, value]) => {
+      Object.entries({ ...data, userId: user.userId }).forEach(([key, value]) => {
         formData.append(key, value);
       });
 
@@ -289,11 +291,15 @@ const Driver = () => {
       if (response.data.success) {
         toast.success('Application submitted successfully');
       } else {
-        toast.error('Failed to submit application');
+        toast.error(response.data.message || 'Failed to submit application');
       }
     } catch (error) {
       console.error('Error submitting application:', error);
-      toast.error('Error submitting application');
+      if (error.response && error.response.data && error.response.data.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error('Error submitting application');
+      }
     }
   };
 

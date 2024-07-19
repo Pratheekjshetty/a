@@ -174,7 +174,7 @@ const getUser = async (req, res) => {
         // Include the image URL in the response
         const imageURL = user.image ? path.join('user-uploads', path.basename(user.image)) : null;
 
-        res.json({ success: true, user: { name: user.name, email: user.email, phone: user.phone, image: imageURL, role:user.role } });
+        res.json({ success: true, user: { userId:user._id, name: user.name, email: user.email, phone: user.phone, image: imageURL, role:user.role } });
     } catch (err) {
         console.log(err);
         res.status(500).json({ success: false, message: 'Error fetching user details' });
