@@ -66,7 +66,7 @@ cron.schedule('* * * * *', async () => {
         const reachedBookings = await rentModel.find({
             dropoffdate: { $lte: currentDate },
             dropofftime: { $lte: currentTime },
-            status: "Car Booked"
+            status: "Car Started"
         });
 
         for (const booking of reachedBookings) {

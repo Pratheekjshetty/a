@@ -1,4 +1,4 @@
-import React, { useRef, useState }  from 'react';
+import React, { useEffect, useRef, useState }  from 'react';
 import Header from '../../component/Header/Header';
 import VehicleDisplay from '../../component/VehicalDisplay/VehicleDisplay';
 import BrowseCar from '../../component/BrowseCars/BrowseCar';
@@ -14,6 +14,9 @@ const Home = () => {
   const vehicleDisplayRef = useRef(null);
   const homeDisplayRef =useRef(null);
   const applyDisplayRef =useRef(null);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div>
     <div ref={homeDisplayRef}>

@@ -17,7 +17,7 @@ const driverSchema = new mongoose.Schema({
     alphone:{type: Number, required: true},
   },
   adharnumber: { type: Number, required: true },
-  licencenumber: { type: Number, required: true },
+  licencenumber: { type: String, required: true },
   expiredate: { type: Date, required: true },
   experience: { type: String, required: true },
   reference: { type: Number, required: true },

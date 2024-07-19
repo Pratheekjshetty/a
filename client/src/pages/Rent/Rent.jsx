@@ -161,6 +161,9 @@ const Rent = () => {
         alert('Please sign in to continue.');
       }    
       };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <form onSubmit={rentBooking} className='flex flex-wrap justify-between items-start gap-[50px] my-24 mx-20'>
         <div className='flex-1 p-[2.5] w-full max-w-[max(30%,500px)]'>
