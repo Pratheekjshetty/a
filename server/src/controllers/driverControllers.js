@@ -69,4 +69,14 @@ const applyDriver = async (req, res) => {
   }
 };
 
-export { applyDriver };
+const getApplications = async(req,res) =>{
+  try {
+    const applications = await driverModel.find({});
+    res.status(200).send(applications);
+} catch (error) {
+    console.error('Error fetching applications:', error);
+    res.status(500).send({ message: 'Failed to fetch applications.' });
+}
+}
+
+export { applyDriver, getApplications };
