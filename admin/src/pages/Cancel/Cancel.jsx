@@ -12,8 +12,7 @@ const Cancel = ({ url }) => {
                 setCancellations(response.data);
         } catch (err) {
             toast.error("An error occurred while fetching cancellations");
-            console.error(err);
-            
+            console.error(err);  
         }
     }, [url]);
 
@@ -48,7 +47,7 @@ const Cancel = ({ url }) => {
     const formatDate = (dateString) => {
         const options = { day: 'numeric', month: 'long', year: 'numeric' };
         return new Date(dateString).toLocaleDateString(undefined, options);
-    };
+    };  
 
     return (
         <div className="mx-20 my-12">
