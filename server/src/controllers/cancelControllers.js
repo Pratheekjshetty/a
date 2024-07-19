@@ -42,6 +42,9 @@ const getCancellations = async (req, res) => {
 const updateCancellationStatus = async (req, res) => {
     try {
         const { bookingid } = req.body;
+        if (!bookingid) {
+            return res.status(400).json({ message: "Booking ID is required" });
+          }
         const rentBooking = await rentModel.findById(bookingid);
         if (!rentBooking) {
             return res.status(404).json({ message: "Booking not found" });

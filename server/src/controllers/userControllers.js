@@ -18,7 +18,7 @@ if (!fs.existsSync(uploadDir)) {
 
 const createToken = (id) =>{
     return jwt.sign({id},process.env.JWT_SECRET)
-}
+};
 
 //login user
 const loginUser =async(req,res)=>{
@@ -180,4 +180,5 @@ const getUser = async (req, res) => {
         res.status(500).json({ success: false, message: 'Error fetching user details' });
     }
 };
+
 export {loginUser,registerUser,editUser,getUser}

@@ -5,7 +5,7 @@ const cancelRouter = express.Router();
 
 cancelRouter.post('/cancel-booking', cancelBooking);
 cancelRouter.get('/cancellations', getCancellations);
-cancelRouter.post('/update-status', updateCancellationStatus);
+cancelRouter.post('/update-status', updateCancellationStatus);  
 cancelRouter.delete('/delete-cancellation', deleteCancellation);
 
 export default cancelRouter;

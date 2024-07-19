@@ -1,9 +1,7 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import apply_icon from '../../assets/apply_icon.png';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useEffect } from 'react';
-
 
 const Apply = ({ url }) => {
   const [applications, setApplications] = useState([]);
@@ -17,6 +15,18 @@ const Apply = ({ url }) => {
         console.error(err);
     }
 }, [url]);
+
+const statusHandler = async (event, userId) => {
+    try {
+        event.preventDefault();
+        await axios.post(`${url}/api/driver/update-role`, { userId });
+        toast.success("User role updated successfully");
+        fetchApplications(); 
+    } catch (err) {
+        console.error('Error updating user role:', err);
+        toast.error("Failed to update user role");
+    }
+};
 
 const handleReject = async (event, applyId) => {
   try {
@@ -59,7 +69,7 @@ const formatDate = (dateString) => {
                         </div>
                         <p>{application.availability}</p>
                         <p>{formatDate(application.date)}</p>
-                            <button className='bg-blue-200 border border-blue-500 p-2 outline-none'>Accept</button>
+                            <button className='bg-blue-200 border border-blue-500 p-2 outline-none' onClick={(event) => statusHandler(event, application.userId)}>Accept</button>
                             <button className='bg-red-200 border border-red-500 p-2 outline-none' onClick={(event) => handleReject(event, application._id)}>Reject</button>
                       </div>
                   )

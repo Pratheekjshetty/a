@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import driverModel from '../models/driverModels.js';
+import userModel from '../models/userModels.js';
 
 const applyDriver = async (req, res) => {
   console.log('Request Body:', req.body); 
@@ -73,10 +74,44 @@ const getApplications = async(req,res) =>{
   try {
     const applications = await driverModel.find({});
     res.status(200).send(applications);
-} catch (error) {
+  } catch (error) {
     console.error('Error fetching applications:', error);
     res.status(500).send({ message: 'Failed to fetch applications.' });
-}
-}
+  }
+};
 
-export { applyDriver, getApplications };
+const updateApplicationStatus = async (req, res) => {
+  try {
+      const { userId } = req.body;
+      if (!userId) {
+        return res.status(400).json({ message: "User ID is required" });
+      }
+      const userRole = await userModel.findById(userId);
+      if (!userRole) {
+          return res.status(404).json({ message: "User not found" });
+      }
+      userRole.role = "driver";
+      await userRole.save();
+
+      res.status(200).json({ message: "User role updated successfully", userRole });
+  } catch (error) {
+      console.error('Error updating application status:', error);
+      res.status(500).send({ message: 'Failed to update user role.' });
+  }
+};
+
+const deleteApplication = async (req, res) => {
+  try {
+      const { applyId } = req.body;
+      const deletedApplication = await driverModel.findByIdAndDelete(applyId);
+      if (!deletedApplication) {
+          return res.status(404).json({ message: "Application not found" });
+      }
+      res.status(200).json({ message: "Application deleted successfully" });
+  } catch (error) {
+      console.error('Error deleting application:', error);
+      res.status(500).send({ message: 'Failed to delete application.' });
+  }
+};
+
+export { applyDriver, getApplications, updateApplicationStatus, deleteApplication };
