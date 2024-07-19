@@ -204,7 +204,7 @@ const Driver = () => {
           <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' type="email" name="email" value={user.email} placeholder="Email" readOnly/>
           <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' type="tel" name="phone" value={user.phone} placeholder="Phone" readOnly/>
           <div className='flex gap-[10px]'>
-              <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' type="date" name="dob" value={data.dob} placeholder="Date of Birth" onChange={handleChange} required/>
+              <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' type="date" name="dob" value={data.dob} placeholder="Date of Birth" onChange={handleChange} onFocus={(e) => (e.target.type = 'date')} onBlur={(e) => (e.target.type = e.target.value ? 'date' : 'text')} required/>
               <select className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="gender" value={data.gender} onChange={handleChange} required>
                 <option value="" disabled>Select Gender</option>
                 <option value="male">Male</option>
@@ -229,13 +229,13 @@ const Driver = () => {
           <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500 mt-3' type="number" name="adharnumber" value={data.adharnumber} placeholder="Adhar Number" onChange={handleChange} required/>
           <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' type="text" name="licencenumber" value={data.licencenumber} placeholder="Driving Licence Number" onChange={handleChange} required/>
           <div className='flex gap-[10px]'>
-              <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' type="date" name="expiredate" value={data.expiredate} placeholder="Licence Expire Date" onChange={handleChange} required/>
+              <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' type="date" name="expiredate" value={data.expiredate} placeholder="Licence Expire Date" onChange={handleChange} onFocus={(e) => (e.target.type = 'date')} onBlur={(e) => (e.target.type = e.target.value ? 'date' : 'text')} required/>
               <select className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="preferredLocation" onChange={handleChange} value={data.preferredLocation} required>
                   <option value="" disabled>Preferred Location</option>
                   <option value="Manglore">Manglore</option>
                   <option value="Bantwal">Bantwal</option>
                   <option value="Puttur">Puttur</option>
-              </select>
+              </select>  
           </div>
           <div className='flex gap-[10px]'>
               <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' type="text" name="experience" value={data.experience} placeholder="Years of Driving Experience" onChange={handleChange} required/>

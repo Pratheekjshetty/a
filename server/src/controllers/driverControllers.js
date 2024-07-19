@@ -7,17 +7,19 @@ const applyDriver = async (req, res) => {
   const {
     userId,
     firstName,lastName,
-    email,phone,dob,
+    email,phone,
+    dob,gender,
     street,city,state,
     zipcode,country,
     alemail,alphone,
     adharnumber,
-    licencenumber,expiredate,
+    licencenumber,
+    expiredate,preferredLocation,
     experience,reference,
     language,availability,
   } = req.body;
 
-  const address = { firstName ,lastName ,email ,phone ,dob , street, city, state, zipcode, country, alemail, alphone };
+  const address = { firstName ,lastName ,email ,phone ,dob ,gender ,street ,city ,state ,zipcode ,country ,alemail ,alphone };
   try {
     if (!userId) {
       return res
@@ -41,6 +43,7 @@ const applyDriver = async (req, res) => {
       adharnumber,
       licencenumber,
       expiredate,
+      preferredLocation,
       experience,
       reference,
       language,
