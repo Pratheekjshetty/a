@@ -55,7 +55,7 @@ const Booking = ({url}) => {
             </div>
           ) 
        })}
-      </div>
+      </div>   
     </div>
   )
 }

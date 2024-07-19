@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import upload_area from '../../assets/upload_area.png';
 import axios from 'axios';
 import './List.css';
@@ -12,6 +12,7 @@ const List = ({ url }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [currentEditId, setCurrentEditId] = useState(null);
   const itemsPerPage = 8;
+  const formRef = useRef(null);
 
   const fetchList = useCallback(async () => {
     try {
@@ -30,9 +31,9 @@ const List = ({ url }) => {
   const removeCar = async (carId) => {
     try {
       const response = await axios.post(`${url}/api/car/remove`, { id: carId });
-      await fetchList();
       if (response.data.success) {
         toast.success(response.data.message);
+        await fetchList();
       } else {
         toast.error("Error");
       }
@@ -60,6 +61,12 @@ const List = ({ url }) => {
   useEffect(() => {
     fetchList();
   }, [fetchList]);
+
+  useEffect(() => {
+    if (isEditMode && formRef.current) {
+      window.scrollTo({ top: formRef.current.offsetTop, behavior: 'smooth' });
+    }
+  }, [isEditMode]);
 
   const totalPages = Math.ceil(list.length / itemsPerPage);
   const startIdx = (currentPage - 1) * itemsPerPage;
@@ -143,8 +150,8 @@ const List = ({ url }) => {
 
   return (
     <div className='w-[70%] ml-20 mt-12 text-[#6d6d6d] text-base'>
+      <h2 className='text-2xl font-bold mb-7 text-black'>All Car List</h2>
       <div className='list add flex-col'>
-        <p>All Car List</p>
         <div className="list-table">
           <div style={{ gridTemplateColumns: '0.5fr 2fr 1fr 1fr 1fr 1fr' }} className="title grid justify-center items-center gap-2 px-3 py-4 border border-solid border-zinc-300 text-sm bg-[#f9f9f9]">
             <b>Image</b>
@@ -178,7 +185,7 @@ const List = ({ url }) => {
         </div>
       </div>
       {isEditMode && (
-        <form className='flex-col gap-5' onSubmit={onSubmitHandler}>
+        <form ref={formRef} className='flex-col gap-5' onSubmit={onSubmitHandler}>
           <div className="flex-col">
             <p>Upload Image</p>
             <label htmlFor='image'>

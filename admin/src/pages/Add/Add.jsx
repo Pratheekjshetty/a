@@ -50,10 +50,11 @@ const Add = ({url}) => {
     }
     else{
       toast.error(response.data.message)
-    }
+    }    
   }
   return (
     <div className='w-[70%] ml-20 mt-12 text-[#6d6d6d] text-base'>
+      <h2 className='text-2xl font-bold mb-7 text-black'>Add Cars</h2>
       <form className='flex-col gap-5' onSubmit={onSubmitHandler}>
           <div className="flex-col">
             <p>Upload Image</p>
