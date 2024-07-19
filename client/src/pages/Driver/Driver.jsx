@@ -21,6 +21,7 @@ const Driver = () => {
     email: '',
     phone: '',
     dob: '',
+    gender: '',
     street: '',
     city: '',
     state: '',
@@ -34,7 +35,8 @@ const Driver = () => {
     experience: '',
     reference: '',
     language: '',
-    availability: 'full-time',
+    availability: '',
+    preferredLocation: '',
     driversLicense: null,
     proofOfAddress: null,
   });
@@ -203,6 +205,12 @@ const Driver = () => {
           <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' type="tel" name="phone" value={user.phone} placeholder="Phone" readOnly/>
           <div className='flex gap-[10px]'>
               <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' type="date" name="dob" value={data.dob} placeholder="Date of Birth" onChange={handleChange} required/>
+              <select className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="gender" value={data.gender} onChange={handleChange} required>
+                <option value="" disabled>Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
           </div>
           <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' type="text" name="street" value={data.street} placeholder="Street Address" onChange={handleChange} required/>
           <div className='flex gap-[10px]'>
@@ -218,12 +226,16 @@ const Driver = () => {
       </div>
       <div className='flex-1 p-[2.5] w-full max-w-[max(30%,500px)]'>              
           <p className='text-[25px] font-semibold mb-[30px]'>Additional Information</p>
+          <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500 mt-3' type="number" name="adharnumber" value={data.adharnumber} placeholder="Adhar Number" onChange={handleChange} required/>
+          <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' type="text" name="licencenumber" value={data.licencenumber} placeholder="Driving Licence Number" onChange={handleChange} required/>
           <div className='flex gap-[10px]'>
-              <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500 mt-3' type="number" name="adharnumber" value={data.adharnumber} placeholder="Adhar Number" onChange={handleChange} required/>
-          </div>
-          <div className='flex gap-[10px]'>
-              <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' type="text" name="licencenumber" value={data.licencenumber} placeholder="Driving Licence Number" onChange={handleChange} required/>
               <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' type="date" name="expiredate" value={data.expiredate} placeholder="Licence Expire Date" onChange={handleChange} required/>
+              <select className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="preferredLocation" onChange={handleChange} value={data.preferredLocation} required>
+                  <option value="" disabled>Preferred Location</option>
+                  <option value="Manglore">Manglore</option>
+                  <option value="Bantwal">Bantwal</option>
+                  <option value="Puttur">Puttur</option>
+              </select>
           </div>
           <div className='flex gap-[10px]'>
               <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' type="text" name="experience" value={data.experience} placeholder="Years of Driving Experience" onChange={handleChange} required/>
@@ -232,6 +244,7 @@ const Driver = () => {
           <div className='flex gap-[10px]'>
               <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' type="text" name="language" value={data.language} placeholder="Mother Tongue" onChange={handleChange} required/>
               <select className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="availability" onChange={handleChange} value={data.availability} required>
+                  <option value="" disabled>Select Availability</option>
                   <option value="full-time">Full-time</option>
                   <option value="part-time">Part-time</option>
               </select>

@@ -62,7 +62,8 @@ const ApplyDriver = () => {
           <b>1. Eligibility Criteria</b>
           <ol className='list-disc list-inside mt-2 ml-6'>
             <li>Applicants must be at least 21 years old.</li>
-            <li>Applicants must possess a valid and current driver's license.</li>
+            <li>Applicants must possess a valid and current driver's license, with an expiry date more than 6 months from the current date.</li>
+            <li>Applicants need to submit one address proof document, such as an Aadhar card photo or any other valid address proof document.</li>
             <li>Applicants must have a clean driving record with no major traffic violations in the past 3 years.</li>
             <li>Applicants must pass a background check, including a criminal record check.</li>
             <li>Applicants must provide proof of eligibility to work in the country.</li>
