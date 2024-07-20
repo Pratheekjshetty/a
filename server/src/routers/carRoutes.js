@@ -1,5 +1,5 @@
 import express from 'express'
-import { addCar,listCar,removeCar,deactivateCar,editCar} from '../controllers/carControllers.js'
+import { addCar,listCar,listActiveCars,removeCar,deactivateCar,editCar} from '../controllers/carControllers.js'
 import multer from 'multer'
 
 const carRouter = express.Router();
@@ -17,6 +17,7 @@ const upload = multer({storage:storage})
 
 carRouter.post('/add',upload.single("image"),addCar)
 carRouter.get('/list',listCar)
+carRouter.get('/listactive-car',listActiveCars)
 carRouter.post('/remove',removeCar)
 carRouter.put('/deactivate-car', deactivateCar)
 carRouter.put('/edit',upload.single("image"),editCar)

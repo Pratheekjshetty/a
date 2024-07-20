@@ -16,7 +16,7 @@ const List = ({ url }) => {
 
   const fetchList = useCallback(async () => {
     try {
-      const response = await axios.get(`${url}/api/car/list`);
+      const response = await axios.get(`${url}/api/car/listactive-car`);
       console.log(response.data);
       if (response.data.success) {
         setList(response.data.data);

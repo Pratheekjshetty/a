@@ -22,7 +22,7 @@ const addCar = async(req,res)=>{
         res.json({success:false,message:"Error"})
     }
 }
-//list car
+//list all car
 const listCar =async(req,res)=>{
     try{
         const cars=await carModel.find({});
@@ -33,6 +33,16 @@ const listCar =async(req,res)=>{
         res.json({success:false,message:"Error"})
     }
 }
+// list active cars
+const listActiveCars = async (req, res) => {
+    try {
+        const cars = await carModel.find({ is_Active: "1" });
+        res.json({success:true,data:cars});
+    } catch (err) {
+        console.log(err);
+        res.json({success:false,message:"Error"});
+    }
+};
 //remove car
 const removeCar=async(req,res)=>{
     try{
@@ -99,4 +109,4 @@ const editCar = async (req, res) => {
         res.json({ success: false, message: "Error" });
     }
 };
-export {addCar,listCar,removeCar,deactivateCar,editCar}
+export {addCar,listCar,listActiveCars,removeCar,deactivateCar,editCar}
