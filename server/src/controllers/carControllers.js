@@ -46,6 +46,22 @@ const removeCar=async(req,res)=>{
         res.json({success:false,message:"Error"})
     }
 }
+// deactivate car
+const deactivateCar = async (req, res) => {
+    try {
+        const car = await carModel.findById(req.body.id);
+        if (!car) {
+            return res.json({ success: false, message: "Car not found" });
+        }
+
+        car.is_Active = "0";
+        await car.save();
+        res.json({ success: true, message: "Car Deactivated" });
+    } catch (err) {
+        console.log(err);
+        res.json({ success: false, message: "Error" });
+    }
+};
 // edit car
 const editCar = async (req, res) => {
     try {
@@ -83,4 +99,4 @@ const editCar = async (req, res) => {
         res.json({ success: false, message: "Error" });
     }
 };
-export {addCar,listCar,removeCar,editCar}
+export {addCar,listCar,removeCar,deactivateCar,editCar}

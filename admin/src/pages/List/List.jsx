@@ -30,7 +30,7 @@ const List = ({ url }) => {
 
   const removeCar = async (carId) => {
     try {
-      const response = await axios.post(`${url}/api/car/remove`, { id: carId });
+      const response = await axios.put(`${url}/api/car/deactivate-car`, { id: carId });
       if (response.data.success) {
         toast.success(response.data.message);
         await fetchList();
