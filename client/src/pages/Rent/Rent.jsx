@@ -115,7 +115,7 @@ const Rent = () => {
                 key: process.env.REACT_APP_RAZORPAY_KEY_ID,
                 amount: amount,
                 currency: currency,
-                name: "Your Company Name",
+                name: "Voyager Car-Rental-Solution",
                 description: "Test Transaction",
                 order_id: rentId,
                 handler: function (response) {

@@ -10,7 +10,7 @@ const StoreContextProvider = (props) => {
     const [bookingList, setBookingList] = useState([]);
 
     const fetchVehicleList = async () =>{
-        const response = await axios.get(url+"/api/car/list");
+        const response = await axios.get(url+"/api/car/listactive-car");
         setVehicleList(response.data.data)
     };
 

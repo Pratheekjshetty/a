@@ -49,9 +49,18 @@ const Booking = ({url}) => {
               </div>
               <p>{rent.caritem.name}</p>
               <img className='w-14' src={url+"/images/"+rent.caritem.image} alt="carImage"/>
-              <p>₹ {rent.amount}.00</p>
-              <p>{formatDate(rent.pickupdate)}</p>
-              <p>{formatDate(rent.dropoffdate)}</p>
+              <div>
+                <p>₹ {rent.amount}.00</p>
+                <p>{rent.address.from+" to "+rent.address.to}</p>
+              </div>
+              <div className='flex flex-col mb-2 justify-center items-center'>
+                <p>{formatDate(rent.pickupdate)}</p>
+                <p>{rent.pickuptime}</p>
+              </div>
+              <div className='flex flex-col mb-2 justify-center items-center'>
+                <p>{formatDate(rent.dropoffdate)}</p>
+                <p>{rent.dropofftime}</p>
+              </div>
               <p><span className='text-blue-500'>&#x25cf;</span> <b>{rent.status}</b></p>
             </div>
           ) 

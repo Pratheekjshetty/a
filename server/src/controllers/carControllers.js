@@ -56,14 +56,13 @@ const removeCar=async(req,res)=>{
         res.json({success:false,message:"Error"})
     }
 }
-// deactivate car
+//deactivate car
 const deactivateCar = async (req, res) => {
     try {
         const car = await carModel.findById(req.body.id);
         if (!car) {
             return res.json({ success: false, message: "Car not found" });
         }
-
         car.is_Active = "0";
         await car.save();
         res.json({ success: true, message: "Car Deactivated" });
@@ -72,7 +71,7 @@ const deactivateCar = async (req, res) => {
         res.json({ success: false, message: "Error" });
     }
 };
-// edit car
+//edit car
 const editCar = async (req, res) => {
     try {
         console.log("Request Body:", req.body);

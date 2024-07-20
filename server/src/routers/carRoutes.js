@@ -19,7 +19,7 @@ carRouter.post('/add',upload.single("image"),addCar)
 carRouter.get('/list',listCar)
 carRouter.get('/listactive-car',listActiveCars)
 carRouter.post('/remove',removeCar)
-carRouter.put('/deactivate-car', deactivateCar)
+carRouter.put('/deactivate-car',deactivateCar)
 carRouter.put('/edit',upload.single("image"),editCar)
 
 export default carRouter;
