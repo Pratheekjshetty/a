@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import upload_area from '../../assets/upload_area1.png'
+import profile_icon from '../../assets/profile_icon.png'
 import getprofile from '../../assets/getprofile.jpg'
 import { toast } from 'react-toastify';
 
@@ -17,7 +17,7 @@ const GetProfile = ({ url }) => {
     role: '',
   });
   const [image, setImage] = useState(null);
-  const [imageUrl, setImageUrl] = useState(upload_area);
+  const [imageUrl, setImageUrl] = useState(profile_icon);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -41,10 +41,17 @@ const GetProfile = ({ url }) => {
             phone: response.data.user.phone,
             password: '',
           });
-          setImageUrl(response.data.user.image ? `${url}/${response.data.user.image}` : upload_area);
-        } else {
-          setError(response.data.message);
-        }
+          const userImage = response.data.user.image ? `${url}/${response.data.user.image}` : profile_icon;
+          axios.get(userImage)
+          .then(() => {
+            setImageUrl(userImage);
+          })
+          .catch(() => {
+            setImageUrl(profile_icon);
+          });
+      } else {
+        setError(response.data.message);
+      }
       } catch (err) {
         setError('Error fetching user details');
       } finally {
@@ -100,8 +107,15 @@ const GetProfile = ({ url }) => {
           password: '',
         });
         setImage(null);
-        setImageUrl(response.data.user.image ? `${url}/${response.data.user.image}` : upload_area);
-        setIsEditing(false);
+        const userImage = response.data.user.image ? `${url}/${response.data.user.image}` : profile_icon;
+        axios.get(userImage)
+        .then(() => {
+          setImageUrl(userImage);
+        })
+        .catch(() => {
+          setImageUrl(profile_icon);
+        });
+      setIsEditing(false);
       } else {
         toast.error(response.data.message);
       }
@@ -119,7 +133,14 @@ const GetProfile = ({ url }) => {
       password: '',
     });
     setImage(null);
-    setImageUrl(user.image ? `${url}/${user.image}` : upload_area);
+    const userImage = user.image ? `${url}/${user.image}` : profile_icon;
+    axios.get(userImage)
+    .then(() => {
+      setImageUrl(userImage);
+    })
+    .catch(() => {
+      setImageUrl(profile_icon);
+    });
     setIsEditing(false);
   };
 
@@ -132,7 +153,7 @@ const GetProfile = ({ url }) => {
     {!isEditing ? (
     <div className='w-[80%] mx-10 my-20 text-[#474747] text-base bg-blue-100 p-4 rounded-md flex flex-col 2xl:w-[25%] lg:w-[30%] md:w-[45%] sm:w-[60%] lg:mx-20'>
       <div className="flex justify-center items-center m-4">
-          {user.image && <img className='w-32 rounded-full border border-blue-500' src={`${url}/${user.image}`} alt="User Profile" />}
+          <img className='w-32 rounded-full border border-blue-500' src={imageUrl} alt="User Profile" />
       </div>
       <div className='m-4'>
         <p><strong>Name:</strong> {user.name}</p>
@@ -155,7 +176,7 @@ const GetProfile = ({ url }) => {
     <form onSubmit={handleSubmit}>
       <div className="flex justify-center items-center m-4">
           <label htmlFor='image'>
-              <img className='w-32 rounded-full' src={imageUrl} alt='' />
+              <img className='w-32 rounded-full' src={imageUrl} alt='Upload Area' />
           </label>
           <input type="file" id='image' onChange={handleFileChange} hidden />
       </div>
