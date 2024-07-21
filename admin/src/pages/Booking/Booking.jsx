@@ -51,7 +51,8 @@ const Booking = ({url}) => {
               <img className='w-14' src={url+"/images/"+rent.caritem.image} alt="carImage"/>
               <div>
                 <p>₹ {rent.amount}.00</p>
-                <p>{rent.address.from+" to "+rent.address.to}</p>
+                <p>{rent.address.from+" to "}</p>
+                <p>{rent.address.to}</p>
               </div>
               <div className='flex flex-col mb-2 justify-center items-center'>
                 <p>{formatDate(rent.pickupdate)}</p>

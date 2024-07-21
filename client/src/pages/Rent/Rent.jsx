@@ -89,9 +89,31 @@ const Rent = () => {
     seats: seats,
   };
 
+  const validatePickup = () => {
+    const now = new Date();
+    const pickupDateTime = new Date(`${pickupDate}T${pickupTime}`);
+    
+    if (pickupDateTime < now) {
+      alert('Pickup date and time must be in the future.');
+      return false;
+    }
+
+    if (pickupDate === now.toISOString().split('T')[0]) {
+      const hoursDifference = (pickupDateTime - now) / (1000 * 60 * 60);
+      if (hoursDifference < 2) {
+        alert('Pickup time must be at least 2 hours from now.');
+        return false;
+      }
+    }
+
+    return true;
+  };
+
   const rentBooking =async(event)=>{
     event.preventDefault();
-    handlePayment();
+    if (validatePickup()) {
+      handlePayment();
+    }
   };
 
   const processRentBooking = async () => {

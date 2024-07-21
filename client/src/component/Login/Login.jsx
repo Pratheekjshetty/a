@@ -6,6 +6,7 @@ import upload_area from '../../assets/upload_area.png'
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Login = ({setShowLogin}) => {
 
@@ -20,16 +21,18 @@ const Login = ({setShowLogin}) => {
     });
 
     const navigate = useNavigate();
-
     const [showPassword, setShowPassword] = useState(false);
+
     const onChangeHandler =(event)=>{
         const name = event.target.name;
         const value = event.target.value;
         setData(data=>({...data,[name]:value}));
     };
+
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
       };
+
     const onLogin =async(event) =>{
         event.preventDefault()
         let newUrl = url;
@@ -59,6 +62,7 @@ const Login = ({setShowLogin}) => {
             setToken(response.data.token);
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("userImage", response.data.image);
+            toast.success('Login successfully');
 
             if (response.data.role === 'admin') {
                 window.open('http://localhost:3003/', '_blank');
@@ -69,11 +73,11 @@ const Login = ({setShowLogin}) => {
             }
         }
         else{
-            alert(response.data.message);
+            toast.error(response.data.message || 'Failed to login/register. Please check your details and try again.');
         }
     } catch (error) {
         console.error('Login/Register error:', error);
-        alert('Failed to login/register. Please check your details and try again.');
+        toast.error(error.response?.data?.message || 'Failed to login/register. Please check your details and try again.');
     }
 };
   return (

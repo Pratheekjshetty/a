@@ -52,39 +52,52 @@ const loginUser =async(req,res)=>{
 //register user
 const registerUser =async(req,res)=>{
     const {name,email,phone,password} = req.body;
+    let imagePath = req.file ? req.file.path : null;
     try{
         // checking is user already exists
         const exists = await userModel.findOne({email});
         if (exists){
+            if (imagePath && fs.existsSync(imagePath)) {
+                fs.unlinkSync(imagePath);
+            }
             return res.status(400).json({success:false,message:"User already exists"})
         }
 
         // checking is phone already exists
         const phones = await userModel.findOne({phone});
         if (phones){
+            if (imagePath && fs.existsSync(imagePath)) {
+                fs.unlinkSync(imagePath);
+            }
             return res.status(400).json({success:false,message:"Phone already exists"})
         }
 
         //validating email format & strong password
         if(!validator.isEmail(email)){
+            if (imagePath && fs.existsSync(imagePath)) {
+                fs.unlinkSync(imagePath);
+            }
             return res.status(400).json({success:false,message:"Please enter a valid email"})
         }
 
         if(password.length<8){
+            if (imagePath && fs.existsSync(imagePath)) {
+                fs.unlinkSync(imagePath);
+            }
             return res.status(400).json({success:false,message:"Please enter a strong password"})
         }
 
         //validating phone number
         if(!validator.isMobilePhone(phone)){
+            if (imagePath && fs.existsSync(imagePath)) {
+                fs.unlinkSync(imagePath);
+            }
             return res.status(400).json({success:false,message:"Please enter a valid phone"})
         }
 
         //hashing user password
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password,salt);
-
-        // getting image path
-        const imagePath = req.file ? req.file.path : null;
 
         const newUser = new userModel({
             name:name,
@@ -103,6 +116,9 @@ const registerUser =async(req,res)=>{
 
     }catch(err){
         console.log(err);
+        if (imagePath && fs.existsSync(imagePath)) {
+            fs.unlinkSync(imagePath);
+        }
         res.status(500).json({success:false,message:"Error"})
     }
 }
