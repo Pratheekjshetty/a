@@ -246,7 +246,6 @@ const Driver = () => {
               <select className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="availability" onChange={handleChange} value={data.availability} required>
                   <option value="" disabled>Select Availability</option>
                   <option value="full-time">Full-time</option>
-                  <option value="part-time">Part-time</option>
               </select>
           </div>
           <div className='flex gap-[10px]'>
