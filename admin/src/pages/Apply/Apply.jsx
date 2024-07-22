@@ -2,6 +2,7 @@ import React, { useCallback, useState, useEffect } from 'react'
 import apply_icon from '../../assets/apply_icon.png';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { FaTrash } from 'react-icons/fa';
 
 const Apply = ({ url }) => {
   const [applications, setApplications] = useState([]);
@@ -40,6 +41,18 @@ const handleReject = async (event, applyId) => {
   }
 };
 
+const handelDelete = async(event, applyId) => {
+    try {
+        event.preventDefault();
+        await axios.delete(`${url}/api/driver/delete-application`, { data: { applyId } });
+        toast.success("Driver application rejected successfully");
+        fetchApplications();
+    } catch (err) {
+        console.error('Error rejecting application:', err);
+        toast.error("Failed to reject application");
+    }
+}
+
 useEffect(() => {
   fetchApplications();
 }, [fetchApplications]);
@@ -55,7 +68,7 @@ const formatDate = (dateString) => {
           <div className='flex flex-col gap-5 mt-7'>
               {applications.map((application, index) => {
                   return(
-                      <div key={application._id} className='grid grid-cols-[1fr_2fr_2fr] items-center gap-5 text-sm p-2.5 px-5 text-gray-500 border border-blue-500 md:grid-cols-[1fr_2fr_2fr_1fr] md-gap-4 lg:grid-cols-[1fr_2fr_2fr_1fr_1fr] xl:grid-cols-[1fr_2fr_2fr_1fr_1fr_1fr_1fr]'>
+                      <div key={application._id} className='grid grid-cols-[1fr_2fr_2fr] items-center gap-5 text-sm p-2.5 px-5 text-gray-500 border border-blue-500 md:grid-cols-[1fr_2fr_2fr_1fr] md-gap-4 lg:grid-cols-[1fr_2fr_2fr_1fr_1fr] xl:grid-cols-[1fr_2fr_2fr_1fr_1fr_1fr_1fr_0.5fr]'>
                         <img className='w-12' src={apply_icon} alt=""/>
                         <div>
                             <p className='mt-2 mb-1'>{application.address.firstName} {application.address.lastName}</p>
@@ -69,8 +82,9 @@ const formatDate = (dateString) => {
                         </div>
                         <p>{application.availability}</p>
                         <p>{formatDate(application.date)}</p>
-                            <button className='bg-blue-200 border border-blue-500 p-2 outline-none' onClick={(event) => statusHandler(event, application.userId)}>Accept</button>
-                            <button className='bg-red-200 border border-red-500 p-2 outline-none' onClick={(event) => handleReject(event, application._id)}>Reject</button>
+                        <button className='bg-blue-200 border border-blue-500 p-2 outline-none' onClick={(event) => statusHandler(event, application.userId)}>Accept</button>
+                        <button className='bg-red-200 border border-red-500 p-2 outline-none' onClick={(event) => handleReject(event, application._id)}>Reject</button>
+                        <p className='flex justify-center items-center cursor' onClick={(event) => handelDelete(event, application._id)}><FaTrash /></p>
                       </div>
                   )
               })}
