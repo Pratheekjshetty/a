@@ -115,6 +115,13 @@ const deleteApplicationStatus = async (req, res) => {
       if (!userId) {
         return res.status(400).json({ message: "User ID is required" });
       }
+      // Update user role
+      const userRole = await userModel.findById(userId);
+      if (!userRole) {
+          return res.status(404).json({ message: "User not found" });
+      }
+      userRole.role = "user";
+      await userRole.save();
 
       // Update driver application status
       const driverApplication = await driverModel.findOne({ userId });
@@ -124,7 +131,7 @@ const deleteApplicationStatus = async (req, res) => {
       driverApplication.status = "Driver Rejected";
       await driverApplication.save();
 
-      res.status(200).json({ message: "Driver Status updated successfully"});
+      res.status(200).json({ message: "Driver Status updated successfully", userRole });
   } catch (error) {
       console.error('Error updating application status:', error);
       res.status(500).send({ message: 'Failed to update user role.' });
