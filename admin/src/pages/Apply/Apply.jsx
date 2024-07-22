@@ -21,31 +21,31 @@ const statusHandler = async (event, userId) => {
     try {
         event.preventDefault();
         await axios.post(`${url}/api/driver/update-role`, { userId });
-        toast.success("User role updated successfully");
+        toast.success("Driver application accepted successfully");
         fetchApplications(); 
     } catch (err) {
-        console.error('Error updating user role:', err);
-        toast.error("Failed to update user role");
+        console.error('Error updating driver status:', err);
+        toast.error("Failed to update driver status");
     }
 };
 
-const handleReject = async (event, applyId) => {
-  try {
-      event.preventDefault();
-      await axios.delete(`${url}/api/driver/delete-application`, { data: { applyId } });
-      toast.success("Driver application rejected successfully");
-      fetchApplications();
-  } catch (err) {
-      console.error('Error rejecting application:', err);
-      toast.error("Failed to reject application");
-  }
+const handleReject = async (event, userId) => {
+    try {
+        event.preventDefault();
+       await axios.post(`${url}/api/driver/delete-role`, { userId });
+        toast.success("Driver application rejected successfully");
+        fetchApplications(); 
+    } catch (err) {
+        console.error('Error updating driver status:', err);
+        toast.error("Failed to update driver status");
+    }
 };
 
 const handelDelete = async(event, applyId) => {
     try {
         event.preventDefault();
         await axios.delete(`${url}/api/driver/delete-application`, { data: { applyId } });
-        toast.success("Driver application rejected successfully");
+        toast.success("Driver application deleted successfully");
         fetchApplications();
     } catch (err) {
         console.error('Error rejecting application:', err);
@@ -83,7 +83,7 @@ const formatDate = (dateString) => {
                         <p>{application.availability}</p>
                         <p>{formatDate(application.date)}</p>
                         <button className='bg-blue-200 border border-blue-500 p-2 outline-none' onClick={(event) => statusHandler(event, application.userId)}>Accept</button>
-                        <button className='bg-red-200 border border-red-500 p-2 outline-none' onClick={(event) => handleReject(event, application._id)}>Reject</button>
+                        <button className='bg-red-200 border border-red-500 p-2 outline-none' onClick={(event) => handleReject(event, application.userId)}>Reject</button>
                         <p className='flex justify-center items-center cursor' onClick={(event) => handelDelete(event, application._id)}><FaTrash /></p>
                       </div>
                   )

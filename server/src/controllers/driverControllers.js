@@ -86,6 +86,7 @@ const updateApplicationStatus = async (req, res) => {
       if (!userId) {
         return res.status(400).json({ message: "User ID is required" });
       }
+      // Update user role
       const userRole = await userModel.findById(userId);
       if (!userRole) {
           return res.status(404).json({ message: "User not found" });
@@ -93,7 +94,37 @@ const updateApplicationStatus = async (req, res) => {
       userRole.role = "driver";
       await userRole.save();
 
-      res.status(200).json({ message: "User role updated successfully", userRole });
+      // Update driver application status
+      const driverApplication = await driverModel.findOne({ userId });
+      if (!driverApplication) {
+          return res.status(404).json({ message: "Driver application not found" });
+      }
+      driverApplication.status = "Driver Confirmed";
+      await driverApplication.save();
+
+      res.status(200).json({ message: "Driver Status updated successfully", userRole });
+  } catch (error) {
+      console.error('Error updating application status:', error);
+      res.status(500).send({ message: 'Failed to update user role.' });
+  }
+};
+
+const deleteApplicationStatus = async (req, res) => {
+  try {
+      const { userId } = req.body;
+      if (!userId) {
+        return res.status(400).json({ message: "User ID is required" });
+      }
+
+      // Update driver application status
+      const driverApplication = await driverModel.findOne({ userId });
+      if (!driverApplication) {
+          return res.status(404).json({ message: "Driver application not found" });
+      }
+      driverApplication.status = "Driver Rejected";
+      await driverApplication.save();
+
+      res.status(200).json({ message: "Driver Status updated successfully"});
   } catch (error) {
       console.error('Error updating application status:', error);
       res.status(500).send({ message: 'Failed to update user role.' });
@@ -114,4 +145,4 @@ const deleteApplication = async (req, res) => {
   }
 };
 
-export { applyDriver, getApplications, updateApplicationStatus, deleteApplication };
+export { applyDriver, getApplications, updateApplicationStatus, deleteApplicationStatus, deleteApplication };
