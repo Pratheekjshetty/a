@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { StoreContext } from '../../context/StoreContext';
+import not_found from '../../assets/not_found.png'
 import CarItem from '../CarItem/CarItem';
 
 const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPriceRange, location, setLocation }) => {
@@ -138,10 +139,11 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
                 </div>
                 </div>
                 {filteredVehicles.length === 0 ? (
-                    <>
+                    <div className='flex flex-col justify-center items-center'>
+                    <img src={not_found} alt="Not Found"/>
                     <p className='mt-8 mb-4 text-3xl text-center font-semibold md:text-4xl text-red-500'>No cars found</p>
                     <p className="mb-4 text-lg text-center font-light text-gray-500 dark:text-gray-400">Sorry, we can't find any cars that match your criteria.</p>
-                    </>
+                    </div>
                 ) : (
                 <div className='grid mt-8 gap-x-13 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
                     {vehicle_list.map((item, index) => {

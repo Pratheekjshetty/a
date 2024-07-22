@@ -4,7 +4,7 @@ import profile_icon from '../../assets/profile_icon.png'
 import booking_icon from '../../assets/booking_icon.png'
 import logout_icon from '../../assets/logout_icon.png'
 import { Link, useNavigate } from 'react-router-dom';
-import { FaBars } from 'react-icons/fa';
+import { FaBars,FaSearch } from 'react-icons/fa';
 import { StoreContext } from '../../context/StoreContext';
 
 const Navbar = ({setShowLogin}) => {
@@ -51,7 +51,8 @@ return (
       </div>
       <div className="flex gap-6 items-center mx-4">
         <div className="relative hidden sm:block">
-          <input type="text" placeholder="Search" className="p-2 rounded-full text-blue-900 placeholder-blue-900 border border-blue-900 focus:outline-none"/>
+          <input type="text" placeholder="Search" className="p-2 rounded-full text-blue-900 placeholder-blue-200 border border-blue-900 focus:outline-none"/>
+          <FaSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-blue-900" />
         </div>
         {!token?(
           <button className='bg-white text-blue-900 rounded-full p-2 cursor-pointer transition duration-500 hover:bg-blue-700 hover:text-white' onClick={()=>setShowLogin(true)}>Sign In</button>)
@@ -90,8 +91,9 @@ return (
           </ul>
         </div>
       <div className="block sm:hidden w-full mt-4 md:mt-0">
-        <div className="flex items-center justify-center">
-          <input type="text" placeholder="Search" className="w-full px-4 py-2 rounded-full text-blue-900 placeholder-blue-900 border border-blue-900  focus:outline-none"/>
+        <div className="flex items-center justify-center relative">
+          <input type="text" placeholder="Search" className="w-full px-4 py-2 rounded-full text-blue-900 placeholder-blue-200 border border-blue-900 focus:outline-none"/>
+          <FaSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-blue-900" />
         </div>
       </div>
     </nav>
