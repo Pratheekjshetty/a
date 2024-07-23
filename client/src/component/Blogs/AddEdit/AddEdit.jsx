@@ -7,7 +7,6 @@ import {toast} from "react-toastify";
 
 const AddEdit = () => {
     const {token,url}=useContext(StoreContext);
-
     const navigate = useNavigate();
     const [image,setImage] = useState(false);
     const [data,setData] = useState({
@@ -29,7 +28,7 @@ const AddEdit = () => {
           },
         });
         if (response.data.success) {
-          const { userId } = response.data.user;
+          const { _id: userId } = response.data.user;
           setData(prevData => ({
             ...prevData,
             userId,
@@ -74,13 +73,14 @@ const AddEdit = () => {
       });
     if(response.data.success){
       setData({
-        userId: "",
-        title:"",
-        description:"",
-        category:"",
+        userId: '',
+        title:'',
+        description:'',
+        category:'Cars',
       })
       setImage(false)
-      toast.success(response.data.message)
+      toast.success(response.data.message);
+      navigate("/blogs");
     }
     else{
       toast.error(response.data.message || 'Failed to add blog')

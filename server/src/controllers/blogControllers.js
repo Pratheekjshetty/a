@@ -2,9 +2,12 @@ import blogModel from '../models/blogModels.js'
 import fs from 'fs'
 //add blog
 const addBlog = async(req,res)=>{
+    if (!req.userId) {
+        return res.json({ success: false, message: "User ID not provided" });
+    }
     let image_filename = `${req.file.filename}`;
     const blog = new blogModel({
-        userId: req.body.userId,
+        userId: req.userId,
         title:req.body.title,
         description:req.body.description,
         category:req.body.category,
@@ -26,7 +29,6 @@ const editBlog = async (req, res) => {
         if (!blogId) {
             return res.json({ success: false, message: "Blog ID not provided" });
         }
-
         console.log("Blog ID:", blogId);
         const blog = await blogModel.findById(blogId);
         if (!blog) {

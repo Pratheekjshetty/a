@@ -1,7 +1,7 @@
 import express from 'express'
 import { addBlog,editBlog} from '../controllers/blogControllers.js'
+import authMiddleware from "../middleware/auth.js"
 import multer from 'multer'
-import { authMiddleware } from '../middleware/auth2.js';
 
 const blogRouter = express.Router();
 
@@ -17,6 +17,6 @@ const storage = multer.diskStorage({
 const upload = multer({storage:storage})
 
 blogRouter.post('/add',authMiddleware,upload.single("image"),addBlog);
-blogRouter.post('/edit',upload.single("image"),editBlog);
+blogRouter.post('/edit',authMiddleware,upload.single("image"),editBlog);
 
 export default blogRouter ;
