@@ -18,6 +18,11 @@ const AddEdit = () => {
     });
 
     useEffect(() => {
+        if (!token) {
+            alert('Please sign in to continue.');
+            navigate('/')
+            return;
+        }
         const fetchUserDetails = async () => {
             if (!token) {
                 return;
@@ -43,7 +48,7 @@ const AddEdit = () => {
         if (token) {
             fetchUserDetails();
         }
-    }, [token, url]);
+    }, [token, url, navigate]);
 
     useEffect(() => {
         const fetchBlogDetails = async () => {

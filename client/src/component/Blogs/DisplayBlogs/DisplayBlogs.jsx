@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaEdit } from 'react-icons/fa';
 
 const DisplayBlogs = () => {
-    const {url,token}=useContext(StoreContext);
+    const {url,token}=useContext(StoreContext);   
     const [blogs, setBlogs] = useState([]);
     const [userId, setUserId] = useState('');
     const navigate = useNavigate();
@@ -59,9 +59,7 @@ const handleEditClick = (blogId) => {
                     <div className="grid mt-8 gap-x-13 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         {blogs.map((blog) => (
                             <div key={blog._id} className="w-full mx-auto rounded shadow-lg bg-white p-4 relative">
-                                <img className="w-full h-auto rounded-md cursor-pointer"
-                                    src={`${url}/blog-uploads/${blog.image}`} alt={blog.title} onClick={() => handleImageClick(blog)}
-                                />
+                                <img className="w-full h-auto rounded-md cursor-pointer" src={`${url}/blog-uploads/${blog.image}`} alt={blog.title} onClick={() => handleImageClick(blog)}/>
                                 {blog.userId === userId && (
                                     <button 
                                         className="absolute top-2 right-2 p-2 bg-transparent rounded-full shadow-md"

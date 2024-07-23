@@ -171,8 +171,8 @@ const Driver = () => {
 
       const response = await axios.post(`${url}/api/driver/apply`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
         },
       });
 
