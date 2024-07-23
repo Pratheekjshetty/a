@@ -1,5 +1,5 @@
 import express from 'express'
-import { addBlog,editBlog,listBlog,getBlog} from '../controllers/blogControllers.js'
+import { addBlog,editBlog,listBlog,getBlog,getBlogById} from '../controllers/blogControllers.js'
 import authMiddleware from "../middleware/auth.js"
 import multer from 'multer'
 
@@ -20,6 +20,7 @@ blogRouter.post('/add',authMiddleware,upload.single("image"),addBlog);
 blogRouter.post('/edit',authMiddleware,upload.single("image"),editBlog);
 blogRouter.get('/list',listBlog);
 blogRouter.get('/category/:category',getBlog)
+blogRouter.get('/:id', getBlogById);
 
 
 export default blogRouter ;

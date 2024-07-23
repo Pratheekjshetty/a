@@ -1,5 +1,6 @@
 import blogModel from '../models/blogModels.js'
 import fs from 'fs'
+
 //add blog
 const addBlog = async(req,res)=>{
     if (!req.userId) {
@@ -15,26 +16,24 @@ const addBlog = async(req,res)=>{
     })
     try{
         await blog.save();
-        res.json({success:true,message:"Blog Added"});
+        res.json({success:true,message:"Blog Added Successfully"});
     } catch(err){
         console.log(err)
         res.json({success:false,message:"Error"})
     }
 }
+
 //edit blog
 const editBlog = async (req, res) => {
     try {
-        console.log("Request Body:", req.body);
         const blogId = req.body.id;
         if (!blogId) {
             return res.json({ success: false, message: "Blog ID not provided" });
         }
-        console.log("Blog ID:", blogId);
         const blog = await blogModel.findById(blogId);
         if (!blog) {
             return res.json({ success: false, message: "Blog not found" });
         }
-
         // If a new image is uploaded, replace the old one
         if (req.file) {
             console.log("Replacing image:", blog.image);
@@ -46,7 +45,7 @@ const editBlog = async (req, res) => {
         blog.description = req.body.description || blog.description;
         blog.category = req.body.category || blog.category;
         await blog.save();
-        res.json({ success: true, message: "Blog Updated" });
+        res.json({ success: true, message: "Blog Updated Successfully" });
     } catch (err) {
         console.log(err);
         res.json({ success: false, message: "Error" });
@@ -76,4 +75,18 @@ const getBlog = async (req, res) => {
     }
 }
 
-export {addBlog,editBlog,listBlog,getBlog}
+// fetch single blog by ID
+const getBlogById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const blog = await blogModel.findById(id);
+        if (!blog) {
+            return res.status(404).json({ success: false, message: 'Blog not found' });
+        }
+        res.json({ success: true, data: blog });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Error fetching blog by ID' });
+    }
+};
+
+export {addBlog,editBlog,listBlog,getBlog,getBlogById}

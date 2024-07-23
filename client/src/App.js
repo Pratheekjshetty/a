@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./App.css";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,18 +21,27 @@ import Driver from './pages/Driver/Driver';
 import CancelBooking from './pages/CancelBooking/CancelBooking';
 import AddEdit from './component/Blogs/AddEdit/AddEdit';
 import Blog from './component/Blogs/Blog/Blog';
+import Rating from './component/Blogs/Rating/Rating';
 import NoPage from './pages/NoPage/NoPage';
+import ProtectedRoute from './component/ProtectedRoute/ProtectedRoute';
 
 function App() { 
   const url ="http://localhost:4001"
   const[showLogin,setShowLogin] = useState(false);
-  // const handleLoginSuccess = () => {
-  //   setShowLogin(false);
-  // };
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
+  useEffect(() => {
+    // Check if the user is logged in
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
   return (   
     <>
     <ToastContainer />
-    {showLogin?<Login setShowLogin={setShowLogin}/>:<></>} 
+    {showLogin?<Login setShowLogin={setShowLogin}/>:null} 
     <div>
     <Navbar setShowLogin={setShowLogin} /> 
         <Routes>
@@ -49,14 +58,15 @@ function App() {
           <Route path="/apply-driver" element={<ApplyDriver/>}/>
           <Route path="/driver" element={<Driver/>}/>
           <Route path="/cancel-booking" element={<CancelBooking/>}/>
-          <Route path='/add-blog' element={<AddEdit/>}/>
-          <Route path='/edit-blog/:id' element={<AddEdit/>}/>
+          <Route path='/add-blog' element={<ProtectedRoute isAuthenticated={isAuthenticated}><AddEdit /></ProtectedRoute>} />
+          <Route path='/edit-blog/:id' element={<ProtectedRoute isAuthenticated={isAuthenticated}><AddEdit/></ProtectedRoute>}/>
           <Route path='/blog/:id' element={<Blog/>}/>
+          <Route path='/add-rating' element={<ProtectedRoute isAuthenticated={isAuthenticated}><Rating/></ProtectedRoute>}/>
+          <Route path='/edit-rating/:id' element={<ProtectedRoute isAuthenticated={isAuthenticated}><AddEdit/></ProtectedRoute>}/>
           <Route path="*" element={<NoPage/>}/>
         </Routes>  
       <Footer/> 
     </div>
-    
     </> 
   );
 }

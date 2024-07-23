@@ -7,7 +7,6 @@ const Blogs = () => {
   }, []);
   return (
     <div>
-      <h2>Blogs</h2>
       <DisplayBlogs/>
     </div>
   )

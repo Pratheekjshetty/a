@@ -4,7 +4,7 @@ import profile_icon from '../../assets/profile_icon.png'
 import booking_icon from '../../assets/booking_icon.png'
 import logout_icon from '../../assets/logout_icon.png'
 import { Link, useNavigate } from 'react-router-dom';
-import { FaBars,FaSearch } from 'react-icons/fa';
+import { FaBars,FaSearch, FaChevronDown } from 'react-icons/fa';
 import { StoreContext } from '../../context/StoreContext';
 
 const Navbar = ({setShowLogin}) => {
@@ -45,7 +45,12 @@ return (
         <ul className='flex flex-row space-x-4'>
           <li className="hidden lg:block cursor-pointer p-4"><Link to='/'>Home</Link></li>
           <li className="hidden lg:block cursor-pointer p-4"><Link to='/about'>About</Link></li>
-          <li className="hidden lg:block cursor-pointer p-4"> <Link to='/blogs'>Blogs</Link></li>
+          <li className="hidden lg:block cursor-pointer p-4 relative group"> <Link to='/blogs'>Blogs<FaChevronDown className="inline ml-1"/></Link>
+              <ul className="absolute hidden group-hover:block bg-white text-blue-900 mt-2 rounded-md shadow-lg"style={{ width: '100%', zIndex: 50 }}>
+                  <li className="p-2 hover:bg-blue-200 hover:rounded-md cursor-pointer"><Link to='/add-blog'>Add Blog</Link></li>
+                  <li className="p-2 hover:bg-blue-200 hover:rounded-md cursor-pointer"><Link to='/add-rating'>Add Rating</Link></li>
+              </ul>
+          </li>
           <li className="hidden lg:block cursor-pointer p-4"> <Link to='/contact'>Contact</Link></li>
         </ul>
       </div>
@@ -82,8 +87,12 @@ return (
             <li className="cursor-pointer p-2">
               <Link to='/about' onClick={() => setIsMobileMenuOpen(false)}>About</Link>
             </li>
-            <li className="cursor-pointer p-2">
-              <Link to='/blogs' onClick={() => setIsMobileMenuOpen(false)}>Blogs</Link>
+            <li className="cursor-pointer p-2 relative group">
+              <Link to='/blogs' onClick={() => setIsMobileMenuOpen(false)}>Blogs<FaChevronDown className="inline ml-1"/></Link>
+              <ul className="absolute hidden group-hover:block bg-white text-blue-900 mt-2 rounded-md shadow-lg"style={{ width: '100%', zIndex: 50 }}>
+                  <li className="p-2 hover:bg-blue-200 hover:rounded-md cursor-pointer"><Link to='/add-blog'>Add Blog</Link></li>
+                  <li className="p-2 hover:bg-blue-200 hover:rounded-md cursor-pointer"><Link to='/add-rating'>Add Rating</Link></li>
+              </ul>
             </li>
             <li className="cursor-pointer p-2">
               <Link to='/contact' onClick={() => setIsMobileMenuOpen(false)}>Contact</Link>
