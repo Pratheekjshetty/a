@@ -1,5 +1,5 @@
 import express from 'express'
-import {loginUser,registerUser,editUser,getUser} from '../controllers/userControllers.js'
+import {loginUser,registerUser,editUser,getUser,getUserById} from '../controllers/userControllers.js'
 import authMiddleware from '../middleware/auth.js';
 import multer from 'multer'
 
@@ -19,5 +19,6 @@ userRouter.post('/register',upload.single('image'),registerUser);
 userRouter.post('/login',upload.none(),loginUser);
 userRouter.put('/edit-user', authMiddleware, upload.single('image'), editUser);
 userRouter.get('/get-user', authMiddleware, getUser);
+userRouter.get('/get-user-by-id/:userId', getUserById);
 
 export default userRouter;

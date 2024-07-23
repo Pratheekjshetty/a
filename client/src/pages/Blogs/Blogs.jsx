@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import DisplayBlogs from '../../component/Blogs/DisplayBlogs/DisplayBlogs';
 
 const Blogs = () => {
   useEffect(() => {
@@ -7,6 +8,7 @@ const Blogs = () => {
   return (
     <div>
       <h2>Blogs</h2>
+      <DisplayBlogs/>
     </div>
   )
 }

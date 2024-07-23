@@ -21,7 +21,7 @@ const addBlog = async(req,res)=>{
         res.json({success:false,message:"Error"})
     }
 }
-//edit car
+//edit blog
 const editBlog = async (req, res) => {
     try {
         console.log("Request Body:", req.body);
@@ -53,4 +53,27 @@ const editBlog = async (req, res) => {
     }
 };
 
-export {addBlog,editBlog}
+//list blog
+const listBlog = async (req, res) => {
+    try{
+        const blogs=await blogModel.find({});
+        res.json({success:true,data:blogs})
+    }
+    catch(err){
+        console.log(err)
+        res.json({success:false,message:"Error"})
+    }
+};
+
+//get blog using category
+const getBlog = async (req, res) => {
+    const { category } = req.params;
+    try {
+        const blogs = await blogModel.find({ category });
+        res.json({ success: true, data: blogs});
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Error fetching blogs by category' });
+    }
+}
+
+export {addBlog,editBlog,listBlog,getBlog}

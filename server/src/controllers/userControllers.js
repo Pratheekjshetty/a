@@ -196,5 +196,22 @@ const getUser = async (req, res) => {
         res.status(500).json({ success: false, message: 'Error fetching user details' });
     }
 };
+const getUserById = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const user = await userModel.findById(userId).select('-password'); // Exclude password from selection
 
-export {loginUser,registerUser,editUser,getUser}
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+
+        const imageURL = user.image ? path.join('user-uploads', path.basename(user.image)) : null;
+
+        res.json({ success: true, user: { userId: user._id, name: user.name, email: user.email, phone: user.phone, image: imageURL, role: user.role } });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ success: false, message: 'Error fetching user details' });
+    }
+};
+
+export {loginUser,registerUser,editUser,getUser,getUserById}
