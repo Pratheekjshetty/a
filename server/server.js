@@ -11,7 +11,8 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import cron from 'node-cron';
 import rentModel from './src/models/rentModels.js';
-import driverRoutes from '../server/src/routers/driverRoutes.js';
+import driverRouter from '../server/src/routers/driverRoutes.js';
+import blogRouter from '../server/src/routers/blogRoutes.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -29,13 +30,15 @@ connectDB();
 
 //api endpoints
 app.use('/images',express.static('uploads'))
-app.use('/api/car',carRouter)
+app.use('/api/car', carRouter)
 app.use('/user-uploads', express.static(path.join(__dirname, 'user-uploads')))
-app.use("/api/user",userRouter)
-app.use("/api/book",rentRouter)
-app.use("/api/cancel",cancelRouter);
+app.use("/api/user", userRouter)
+app.use("/api/book", rentRouter)
+app.use("/api/cancel", cancelRouter);
 app.use('/doc-uploads', express.static('doc-uploads'));
-app.use('/api/driver', driverRoutes);
+app.use('/api/driver', driverRouter);
+app.use('/blog-uploads', express.static('blog-uploads'));
+app.use('/api/blog', blogRouter);
 
 app.get("/",(req,res)=>{
     res.send("Api Working")

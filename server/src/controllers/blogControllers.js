@@ -1,0 +1,54 @@
+import blogModel from '../models/blogModels.js'
+import fs from 'fs'
+//add blog
+const addBlog = async(req,res)=>{
+    let image_filename = `${req.file.filename}`;
+    const blog = new blogModel({
+        userId: req.body.userId,
+        title:req.body.title,
+        description:req.body.description,
+        category:req.body.category,
+        image:image_filename
+    })
+    try{
+        await blog.save();
+        res.json({success:true,message:"Blog Added"});
+    } catch(err){
+        console.log(err)
+        res.json({success:false,message:"Error"})
+    }
+}
+//edit car
+const editBlog = async (req, res) => {
+    try {
+        console.log("Request Body:", req.body);
+        const blogId = req.body.id;
+        if (!blogId) {
+            return res.json({ success: false, message: "Blog ID not provided" });
+        }
+
+        console.log("Blog ID:", blogId);
+        const blog = await blogModel.findById(blogId);
+        if (!blog) {
+            return res.json({ success: false, message: "Blog not found" });
+        }
+
+        // If a new image is uploaded, replace the old one
+        if (req.file) {
+            console.log("Replacing image:", blog.image);
+            fs.unlink(`blog-uploads/${blog.image}`, () => {});
+            blog.image = `${req.file.filename}`;
+        }
+        // Update other car details
+        blog.title = req.body.title || blog.title;
+        blog.description = req.body.description || blog.description;
+        blog.category = req.body.category || blog.category;
+        await blog.save();
+        res.json({ success: true, message: "Blog Updated" });
+    } catch (err) {
+        console.log(err);
+        res.json({ success: false, message: "Error" });
+    }
+};
+
+export {addBlog,editBlog}
