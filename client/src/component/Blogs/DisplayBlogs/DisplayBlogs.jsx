@@ -52,6 +52,7 @@ const handleEditClick = (blogId) => {
   return (
     <div className="bg-blue-50">
             <div className="m-8" id="blog_display">
+            <h2 className='text-xl font-semibold'>Browse by Type</h2>
                 {blogs.length === 0 ? (
                     <p className="text-center text-gray-500">No blogs available</p>
                 ) : (
