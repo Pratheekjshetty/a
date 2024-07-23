@@ -16,10 +16,12 @@ import CarDisplay from './component/CarDisplay/CarDisplay';
 import Booking from './pages/Booking/Booking';
 import Rent from './pages/Rent/Rent';
 import Footer from './component/Footer/Footer';
-import NoPage from './pages/NoPage/NoPage';
 import ApplyDriver from './pages/ApplyDriver/ApplyDriver';
 import Driver from './pages/Driver/Driver';
 import CancelBooking from './pages/CancelBooking/CancelBooking';
+import AddEdit from './component/Blogs/AddEdit/AddEdit';
+import Blog from './component/Blogs/Blog/Blog';
+import NoPage from './pages/NoPage/NoPage';
 
 function App() { 
   const url ="http://localhost:4001"
@@ -47,6 +49,9 @@ function App() {
           <Route path="/apply-driver" element={<ApplyDriver/>}/>
           <Route path="/driver" element={<Driver/>}/>
           <Route path="/cancel-booking" element={<CancelBooking/>}/>
+          <Route path='/add-blog' element={<AddEdit/>}/>
+          <Route path='/edit-blog/:id' element={<AddEdit/>}/>
+          <Route path='/blog/:id' element={<Blog/>}/>
           <Route path="*" element={<NoPage/>}/>
         </Routes>  
       <Footer/> 
