@@ -1,13 +1,15 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StoreContext } from '../../context/StoreContext';
 import not_found from '../../assets/not_found.png'
+import axios from 'axios';
 import CarItem from '../CarItem/CarItem';
 
 const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPriceRange, location, setLocation }) => {
-    const { vehicle_list, bookingList } = useContext(StoreContext);
+    const { vehicle_list, bookingList ,url} = useContext(StoreContext);
     const [filterType, setFilterType] = useState('');
     const [pickupDate, setPickupDate] = useState('');
     const [dropoffDate, setDropoffDate] = useState('');
+    const [averageRatings, setAverageRatings] = useState({});
 
     const handleCategoryChange = (e) => {
         setCategory(e.target.value);
@@ -61,6 +63,34 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
                 new Date(dropoffDate) >= new Date(booking.pickupDate);
         });
     };
+
+    useEffect(() => {
+        const fetchAverageRatings = async () => {
+          const ratingsMap = {};
+          await Promise.all(
+            vehicle_list.map(async (vehicle) => {
+              try {
+                const response = await axios.get(`${url}/api/rating/car/${vehicle._id}`);
+                if (response.data.success) {
+                  const ratings = response.data.data;
+                  const averageRating = ratings.length > 0
+                    ? ratings.reduce((sum, rating) => sum + rating.rating, 0) / ratings.length
+                    : 0;
+                  ratingsMap[vehicle._id] = averageRating;
+                } else {
+                  ratingsMap[vehicle._id] = 0;
+                }
+              } catch (error) {
+                console.error("Error fetching ratings", error);
+                ratingsMap[vehicle._id] = 0;
+              }
+            })
+          );
+          setAverageRatings(ratingsMap);
+        };
+    
+        fetchAverageRatings();
+      }, [vehicle_list, url]);
 
     const renderFilterOptions = () => {
         switch (filterType) {
@@ -166,6 +196,7 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
                                     model={item.model}
                                     color={item.color}
                                     seats={item.seats}
+                                    averageRating={averageRatings[item._id]}
                                 />
                             );
                         }

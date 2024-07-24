@@ -1,14 +1,48 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StoreContext } from '../../../context/StoreContext';
 import { useNavigate } from 'react-router-dom';
-import { FaPlusCircle } from 'react-icons/fa';
+import { FaPlusCircle, FaStar } from 'react-icons/fa';
+import axios from 'axios';
 
 const DisplayRatings = () => {
     const { vehicle_list, url, token } = useContext(StoreContext);
     const navigate = useNavigate();
+    const [averageRatings, setAverageRatings] = useState({});
+
+    useEffect(() => {
+        const fetchAverageRatings = async () => {
+            const ratingsMap = {};
+            await Promise.all(
+                vehicle_list.map(async (vehicle) => {
+                    try {
+                        const response = await axios.get(`${url}/api/rating/car/${vehicle._id}`);
+                        if (response.data.success) {
+                            const ratings = response.data.data;
+                            const averageRating = ratings.length > 0
+                                ? ratings.reduce((sum, rating) => sum + rating.rating, 0) / ratings.length
+                                : 0;
+                            ratingsMap[vehicle._id] = averageRating;
+                        } else {
+                            ratingsMap[vehicle._id] = 0;
+                        }
+                    } catch (error) {
+                        console.error("Error fetching average rating", error);
+                        ratingsMap[vehicle._id] = 0;
+                    }
+                })
+            );
+            setAverageRatings(ratingsMap);
+        };
+
+        fetchAverageRatings();
+    }, [vehicle_list, url]);
 
     const handleAddRating = (vehicleId) => {
         navigate(`/add-rating/${vehicleId}`);
+    };
+
+    const handleViewRatings = (vehicleId, name, image) => {
+        navigate(`/ratings/${vehicleId}`,{state:{name,image}});
     };
 
     return (
@@ -25,7 +59,13 @@ const DisplayRatings = () => {
                                 <FaPlusCircle className="text-white w-5 h-5" />
                             </button>
                             )}
-                            <img className='w-full rounded-md' src={`${url}/images/${item.image}`} alt="" />
+                            {averageRatings[item._id] > 0 && (
+                            <div className="absolute bottom-16 left-4 flex items-center bg-transparent p-1 rounded-full">
+                            <span className="ml-1 text-white font-bold">{averageRatings[item._id]?.toFixed(1) || 0}</span>
+                                <FaStar className="text-yellow-500 w-4 h-4" />   
+                            </div>
+                            )}
+                            <img className='w-full rounded-md' src={`${url}/images/${item.image}`} alt="" onClick={() => handleViewRatings(item._id,item.name, item.image)}/>
                             <div className='p-2.5'>
                                 <h2 className="text-xl font-bold mb-2">{item.name}</h2>
                             </div>

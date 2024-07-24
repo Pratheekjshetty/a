@@ -34,4 +34,19 @@ const addRating = async(req,res)=>{
     }
 };
 
-export {addRating}
+// get ratings by Car ID
+const getRatingsByCarId = async (req, res) => {
+    const { carId } = req.params;
+
+    try {
+        // Fetch ratings from the database
+        const ratings = await ratingModel.find({ carId });
+        // Respond with success
+        res.status(200).json({ success: true, data: ratings });
+    } catch (error) {
+        console.error('Error fetching ratings:', error);
+        res.status(500).json({ success: false, message: 'Server error. Please try again later.' });
+    }
+};
+
+export {addRating, getRatingsByCarId}

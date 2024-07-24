@@ -6,7 +6,7 @@ import { format } from 'date-fns';
 
 const Blog = () => {
     const {url}=useContext(StoreContext);
-    const location = useLocation();
+    const location = useLocation();  
     const navigate = useNavigate();
     const { blog } = location.state || {};
     const [user, setUser] = useState(null);
@@ -75,7 +75,6 @@ const Blog = () => {
           <div className="flex flex-col w-full">
             <p className="mt-4">{blog.description}</p>
           </div>
-       
         {similarBlogs.length > 0 && (
             <div className="w-full max-w-5xl mx-auto p-4 bg-white shadow-none rounded-lg my-4">
                 <h2 className="text-xl font-bold mb-4">Similar Blogs</h2>

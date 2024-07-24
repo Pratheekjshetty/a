@@ -56,7 +56,7 @@ function App() {
           <Route path='/blog/:id' element={<Blog/>}/>
           <Route path='/add-rating/:id' element={<AddRating/>}/>
           <Route path='/edit-rating/:id' element={<AddRating/>}/>
-          <Route path='/rating/:id' element={<Rating/>}/>
+          <Route path='/ratings/:carId' element={<Rating/>}/>
           <Route path="*" element={<NoPage/>}/>
         </Routes>  
       <Footer/> 
