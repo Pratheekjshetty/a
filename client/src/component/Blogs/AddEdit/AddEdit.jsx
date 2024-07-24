@@ -146,7 +146,6 @@ const AddEdit = () => {
                     <p>Blog title</p>
                     <input className='w-custom border border-black p-3 text-sm' onChange={onChangeHandler} type="text" value={data.title} name="title" placeholder='Enter the title' required />
                 </p>
-
                 <div className="flex-col">
                     <p>Blog description</p>
                     <textarea className='w-custom border border-black p-3 text-sm' onChange={onChangeHandler} value={data.description} name='description' rows="4" placeholder='Enter the description' required></textarea>

@@ -13,6 +13,7 @@ import cron from 'node-cron';
 import rentModel from './src/models/rentModels.js';
 import driverRouter from '../server/src/routers/driverRoutes.js';
 import blogRouter from '../server/src/routers/blogRoutes.js';
+import ratingRouter from './src/routers/ratingRoutes.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -39,6 +40,7 @@ app.use('/doc-uploads', express.static('doc-uploads'));
 app.use('/api/driver', driverRouter);
 app.use('/blog-uploads', express.static('blog-uploads'));
 app.use('/api/blog', blogRouter);
+app.use('/api/rating',ratingRouter)
 
 app.get("/",(req,res)=>{
     res.send("Api Working")

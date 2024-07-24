@@ -22,5 +22,4 @@ blogRouter.get('/list',listBlog);
 blogRouter.get('/category/:category',getBlog)
 blogRouter.get('/:id', getBlogById);
 
-
 export default blogRouter ;
