@@ -8,6 +8,8 @@ const DisplayRatings = () => {
     const { vehicle_list, url, token } = useContext(StoreContext);
     const navigate = useNavigate();
     const [averageRatings, setAverageRatings] = useState({});
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 8;
 
     useEffect(() => {
         const fetchAverageRatings = async () => {
@@ -45,15 +47,24 @@ const DisplayRatings = () => {
         navigate(`/ratings/${vehicleId}`,{state:{name,image,model}});
     };
 
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+    };
+
+    const totalPages = Math.ceil(vehicle_list.length / itemsPerPage);
+    const startIdx = (currentPage - 1) * itemsPerPage;
+    const endIdx = startIdx + itemsPerPage;
+    const currentItems = vehicle_list.slice(startIdx, endIdx);
+
     return (
         <div className='bg-blue-50'>
-            <div className='m-8' id='car_display'>
-            <h2 className='text-xl font-semibold'>Browse by Make</h2>
+            <div className='p-8' id='car_display'>
+                <h2 className='text-xl font-semibold'>Browse by Make</h2>
                 <div className='grid mt-8 gap-x-13 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
-                    {vehicle_list.map((item, index) => (
+                    {currentItems.map((item, index) => (
                         <div key={index} className="w-full mx-auto rounded shadow-lg bg-white p-4 relative">
                             {token && (
-                                <button 
+                            <button 
                                 className="absolute top-2 right-2 p-2 bg-transparent rounded-full shadow-md"
                                 onClick={() => handleAddRating(item._id)}>
                                 <FaPlusCircle className="text-white w-5 h-5" />
@@ -61,7 +72,7 @@ const DisplayRatings = () => {
                             )}
                             {averageRatings[item._id] > 0 && (
                             <div className="absolute bottom-16 left-4 flex items-center bg-transparent p-1 rounded-full">
-                            <span className="ml-1 text-white font-bold">{averageRatings[item._id]?.toFixed(1) || 0}</span>
+                                <span className="ml-1 text-white font-bold">{averageRatings[item._id]?.toFixed(1) || 0}</span>
                                 <FaStar className="text-yellow-500 w-4 h-4" />   
                             </div>
                             )}
@@ -71,6 +82,21 @@ const DisplayRatings = () => {
                             </div>
                         </div>
                     ))}  
+                </div>
+                <div className="flex justify-center mt-4">
+                    <button
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className="px-4 py-2 bg-blue-500 text-white rounded-l">
+                        Prev
+                    </button>
+                    <span className="px-4 py-2">Page {currentPage} of {totalPages}</span>
+                    <button
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                        className="px-4 py-2 bg-blue-500 text-white rounded-r">
+                        Next
+                    </button>
                 </div>
             </div>
         </div>
