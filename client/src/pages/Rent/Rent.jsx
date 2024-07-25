@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import { StoreContext } from '../../context/StoreContext';
 import axios from 'axios';
+import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
 
 const Rent = () => {
@@ -65,6 +66,7 @@ const Rent = () => {
         }
       } catch (err) {
         console.error('Error fetching user details', err);
+        toast.error('Failed to fetch user details.');
       }
     };
 
@@ -138,7 +140,7 @@ const Rent = () => {
                 amount: amount,
                 currency: currency,
                 name: "Voyager Car-Rental-Solution",
-                description: "Test Transaction",
+                description: "Car Booking Payment",
                 order_id: rentId,
                 handler: function (response) {
                   window.location.href = `${success_url}&payment_id=${response.razorpay_payment_id}`;
@@ -162,7 +164,7 @@ const Rent = () => {
               });
               rzp1.open();
             } else {
-              alert("Error");
+              toast.error('Error processing your booking.');
             }
       }
       catch(err){

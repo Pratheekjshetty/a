@@ -58,11 +58,22 @@ const verifyBooking = async(req,res)=>{
     try{
         if(success=="true"){
             await rentModel.findByIdAndUpdate(rentId,{payment:true});
-            res.json({success:true,message:"Paid"})
+
+            const booking = await rentModel.findById(rentId);
+            if (!booking) {
+                return res.status(404).json({ success: false, message: "Booking not found" });
+            }
+
+            await userModel.findByIdAndUpdate(booking.userId, {
+                $set: {
+                    bookingData: booking
+                }
+            });
+            return res.json({ success: true, message: "Paid and booking data saved" });
         }
         else{
             await rentModel.findByIdAndDelete(rentId);
-            res.json({success:false,message:"Not Paid"})
+            return res.json({success:false,message:"Not Paid"})
         }
     }
     catch(err){
