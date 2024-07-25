@@ -93,11 +93,15 @@ const Booking = () => {
     setDeliveryOption(event.target.value);
   };
 
+  const handleImageClick = () => {
+    navigate(`/ratings/${id}`, { state: { name, image, model } });
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
       <div className="w-full max-w-5xl mx-auto p-4 bg-white shadow-none rounded-lg my-4 ">
         <div className="w-full h-auto md:h-96">
-          <img src={url + "/images/" + image} alt={name} className="w-full h-full object-contain" />
+          <img src={url + "/images/" + image} alt={name} className="w-full h-full object-contain" onClick={handleImageClick} />
         </div>
         <div className="flex flex-col md:flex-row w-full">
           <div className="w-full md:w-1/2 p-4 flex-grow">

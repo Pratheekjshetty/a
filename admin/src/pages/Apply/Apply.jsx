@@ -6,11 +6,14 @@ import { FaTrash } from 'react-icons/fa';
 
 const Apply = ({ url }) => {
   const [applications, setApplications] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   const fetchApplications =useCallback(async () => {
     try {
         const response = await axios.get(`${url}/api/driver/applications`);
-            setApplications(response.data);
+            const reversedApplications = response.data.reverse();
+            setApplications(reversedApplications);
     } catch (err) {
         toast.error("An error occurred while fetching application");
         console.error(err);
@@ -62,11 +65,19 @@ const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
 
+const totalPages = Math.ceil(applications.length / itemsPerPage);
+const startIdx = (currentPage - 1) * itemsPerPage;
+const endIdx = startIdx + itemsPerPage;
+const currentItems = applications.slice(startIdx, endIdx);
+
+const handlePageChange = (newPage) => {
+  setCurrentPage(newPage);
+};
   return (
       <div className="mx-20 my-12">
           <h2 className="text-2xl font-bold">Driver Applications</h2>
           <div className='flex flex-col gap-5 mt-7'>
-              {applications.map((application, index) => {
+              {currentItems.map((application, index) => {
                   return(
                       <div key={application._id} className='grid grid-cols-[1fr_2fr_2fr] items-center gap-5 text-sm p-2.5 px-5 text-gray-500 border border-blue-500 md:grid-cols-[1fr_2fr_2fr_1fr] md-gap-4 lg:grid-cols-[1fr_2fr_2fr_1fr_1fr] xl:grid-cols-[1fr_2fr_2fr_1fr_1fr_1fr_1fr_0.5fr]'>
                         <img className='w-12' src={apply_icon} alt=""/>
@@ -89,6 +100,16 @@ const formatDate = (dateString) => {
                   )
               })}
           </div>
+          <div className="flex justify-center mt-5">
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                className={`page-button ${currentPage === index + 1 ? 'active' : ''}`}
+                onClick={() => handlePageChange(index + 1)}>
+                {index + 1}
+              </button>
+            ))}
+        </div>  
       </div>  
   )
 }

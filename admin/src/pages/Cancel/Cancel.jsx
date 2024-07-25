@@ -5,11 +5,14 @@ import { toast } from 'react-toastify';
 
 const Cancel = ({ url }) => {
     const [cancellations, setCancellations] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
 
     const fetchCancellations = useCallback(async () => {
         try {
             const response = await axios.get(`${url}/api/cancel/cancellations`);
-                setCancellations(response.data);
+                const reversedCancellations = response.data.reverse();
+                setCancellations(reversedCancellations);
         } catch (err) {
             toast.error("An error occurred while fetching cancellations");
             console.error(err);  
@@ -47,13 +50,22 @@ const Cancel = ({ url }) => {
     const formatDate = (dateString) => {
         const options = { day: 'numeric', month: 'long', year: 'numeric' };
         return new Date(dateString).toLocaleDateString(undefined, options);
-    };  
+    };
+    
+    const totalPages = Math.ceil(cancellations.length / itemsPerPage);
+    const startIdx = (currentPage - 1) * itemsPerPage;
+    const endIdx = startIdx + itemsPerPage;
+    const currentItems = cancellations.slice(startIdx, endIdx);
+
+    const handlePageChange = (newPage) => {
+      setCurrentPage(newPage);
+    };
 
     return (
         <div className="mx-20 my-12">
             <h2 className="text-2xl font-bold">Cancellation Requests</h2>
             <div className='flex flex-col gap-5 mt-7'>
-                {cancellations.map((cancellation, index) => {
+                {currentItems.map((cancellation, index) => {
                     return (
                         <div key={cancellation._id} className='grid grid-cols-[1fr_2fr_2fr] items-center gap-5 text-sm p-2.5 px-5 text-gray-500 border border-blue-500 md:grid-cols-[1fr_2fr_2fr_1fr] md-gap-4 lg:grid-cols-[1fr_2fr_2fr_1fr_1fr] xl:grid-cols-[1fr_2fr_2fr_1fr_1fr_1fr_1fr]'>
                             <img className='w-12' src={cancel_icon} alt=""/>
@@ -70,6 +82,16 @@ const Cancel = ({ url }) => {
                         </div>
                     )
                 })}
+            </div>
+            <div className="flex justify-center mt-5">
+            {Array.from({ length: totalPages }, (_, index) => (
+                <button
+                  key={index}
+                  className={`page-button ${currentPage === index + 1 ? 'active' : ''}`}
+                  onClick={() => handlePageChange(index + 1)}>
+                  {index + 1}
+                </button>
+            ))}
             </div>
         </div>
     );
