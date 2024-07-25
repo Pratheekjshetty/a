@@ -7,7 +7,7 @@ import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa';
 const Rating = () => {
     const { url } = useContext(StoreContext);
     const location = useLocation();
-    const {name,image} = location.state || {};
+    const {name,image,model} = location.state || {};
     const { carId } = useParams();
     const [ratings, setRatings] = useState([]);
     const [userDetails, setUserDetails] = useState({});
@@ -57,11 +57,15 @@ const Rating = () => {
       return stars;
   };
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     return (
         <div className="min-h-screen bg-blue-100 flex flex-col items-center justify-center">
             <div className="w-full max-w-5xl mx-auto p-4 bg-white shadow-none rounded-lg my-4">
               <div className="flex flex-col w-full">
-                <h1 className="text-2xl font-bold mb-4">{name}</h1>
+                <h1 className="text-2xl font-bold mb-4">{model}</h1>
               </div>
               <div className="w-full h-auto md:h-96">
                 <img src={`${url}/images/${image}`} alt={name} className="w-full h-full object-contain" />

@@ -41,8 +41,8 @@ const DisplayRatings = () => {
         navigate(`/add-rating/${vehicleId}`);
     };
 
-    const handleViewRatings = (vehicleId, name, image) => {
-        navigate(`/ratings/${vehicleId}`,{state:{name,image}});
+    const handleViewRatings = (vehicleId, name, image, model) => {
+        navigate(`/ratings/${vehicleId}`,{state:{name,image,model}});
     };
 
     return (
@@ -65,7 +65,7 @@ const DisplayRatings = () => {
                                 <FaStar className="text-yellow-500 w-4 h-4" />   
                             </div>
                             )}
-                            <img className='w-full rounded-md' src={`${url}/images/${item.image}`} alt="" onClick={() => handleViewRatings(item._id,item.name, item.image)}/>
+                            <img className='w-full rounded-md' src={`${url}/images/${item.image}`} alt="" onClick={() => handleViewRatings(item._id, item.name, item.image, item.model)}/>
                             <div className='p-2.5'>
                                 <h2 className="text-xl font-bold mb-2">{item.name}</h2>
                             </div>

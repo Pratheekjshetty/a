@@ -51,6 +51,10 @@ const Blog = () => {
     fetchSimilarBlogs();
 }, [blog, url]);
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     if (!blog) {
         return <p>No blog details available</p>;
     }

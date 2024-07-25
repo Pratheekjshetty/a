@@ -95,6 +95,10 @@ const AddRating = () => {
         }
     };
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
+
     return (
         <div className='w-[70%] ml-5 mt-12 text-[#6d6d6d] text-base xs:ml-12 sm:ml-20 lg:ml-40'>
             <h2 className='text-2xl font-bold mb-7 text-black'>Add Rating</h2>

@@ -9,6 +9,10 @@ const CarItem = ({id,name,price,location,description,image,model,color,seats,ave
   const handleBooking = () => {
     navigate('/booking', { state: { id, name, price, location, description, image, model, color, seats, } });    
   };
+
+  const handleImageClick = () => {
+    navigate(`/ratings/${id}`,{ state: { name, image, model } });
+  };
   return (
     <div className="w-full mx-auto rounded shadow-lg animate-fadeIn duration-2000 " id="car_item">
       <div className="relative">
@@ -18,7 +22,7 @@ const CarItem = ({id,name,price,location,description,image,model,color,seats,ave
           <FaStar className="text-yellow-500 w-4 h-4" />
         </div>
         )}
-        <img className='w-full rounded-md' src={url + "/images/" + image} alt="" />
+        <img className='w-full rounded-md' src={url + "/images/" + image} alt="" onClick={handleImageClick}/>
       </div>
         <div className='p-2.5'>
             <div className='flex justify-between items-center mb-2.5'>
