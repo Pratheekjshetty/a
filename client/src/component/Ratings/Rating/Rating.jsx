@@ -1,16 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { StoreContext } from '../../../context/StoreContext';
-import {useLocation, useParams } from 'react-router-dom';
+import {useLocation, useParams , useNavigate  } from 'react-router-dom';
 import axios from 'axios';
-import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa';
+import { FaStar, FaStarHalfAlt, FaRegStar, FaEdit } from 'react-icons/fa';
 
 const Rating = () => {
-    const { url } = useContext(StoreContext);
+    const { url, token  } = useContext(StoreContext);
     const location = useLocation();
     const {name,image,model} = location.state || {};
     const { carId } = useParams();
     const [ratings, setRatings] = useState([]);
     const [userDetails, setUserDetails] = useState({});
+    const [userId, setUserId] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchRatings = async () => {
@@ -40,8 +42,25 @@ const Rating = () => {
             }
         };
 
+        const fetchUserIdFromToken = async () => {
+            if (!token) return;
+            try {
+                const response = await axios.get(`${url}/api/user/get-user`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                if (response.data.success) {
+                    setUserId(response.data.user.userId);
+                }
+            } catch (error) {
+                console.error("Error fetching user details", error);
+            }
+        };
+
         fetchRatings();
-    }, [carId, url]);
+        fetchUserIdFromToken();
+    }, [carId, url, token]);
 
     const renderStars = (rating) => {
       const stars = [];
@@ -56,6 +75,10 @@ const Rating = () => {
       }
       return stars;
   };
+
+    const handleEditClick = (ratingId) => {
+        navigate(`/edit-rating/${ratingId}`);
+    };
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -78,6 +101,13 @@ const Rating = () => {
                                     <div className="flex items-center mt-4">
                                         <img src={`${url}/${userDetails[rating.userId].image}`} alt={userDetails[rating.userId].name} className="w-12 h-12 rounded-full mr-4"/>
                                         <p className="text-gray-700">{userDetails[rating.userId].name}</p>
+                                        {rating.userId === userId && (
+                                            <button
+                                                className="ml-auto p-2 bg-transparent rounded-full"
+                                                onClick={() => handleEditClick(rating._id)}>
+                                                <FaEdit className="text-gray-700" />
+                                            </button>
+                                        )}
                                     </div>
                                 )}
                                 <div className="flex items-center">

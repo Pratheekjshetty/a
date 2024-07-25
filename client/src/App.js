@@ -23,6 +23,7 @@ import CancelBooking from './pages/CancelBooking/CancelBooking';
 import AddEdit from './component/Blogs/AddEdit/AddEdit';
 import Blog from './component/Blogs/Blog/Blog';
 import AddRating from './component/Ratings/AddRating/AddRating'
+import EditRating from './component/Ratings/EditRating/EditRating';
 import Rating from './component/Ratings/Rating/Rating'
 import NoPage from './pages/NoPage/NoPage';
 
@@ -55,7 +56,7 @@ function App() {
           <Route path='/edit-blog/:id' element={<AddEdit/>}/>
           <Route path='/blog/:id' element={<Blog/>}/>
           <Route path='/add-rating/:id' element={<AddRating/>}/>
-          <Route path='/edit-rating/:id' element={<AddRating/>}/>
+          <Route path='/edit-rating/:id' element={<EditRating/>}/>
           <Route path='/ratings/:carId' element={<Rating/>}/>
           <Route path="*" element={<NoPage/>}/>
         </Routes>  
