@@ -213,5 +213,23 @@ const getUserById = async (req, res) => {
         res.status(500).json({ success: false, message: 'Error fetching user details' });
     }
 };
+const getCount = async (req, res) => {
+    try {
+        const userCount = await userModel.countDocuments({ role: 'user' });
+        const driverCount = await userModel.countDocuments({ role: 'driver' });
+        const adminCount = await userModel.countDocuments({ role: 'admin' });
+        res.json({
+            success: true,
+            counts: {
+                users: userCount,
+                drivers: driverCount,
+                admins: adminCount
+            }
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ success: false, message: 'Error fetching user count' });
+    }
+};
 
-export {loginUser,registerUser,editUser,getUser,getUserById}
+export {loginUser,registerUser,editUser,getUser,getUserById,getCount}

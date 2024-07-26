@@ -108,4 +108,13 @@ const editCar = async (req, res) => {
         res.json({ success: false, message: "Error" });
     }
 };
-export {addCar,listCar,listActiveCars,removeCar,deactivateCar,editCar}
+const getTotalCars = async (req, res) => {
+    try {
+        const count = await carModel.countDocuments({});
+        res.json({ success: true, totalCars: count });
+    } catch (err) {
+        console.log(err);
+        res.json({ success: false, message: "Error" });
+    }
+};
+export {addCar,listCar,listActiveCars,removeCar,deactivateCar,editCar,getTotalCars}

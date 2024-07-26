@@ -1,5 +1,5 @@
 import express from 'express'
-import { addCar,listCar,listActiveCars,removeCar,deactivateCar,editCar} from '../controllers/carControllers.js'
+import { addCar,listCar,listActiveCars,removeCar,deactivateCar,editCar,getTotalCars} from '../controllers/carControllers.js'
 import multer from 'multer'
 
 const carRouter = express.Router();
@@ -21,5 +21,6 @@ carRouter.get('/listactive-car',listActiveCars)
 carRouter.post('/remove',removeCar)
 carRouter.put('/deactivate-car',deactivateCar)
 carRouter.put('/edit',upload.single("image"),editCar)
+carRouter.get('/total-cars', getTotalCars);
 
 export default carRouter;

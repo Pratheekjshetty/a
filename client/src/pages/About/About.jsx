@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import axios from 'axios';
+import { StoreContext } from '../../context/StoreContext';
 import about_1 from '../../assets/about/about_1.jpg';
 import about_2 from '../../assets/about/about_2.jpg';
 import about_3 from '../../assets/about/about_3.jpg';
@@ -7,6 +9,33 @@ import about_5 from '../../assets/about/about_5.jpg';
 import about_6 from '../../assets/about/about_6.jpg';
 
 const About = () => {
+  const { url } = useContext(StoreContext);
+  const [counts, setCounts] = useState({
+    users: 0,
+    drivers: 0,
+    cars: 0 
+  });
+
+  useEffect(() => {
+    const fetchCounts = async () => {
+      try {
+        const [userResponse, carResponse] = await Promise.all([
+          axios.get(`${url}/api/user/get-count`),
+          axios.get(`${url}/api/car/total-cars`)
+        ]);
+        setCounts({
+          users: userResponse.data.counts.users || 0,
+          drivers: userResponse.data.counts.drivers || 0,
+          cars: carResponse.data.totalCars  || 0
+        });
+      } catch (error) {
+        console.error("Error fetching counts", error);
+      }
+    };
+
+    fetchCounts();
+  }, [url]);
+
   return (
     <div className="container justify-center">
       <div className="flex flex-wrap bg-blue-100">
@@ -47,17 +76,17 @@ const About = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-16 p-8 bg-blue-300">
         <div className="text-center bg-white rounded-xl p-16">
           <img src={about_2} alt="Total Users" className="mx-auto w-32 h-32 rounded-full"/>
-          <h3 className="text-2xl font-bold">1000+</h3>
+          <h3 className="text-2xl font-bold">{counts.users || '0'}</h3>
           <p className="text-gray-600">Total Users</p>
         </div>
         <div className="text-center bg-white rounded-xl p-16">
           <img src={about_1} alt="Total Drivers" className="mx-auto w-32 h-32 rounded-full"/>
-          <h3 className="text-2xl font-bold">500+</h3>
+          <h3 className="text-2xl font-bold">{counts.drivers || '0'}</h3>
           <p className="text-gray-600">Total Drivers</p>
         </div>
         <div className="text-center bg-white rounded-xl p-16">
           <img src={about_5} alt="Total Cars" className="mx-auto w-32 h-32 rounded-full"/>
-          <h3 className="text-2xl font-bold">300+</h3>
+          <h3 className="text-2xl font-bold">{counts.cars || '0'}</h3>
           <p className="text-gray-600">Total Cars</p>
         </div>
       </div>
