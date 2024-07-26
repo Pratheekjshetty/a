@@ -14,7 +14,7 @@ const DisplayRatings = () => {
     useEffect(() => {
         const fetchAverageRatings = async () => {
             const ratingsMap = {};
-            await Promise.all(
+            await Promise.all(  
                 vehicle_list.map(async (vehicle) => {
                     try {
                         const response = await axios.get(`${url}/api/rating/car/${vehicle._id}`);

@@ -20,10 +20,11 @@ const Rating = () => {
                 const response = await axios.get(`${url}/api/rating/car/${carId}`);
                 if (response.data.success) {
                   const fetchedRatings = response.data.data;
-                  setRatings(fetchedRatings);
+                  const reverseRatings =fetchedRatings.reverse();
+                  setRatings(reverseRatings);
 
                     // Fetch user details for each rating
-                    const userIds = fetchedRatings.map(rating => rating.userId);
+                    const userIds = reverseRatings.map(rating => rating.userId);
                     const userDetailsMap = {};
 
                     await Promise.all(userIds.map(async userId => {
