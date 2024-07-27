@@ -17,7 +17,8 @@ const Apply = ({carDisplayRef}) => {
     }
   };
   return (
-    <div className="flex justify-center items-center h-screen bg-blue-50">
+    <div className="flex flex-col justify-center items-center h-screen bg-blue-50">
+      <h1 className="text-4xl font-bold mb-8">Join Us Today</h1>
       <div className="relative w-full h-full max-w-3xl max-h-96 ">
         <img src={carrental} alt="Background" className="w-full h-full object-cover"
         />

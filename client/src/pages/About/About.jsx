@@ -71,25 +71,26 @@ const About = () => {
           <img src={about_3} alt="Our story" className="w-full h-auto rounded-xl"/>
         </div>
       </div> 
-
-      {/* bottom section */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-16 p-8 bg-blue-300">
+      <div className="p-8 bg-blue-300">
+      <h2 className="text-3xl font-bold mb-8 text-center">Our Growth</h2> 
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 ">
         <div className="text-center bg-white rounded-xl p-16">
           <img src={about_2} alt="Total Users" className="mx-auto w-32 h-32 rounded-full"/>
-          <h3 className="text-2xl font-bold">{counts.users || '0'}</h3>
+          <h3 className="text-2xl font-bold">{counts.users || '0'}+</h3>
           <p className="text-gray-600">Total Users</p>
         </div>
         <div className="text-center bg-white rounded-xl p-16">
           <img src={about_1} alt="Total Drivers" className="mx-auto w-32 h-32 rounded-full"/>
-          <h3 className="text-2xl font-bold">{counts.drivers || '0'}</h3>
+          <h3 className="text-2xl font-bold">{counts.drivers || '0'}+</h3>
           <p className="text-gray-600">Total Drivers</p>
         </div>
         <div className="text-center bg-white rounded-xl p-16">
           <img src={about_5} alt="Total Cars" className="mx-auto w-32 h-32 rounded-full"/>
-          <h3 className="text-2xl font-bold">{counts.cars || '0'}</h3>
+          <h3 className="text-2xl font-bold">{counts.cars || '0'}+</h3>
           <p className="text-gray-600">Total Cars</p>
         </div>
       </div>
+    </div>
     </div>
   );
 };
