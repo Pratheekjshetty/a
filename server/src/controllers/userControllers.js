@@ -231,5 +231,20 @@ const getCount = async (req, res) => {
         res.status(500).json({ success: false, message: 'Error fetching user count' });
     }
 };
+const listUsersByRole = async (req, res) => {
+    try {
+        const role = req.params.role;
+        const users = await userModel.find({ role: role }).select('-password');
+        
+        if (!users) {
+            return res.status(404).json({ success: false, message: 'No users found' });
+        }
 
-export {loginUser,registerUser,editUser,getUser,getUserById,getCount}
+        res.json({ success: true, users });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ success: false, message: 'Error fetching users' });
+    }
+};
+
+export {loginUser,registerUser,editUser,getUser,getUserById,getCount,listUsersByRole}

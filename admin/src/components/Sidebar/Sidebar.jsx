@@ -1,6 +1,7 @@
 import React from 'react'
 import './Sidebar.css'
 import home_icon from '../../assets/home_icon.png'
+import user_icon from '../../assets/user_icon.png'
 import add_icon from '../../assets/add_icon.png'
 import order_icon from '../../assets/order_icon.png'
 import car_icon from '../../assets/car_icon.png'
@@ -16,6 +17,10 @@ const Sidebar = () => {
             <NavLink to='/' className="sidebar-option flex items-center gap-[12px] border border-gray-400 border-r-0 p-[8px_10px] rounded-[3px_0px_0px_3px] cursor-pointer bg-blue-100">
                 <img src={home_icon} alt="" style={{ width: '30px' }} />
                 <p className='hidden lg:block'>Home</p>
+            </NavLink>
+            <NavLink to='/user' className="sidebar-option flex items-center gap-[12px] border border-gray-400 border-r-0 p-[8px_10px] rounded-[3px_0px_0px_3px] cursor-pointer bg-blue-100">
+                <img src={user_icon} alt="" style={{ width: '30px' }} />
+                <p className='hidden lg:block'>Users</p>
             </NavLink>
             <NavLink to='/add' className="sidebar-option flex items-center gap-[12px] border border-gray-400 border-r-0 p-[8px_10px] rounded-[3px_0px_0px_3px] cursor-pointer bg-blue-100">
                 <img src={add_icon} alt="" />
