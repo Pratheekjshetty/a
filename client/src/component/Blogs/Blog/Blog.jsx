@@ -37,8 +37,9 @@ const Blog = () => {
             try {
                 const response = await axios.get(`${url}/api/blog/category/${blog.category}`);
                 if (response.data.success) {
+                    const blogs = response.data.data;
                     // Filter out the current blog from similar blogs list
-                    const filteredBlogs = response.data.data.filter(b => b._id !== blog._id);
+                    const filteredBlogs = blogs.reverse().filter(b => b._id !== blog._id).slice(0, 4);
                     setSimilarBlogs(filteredBlogs);
                 } else {
                     console.error("Error fetching similar blogs");
