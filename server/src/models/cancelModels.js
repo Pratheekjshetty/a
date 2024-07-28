@@ -5,7 +5,7 @@ const cancelSchema = new mongoose.Schema({
     lastName: { type: String, required: true },
     bookingid: { type: String, required: true },
     email: { type: String, required: true },
-    phone: { type: String, required: true },
+    phone: { type: Number, required: true },
     from: { type: String, required: true },
     to: { type: String, required: true },
     reason: { type: String, required: true },
