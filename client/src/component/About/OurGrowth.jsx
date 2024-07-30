@@ -39,7 +39,7 @@ const OurGrowth = () => {
   return (
     <div className="bg-blue-300">
       <div className="p-16">
-        <h2 className="text-3xl font-bold text-center mb-8">Our Growth</h2>
+        <h2 className="text-4xl font-bold text-center mb-8">Our Growth</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           <div className="w-full mx-auto rounded shadow-lg bg-white p-4">
             <img src={about_2} alt="Total Users" className="w-full rounded-md" />

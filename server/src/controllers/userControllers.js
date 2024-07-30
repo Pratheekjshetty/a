@@ -30,6 +30,11 @@ const loginUser =async(req,res)=>{
             return res.status(400).json({success:false,message:"User doesn't exists"})
         }
 
+        // checking if user is active
+        if (user.is_Active !== "1") {
+            return res.status(403).json({ success: false, message: "User account is inactive" });
+        }
+
         // checking if password matches
         const isMatch = await bcrypt.compare(password,user.password)
         if (!isMatch){
@@ -231,13 +236,13 @@ const getCount = async (req, res) => {
         res.status(500).json({ success: false, message: 'Error fetching user count' });
     }
 };
-const listUsersByRole = async (req, res) => {
+const listActiveUsersByRole = async (req, res) => {
     try {
         const role = req.params.role;
-        const users = await userModel.find({ role: role }).select('-password');
+        const users = await userModel.find({ role: role, is_Active: "1"  }).select('-password');
         
-        if (!users) {
-            return res.status(404).json({ success: false, message: 'No users found' });
+        if (!users || users.length === 0) {
+            return res.status(404).json({ success: false, message: 'No active users found' });
         }
 
         res.json({ success: true, users });
@@ -246,5 +251,20 @@ const listUsersByRole = async (req, res) => {
         res.status(500).json({ success: false, message: 'Error fetching users' });
     }
 };
+const deactivateUser = async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const user = await userModel.findById(userId);
+      if (!user) {
+        return res.status(404).json({ success: false, message: "User not found" });
+      }
+      user.is_Active = "0";
+      await user.save();
+      res.json({ success: true, message: "User has been deactivated successfully" });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ success: false, message: "Error deactivating user" });
+    }
+  };
 
-export {loginUser,registerUser,editUser,getUser,getUserById,getCount,listUsersByRole}
+export {loginUser,registerUser,editUser,getUser,getUserById,getCount,listActiveUsersByRole,deactivateUser}

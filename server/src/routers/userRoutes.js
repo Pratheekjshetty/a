@@ -1,5 +1,5 @@
 import express from 'express'
-import {loginUser,registerUser,editUser,getUser,getUserById,getCount,listUsersByRole} from '../controllers/userControllers.js'
+import {loginUser,registerUser,editUser,getUser,getUserById,getCount,listActiveUsersByRole,deactivateUser} from '../controllers/userControllers.js'
 import authMiddleware from '../middleware/auth.js';
 import multer from 'multer'
 
@@ -21,6 +21,7 @@ userRouter.put('/edit-user', authMiddleware, upload.single('image'), editUser);
 userRouter.get('/get-user', authMiddleware, getUser);
 userRouter.get('/get-user-by-id/:userId', getUserById);
 userRouter.get('/get-count',getCount);
-userRouter.get('/list-users/:role', listUsersByRole);
+userRouter.get('/list-users/:role', listActiveUsersByRole);
+userRouter.put('/deactivate/:userId', deactivateUser);
 
 export default userRouter;

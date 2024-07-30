@@ -2,59 +2,44 @@ import React, { useCallback, useState, useEffect } from 'react'
 import apply_icon from '../../assets/apply_icon.png';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { FaTrash } from 'react-icons/fa';
 
 const Apply = ({ url }) => {
   const [applications, setApplications] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [statuses, setStatuses] = useState({});
   const itemsPerPage = 5;
 
   const fetchApplications =useCallback(async () => {
     try {
         const response = await axios.get(`${url}/api/driver/applications`);
-            const reversedApplications = response.data.reverse();
-            setApplications(reversedApplications);
+        const reversedApplications = response.data.reverse();
+        setApplications(reversedApplications);
+        const newStatuses = {};
+        reversedApplications.forEach(app => {
+        newStatuses[app.userId] = app.status;
+      });
+      setStatuses(newStatuses);
     } catch (err) {
         toast.error("An error occurred while fetching application");
         console.error(err);
     }
 }, [url]);
 
-const statusHandler = async (event, userId) => {
+const updateStatus = async (event, userId, status) => {
+    event.preventDefault();
     try {
-        event.preventDefault();
-        await axios.post(`${url}/api/driver/update-role`, { userId });
-        toast.success("Driver application accepted successfully");
-        fetchApplications(); 
-    } catch (err) {
-        console.error('Error updating driver status:', err);
-        toast.error("Failed to update driver status");
-    }
-};
+      const endpoint = status === 'accepted'
+        ? `${url}/api/driver/update-role`
+        : `${url}/api/driver/delete-role`;
 
-const handleReject = async (event, userId) => {
-    try {
-        event.preventDefault();
-       await axios.post(`${url}/api/driver/delete-role`, { userId });
-        toast.success("Driver application rejected successfully");
-        fetchApplications(); 
+      await axios.post(endpoint, { userId });
+      toast.success(`Driver application ${status} successfully`);
+      setStatuses(prev => ({ ...prev, [userId]: status }));
     } catch (err) {
-        console.error('Error updating driver status:', err);
-        toast.error("Failed to update driver status");
+      console.error(`Error updating driver status: ${status}`, err);
+      toast.error(`Failed to update driver status`);
     }
-};
-
-const handelDelete = async(event, applyId) => {
-    try {
-        event.preventDefault();
-        await axios.delete(`${url}/api/driver/delete-application`, { data: { applyId } });
-        toast.success("Driver application deleted successfully");
-        fetchApplications();
-    } catch (err) {
-        console.error('Error rejecting application:', err);
-        toast.error("Failed to reject application");
-    }
-}
+  };
 
 useEffect(() => {
   fetchApplications();
@@ -77,9 +62,10 @@ const handlePageChange = (newPage) => {
       <div className="mx-20 my-12">
           <h2 className="text-2xl font-bold">Driver Applications</h2>
           <div className='flex flex-col gap-5 mt-7'>
-              {currentItems.map((application, index) => {
+              {currentItems.map((application) => {
+                const status = statuses[application.userId];
                   return(
-                      <div key={application._id} className='grid grid-cols-[1fr_2fr_2fr] items-center gap-5 text-sm p-2.5 px-5 text-gray-500 border border-blue-500 md:grid-cols-[1fr_2fr_2fr_1fr] md-gap-4 lg:grid-cols-[1fr_2fr_2fr_1fr_1fr] xl:grid-cols-[1fr_2fr_2fr_1fr_1fr_1fr_1fr_0.5fr]'>
+                    <div key={application._id} className='grid grid-cols-[1fr_2fr_2fr] items-center gap-5 text-sm p-2.5 px-5 text-gray-500 border border-blue-500 md:grid-cols-[1fr_2fr_2fr_1fr] md-gap-4 lg:grid-cols-[1fr_2fr_2fr_1fr_1fr] xl:grid-cols-[1fr_2fr_2fr_1fr_1fr_1fr_1fr_0.5fr]'>
                         <img className='w-12' src={apply_icon} alt=""/>
                         <div>
                             <p className='mt-2 mb-1'>{application.address.firstName} {application.address.lastName}</p>
@@ -93,10 +79,11 @@ const handlePageChange = (newPage) => {
                         </div>
                         <p>{application.availability}</p>
                         <p>{formatDate(application.date)}</p>
-                        <button className='bg-blue-200 border border-blue-500 p-2 outline-none' onClick={(event) => statusHandler(event, application.userId)}>Accept</button>
-                        <button className='bg-red-200 border border-red-500 p-2 outline-none' onClick={(event) => handleReject(event, application.userId)}>Reject</button>
-                        <p className='flex justify-center items-center cursor' onClick={(event) => handelDelete(event, application._id)}><FaTrash /></p>
-                      </div>
+                        <button className={`p-2 outline-none ${status === 'accepted' ? 'bg-green-200 border border-green-500' : 'bg-blue-200 border border-blue-500'}`}
+                        onClick={(event) => updateStatus(event, application.userId, 'accepted')}>Accept</button>
+                        <button className={`p-2 outline-none ${status === 'rejected' ? 'bg-orange-200 border border-orange-500' : 'bg-red-200 border border-red-500'}`}
+                        onClick={(event) => updateStatus(event, application.userId, 'rejected')}>Reject</button>
+                    </div>
                   )
               })}
           </div>
