@@ -4,14 +4,16 @@ import axios from 'axios';
 import './List.css';
 import { FaTrash, FaEdit } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import Confirmation from  '../../components/Confirmation/Confirmation';
 
 const List = ({ url }) => {   
-
   const [list, setList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isEditMode, setIsEditMode] = useState(false);
   const [currentEditId, setCurrentEditId] = useState(null);
   const itemsPerPage = 8;
+  const [selectedCar, setSelectedCar] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const formRef = useRef(null);
 
   const fetchList = useCallback(async () => {
@@ -28,18 +30,24 @@ const List = ({ url }) => {
     }
   }, [url]);
 
-  const removeCar = async (carId) => {
+  const removeCar = async () => {
     try {
-      const response = await axios.put(`${url}/api/car/deactivate-car`, { id: carId });
+      const response = await axios.put(`${url}/api/car/deactivate-car`, { id: selectedCar });
       if (response.data.success) {
         toast.success(response.data.message);
         await fetchList();
+        setShowModal(false);
       } else {
         toast.error("Error");
       }
     } catch (error) {
       toast.error("Error removing the car item");
     }
+  };
+
+  const handleDeleteClick = (carId) => {
+    setSelectedCar(carId);
+    setShowModal(true);
   };
 
   const editCar = (car) => {
@@ -53,7 +61,7 @@ const List = ({ url }) => {
       seats: car.seats,
       model: car.model,
     });
-    setImage(null); // Clear the image input
+    setImage(null); 
     setCurrentEditId(car._id);
     setIsEditMode(true);
   };
@@ -168,8 +176,8 @@ const List = ({ url }) => {
               <p>{item.category}</p>
               <p>{item.location}</p>
               <p>Rs.{item.price}</p>
-              <p onClick={() => removeCar(item._id)} className='cursor'><FaTrash /></p>
-              <p onClick={() => editCar(item)} className='cursor'><FaEdit /></p>
+              <p onClick={() => handleDeleteClick(item._id)} className='cursor-pointer'><FaTrash /></p>
+              <p onClick={() => editCar(item)} className='cursor-pointer'><FaEdit /></p>
             </div>
           ))}
         </div>
@@ -250,6 +258,12 @@ const List = ({ url }) => {
           </div>
         </form>
       )}
+      <Confirmation
+        show={showModal}
+        message="Are you sure you want to deactivate this user?"
+        onConfirm={removeCar}
+        onCancel={() => setShowModal(false)}
+      />
     </div>
   );
 }
