@@ -91,9 +91,11 @@ const getBlogById = async (req, res) => {
 // get total blogs
 const getTotalBlogs = async (req, res) => {
     try {
-       
+        const totalBlogs = await blogModel.countDocuments();
+        res.json({ success: true, totalBlogs: totalBlogs });
     } catch (error) {
-        
+        console.log(error);
+        res.status(500).json({ success: false, message: 'Error fetching total blogs count' });
     }
 };
 

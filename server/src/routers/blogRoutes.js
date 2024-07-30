@@ -19,8 +19,8 @@ const upload = multer({storage:storage})
 blogRouter.post('/add',authMiddleware,upload.single("image"),addBlog);
 blogRouter.post('/edit',authMiddleware,upload.single("image"),editBlog);
 blogRouter.get('/list',listBlog);
+blogRouter.get('/total-blogs',getTotalBlogs);
 blogRouter.get('/category/:category',getBlog)
 blogRouter.get('/:id', getBlogById);
-blogRouter.get('/total-blogs',getTotalBlogs)
 
 export default blogRouter ;

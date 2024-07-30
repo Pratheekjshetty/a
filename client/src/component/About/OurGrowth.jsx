@@ -11,22 +11,24 @@ const OurGrowth = () => {
     const [counts, setCounts] = useState({
       users: 0,
       drivers: 0,
-      cars: 0 
+      cars: 0,
+      blogs: 0,
     });
   
     useEffect(() => {
       const fetchCounts = async () => {
         try {
-          const [userResponse, carResponse, ] = await Promise.all([
+          const [userResponse, carResponse, blogResponse ] = await Promise.all([
             axios.get(`${url}/api/user/get-count`),
             axios.get(`${url}/api/car/total-cars`),
+            axios.get( `${url}/api/blog/total-blogs`)
           ]);
           setCounts({
             users: userResponse.data.counts.users || 0,
             drivers: userResponse.data.counts.drivers || 0,
             cars: carResponse.data.totalCars  || 0,
-            
-          });
+            blogs: blogResponse.data.totalBlogs || 0,
+          });      
         } catch (error) {
           console.error("Error fetching counts", error);
         }
@@ -56,7 +58,7 @@ const OurGrowth = () => {
           </div>
           <div className="w-full mx-auto rounded shadow-lg bg-white p-4">
             <img src={about_7} alt="Total Blogs" className="w-full rounded-md" />
-            <h3 className="text-2xl font-bold mt-4">0+</h3>
+            <h3 className="text-2xl font-bold mt-4">{counts.blogs || '0'}+</h3>
             <p className="text-gray-600">Total Blogs</p>
           </div>
         </div>
