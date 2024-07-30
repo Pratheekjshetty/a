@@ -88,5 +88,13 @@ const getBlogById = async (req, res) => {
         res.status(500).json({ success: false, message: 'Error fetching blog by ID' });
     }
 };
+// get total blogs
+const getTotalBlogs = async (req, res) => {
+    try {
+       
+    } catch (error) {
+        
+    }
+};
 
-export {addBlog,editBlog,listBlog,getBlog,getBlogById}
+export {addBlog,editBlog,listBlog,getBlog,getBlogById,getTotalBlogs}
