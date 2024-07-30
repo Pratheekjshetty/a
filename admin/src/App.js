@@ -7,6 +7,7 @@ import Navbar from './components/Navbar/Navbar';
 import Sidebar from './components/Sidebar/Sidebar';
 import Home from './pages/Home/Home';
 import User from './pages/User/User';
+import Driver from './pages/Driver/Driver';
 import Add from './pages/Add/Add';
 import List from './pages/List/List';
 import Booking from './pages/Booking/Booking';
@@ -24,6 +25,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home url={url}/>}/>
           <Route path='/user' element={<User url={url}/>}/>
+          <Route path='driver' element={<Driver url={url}/>}/>
           <Route path='/add' element={<Add url={url}/>}/>
           <Route path='/list' element={<List url={url} />}/>
           <Route path='/booking' element={<Booking url={url}/>}/>
