@@ -66,8 +66,7 @@ const DriverPage = ({ url }) => {
         {currentItems.map((driver, index) => (
           <div
             key={index}
-            className="grid grid-cols-[1fr_1fr] items-center gap-5 text-sm p-2.5 px-5 text-gray-500 border border-blue-500 sm:grid-cols-[1fr_1fr_1fr]  md:grid-cols-[1fr_1fr_1fr_1fr] md-gap-4 lg:grid-cols-[1fr_1fr_1fr_1fr_1fr]"
-          >
+            className="grid grid-cols-[1fr_1fr] items-center gap-5 text-sm p-2.5 px-5 text-gray-500 border border-blue-500 sm:grid-cols-[1fr_1fr_1fr]  md:grid-cols-[1fr_1fr_1fr_1fr] md-gap-4 lg:grid-cols-[1fr_1fr_1fr_1fr_0.5fr]">
             <img className="w-16" src={`${url}/${driver.image}`} alt="Driver Icon" />
             <p className="mt-2 mb-1">{driver.name}</p>
             <p>{driver.email}</p>

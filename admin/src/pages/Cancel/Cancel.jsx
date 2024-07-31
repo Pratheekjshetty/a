@@ -25,9 +25,22 @@ const Cancel = ({ url }) => {
         }
     }, [url]);
 
-    const statusHandler = async (event, bookingid) => {
+    const isButtonActive = (pickupDate, pickupTime) => {
+        const pickupDateTime = new Date(pickupDate);
+        const [hours, minutes] = pickupTime.split(':');
+        pickupDateTime.setHours(hours, minutes);
+        const currentTime = new Date();
+        const timeDifference = pickupDateTime - currentTime;
+        return timeDifference > 10 * 60 * 1000; // 10 minutes
+    };
+
+    const statusHandler = async (event, bookingid, pickupDate, pickupTime) => {
+        event.preventDefault();
+        if (!isButtonActive(pickupDate, pickupTime)) {
+            toast.error("Accept action is not allowed within 10 minutes of pickup time.");
+            return;
+        }
         try {
-            event.preventDefault();
             await axios.post(`${url}/api/cancel/update-status`, { bookingid });
             toast.success("Booking status updated successfully");
             fetchCancellations(); 
@@ -37,9 +50,13 @@ const Cancel = ({ url }) => {
         }
     };
 
-    const handleReject = async (event, bookingid) => {
+    const handleReject = async (event, bookingid, pickupDate, pickupTime) => {
+        event.preventDefault();
+        if (!isButtonActive(pickupDate, pickupTime)) {
+            toast.error("Reject action is not allowed within 10 minutes of pickup time.");
+            return;
+        }
         try {
-            event.preventDefault();
             await axios.post(`${url}/api/cancel/delete-status`, { bookingid });
             toast.success("Cancellation request rejected successfully");
             fetchCancellations();
@@ -73,6 +90,7 @@ const Cancel = ({ url }) => {
             <div className='flex flex-col gap-5 mt-7'>
                 {currentItems.map((cancellation, index) => {
                     const status = statuses[cancellation.bookingid];
+                    const buttonActive = isButtonActive(cancellation.pickupdate, cancellation.pickuptime);
                     return (
                         <div key={cancellation._id} className='grid grid-cols-[1fr_2fr_2fr] items-center gap-5 text-sm p-2.5 px-5 text-gray-500 border border-blue-500 md:grid-cols-[1fr_2fr_2fr_1fr] md-gap-4 lg:grid-cols-[1fr_2fr_2fr_1fr_1fr] xl:grid-cols-[1fr_2fr_2fr_1fr_1fr_1fr_1fr]'>
                             <img className='w-12' src={cancel_icon} alt=""/>
@@ -84,10 +102,22 @@ const Cancel = ({ url }) => {
                             <p className='w-48'>{cancellation.reason}</p>
                             <p>{formatDate(cancellation.bookingdate)}</p>
                             <p>{formatDate(cancellation.currentdate)}</p>
-                            <button className={`p-2 outline-none ${status === 'Cancellation Approved' ? 'bg-green-200 border border-green-500' : 'bg-blue-200 border border-blue-500'}`}
-                            onClick={(event) => statusHandler(event, cancellation.bookingid)}>Accept</button>
-                            <button className={`p-2 outline-none ${status === 'Cancellation Rejected' ? 'bg-orange-200 border border-orange-500' : 'bg-red-200 border border-red-500'}`}
-                            onClick={(event) => handleReject(event, cancellation.bookingid)}>Reject</button>
+                            <button className={`p-2 outline-none ${buttonActive ? (status === 'Cancellation Approved' ? 'bg-green-200 border border-green-500' : 'bg-blue-200 border border-blue-500') : 'bg-gray-300 cursor-not-allowed'}`}
+                            onClick={(event) => {
+                            if (buttonActive) {
+                                statusHandler(event, cancellation.bookingid, cancellation.pickupdate, cancellation.pickuptime);
+                            } else {
+                                alert("Accept action is not allowed within 10 minutes of pickup time.");
+                            }
+                            }}>Accept</button>
+                            <button className={`p-2 outline-none ${buttonActive ? (status === 'Cancellation Rejected' ? 'bg-orange-200 border border-orange-500' : 'bg-red-200 border border-red-500') : 'bg-gray-300 cursor-not-allowed'}`}
+                            onClick={(event) => {
+                            if (buttonActive) {
+                                handleReject(event, cancellation.bookingid, cancellation.pickupdate, cancellation.pickuptime);
+                            } else {
+                                alert("Reject action is not allowed within 10 minutes of pickup time.");
+                            }
+                            }}>Reject</button>
                         </div>
                     )
                 })}
