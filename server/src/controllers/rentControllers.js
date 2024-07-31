@@ -117,4 +117,70 @@ const updateStatus = async (req,res)=>{
         res.json({success:false,message:"Error"}) 
     }
 }
-export {rentBooking,verifyBooking,userBooking,listBooking,updateStatus}
+
+//get weekly bookings
+const getWeekBookings = async (req, res) => {
+    try {
+        const firstBooking = await rentModel.findOne().sort({ date: 1 });
+        if (!firstBooking) {
+          return res.status(404).json({ success: false, message: "No bookings found" });
+        }
+    
+        const bookings = await rentModel.aggregate([
+          {
+            $group: {
+              _id: {
+                $dateToString: {
+                  format: "%Y-%U",
+                  date: "$date",
+                  timezone: "Asia/Kolkata",
+                },
+              },
+              count: { $sum: 1 },
+            },
+          },
+          {
+            $sort: { _id: 1 },
+          },
+        ]);
+        res.json(bookings);
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: "Error fetching weekly bookings" });
+      }
+  };
+  const getCarBookingPercentages = async (req, res) => {
+    try {
+      const bookings = await rentModel.find({});
+      const totalBookings = bookings.length;
+  
+      if (totalBookings === 0) {
+        return res.json({ success: true, data: [] });
+      }
+      const bookingCounts = await rentModel.aggregate([
+        {
+          $group: {
+            _id: "$caritem.name",
+            count: { $sum: 1 },
+          },
+        },
+        {
+          $sort: { count: -1 },
+        },
+      ]);
+      const carBookingPercentages = bookingCounts.map((car) => {
+        const percentage = ((car.count / totalBookings) * 100).toFixed(2);
+        return {
+          carModel: car._id,
+          count: car.count,
+          percentage: percentage,
+        };
+      });
+  
+      res.json({ success: true, data: carBookingPercentages });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ success: false, message: "Error fetching car booking percentages" });
+    }
+  };
+export {rentBooking,verifyBooking,userBooking,listBooking,updateStatus,getWeekBookings,getCarBookingPercentages}
