@@ -72,9 +72,7 @@ const applyDriver = async (req, res) => {
 
 const getApplications = async(req,res) =>{
   try {
-    const applications = await driverModel.find({
-      status: { $in: ["Driver Applied"] }
-    });
+    const applications = await driverModel.find({});
     res.status(200).send(applications);
   } catch (error) {
     console.error('Error fetching applications:', error);
