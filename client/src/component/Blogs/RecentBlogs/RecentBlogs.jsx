@@ -47,7 +47,7 @@ const RecentBlogs = ({ onCategorySelect }) => {
             <h3 className="text-lg font-semibold mb-4">Recent Blogs</h3>
             <div className="space-y-2">
                 {recentBlogs.map((blog) => (
-                    <div key={blog._id} className="flex items-center space-x-4">
+                    <div key={blog._id} className="flex items-center space-x-4 transform transition-transform duration-300 hover:scale-105">
                         <img src={`${url}/blog-uploads/${blog.image}`} alt={blog.title}
                             className="w-16 h-16 object-cover rounded-full" onClick={() => handleImageClick(blog)}/>
                         <div className="flex-1">

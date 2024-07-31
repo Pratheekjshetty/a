@@ -62,7 +62,7 @@ const DisplayRatings = () => {
                 <h2 className='text-xl font-semibold'>Browse by Make</h2>
                 <div className='grid mt-8 gap-x-13 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
                     {currentItems.map((item, index) => (
-                        <div key={index} className="w-full mx-auto rounded shadow-lg bg-white p-4 relative">
+                        <div key={index} className="w-full mx-auto rounded shadow-lg bg-white p-4 relative transform transition-transform duration-300 hover:scale-105">
                             {token && (
                             <button 
                                 className="absolute top-2 right-2 p-2 bg-transparent rounded-full shadow-md"

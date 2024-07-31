@@ -81,7 +81,7 @@ const handleCategorySelect = (category) => {
                 ) : (
                     <div className="grid mt-8 gap-x-13 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
                         {currentItems.map((blog) => (
-                            <div key={blog._id} className="w-full mx-auto rounded shadow-lg bg-white p-4 relative">
+                            <div key={blog._id} className="w-full mx-auto rounded shadow-lg bg-white p-4 relative transform transition-transform duration-300 hover:scale-105">
                                 <img className="w-full h-auto rounded-md cursor-pointer" src={`${url}/blog-uploads/${blog.image}`} alt={blog.title} onClick={() => handleImageClick(blog)}/>
                                 {blog.userId === userId && (
                                     <button 

@@ -38,7 +38,7 @@ const BrowseCar = ({ carDisplayRef }) => {
   };
   return (
     <div className="flex justify-center items-center min-h-screen bg-blue-300">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl relative">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl relative transform transition-transform duration-300 hover:scale-105">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="relative flex justify-center items-center">
             <img src={images[currentIndex].src} alt={images[currentIndex].alt} className="rounded-lg max-w-full"/>

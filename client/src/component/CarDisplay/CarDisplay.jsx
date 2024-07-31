@@ -149,8 +149,8 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
     });
 
     return (
-        <div className='bg-blue-50'>
-            <div className='m-8' id='car_display'>
+        <div className='bg-blue-50 p-8'>
+            <div className='p-8' id='car_display'>
                 <h2 className='text-xl font-semibold'>Browse by Make</h2>
                 <div className='flex flex-col md:flex-row'>
                 <div className='flex items-center mt-4'>

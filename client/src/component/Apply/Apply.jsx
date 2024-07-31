@@ -22,7 +22,7 @@ const Apply = ({carDisplayRef}) => {
       <div className="relative w-full h-full max-w-3xl max-h-96 ">
         <img src={carrental} alt="Background" className="w-full h-full object-cover"
         />
-        <div className="absolute top-0 left-0 m-4 p-4 bg-transparent rounded transform translate-x-8">
+        <div className="absolute top-0 left-0 m-4 p-4 bg-transparent rounded transform transition-transform duration-300 hover:scale-105">
           <h2 className="text-xl font-bold">
           <Link onClick={handleBookRideClick} className="text-blue-700">
               Book a Ride
@@ -30,7 +30,7 @@ const Apply = ({carDisplayRef}) => {
           </h2>
           <p className="max-w-xs">Down the street or across the country, find the perfect vehicle for your next adventure.</p>
         </div>
-        <div className="absolute bottom-0 right-0 m-4 p-4 bg-transparent rounded transform translate-x-8">
+        <div className="absolute bottom-0 right-0 m-4 p-4 bg-transparent rounded transform transition-transform duration-300 hover:scale-105">
           <h2 className="text-xl font-bold">
           <Link to="/apply-driver" onClick={handleApplyDriverClick} className="text-blue-700">
               Apply as a Driver
