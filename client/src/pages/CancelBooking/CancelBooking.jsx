@@ -31,8 +31,19 @@ const CancelBooking = () => {
   const formatDate = getFormatDate(date);
   const currentDate = getCurrentDate();
 
+  const isCancellationAllowed = () => {
+    const pickupDateTime = new Date(pickupDate + 'T' + pickupTime);
+    const currentTime = new Date();
+    const timeDifference = pickupDateTime - currentTime;
+    return timeDifference > 24 * 60 * 60 * 1000;
+};
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!isCancellationAllowed()) {
+      toast.error('You can only cancel a booking up to 24 hours before the pickup time.');
+      return;
+    }
     try {
       await axios.post(url +"/api/cancel/cancel-booking", {
         firstName,

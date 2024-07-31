@@ -66,7 +66,7 @@ const BrowseCar = ({ carDisplayRef }) => {
             <p className="text-md font-sans text-gray-600 mb-4">
               {images[currentIndex].paragraph}
             </p>
-            <center><button onClick={handleBrowseBlogs} className='bg-indigo-600 text-white p-2 rounded-lg text-md w-40' >Browse Blogs</button></center>
+            <center><button onClick={handleBrowseBlogs} className='bg-indigo-600 text-white p-2 rounded-lg text-md w-40 transform transition-transform duration-300 hover:scale-105' >Browse Blogs</button></center>
           </div>
         </div>
       </div>

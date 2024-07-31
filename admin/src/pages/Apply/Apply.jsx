@@ -98,9 +98,9 @@ const Apply = ({ url }) => {
               </div>
               <p>{application.availability}</p>
               <p>{formatDate(application.date)}</p>
-              <button className={`p-2 outline-none ${status === 'Driver Confirmed' ? 'bg-green-200 border border-green-500' : 'bg-blue-200 border border-blue-500'}`}
+              <button className={`p-2 outline-none ${status === 'Driver Confirmed' ? 'bg-green-200 border border-green-500' : 'bg-blue-200 border border-blue-500'} transform transition-transform duration-300 hover:scale-105`}
                 onClick={() => handleActionClick(application, 'Driver Confirmed')}>Accept</button>
-              <button className={`p-2 outline-none ${status === 'Driver Rejected' ? 'bg-orange-200 border border-orange-500' : 'bg-red-200 border border-red-500'}`}
+              <button className={`p-2 outline-none ${status === 'Driver Rejected' ? 'bg-orange-200 border border-orange-500' : 'bg-red-200 border border-red-500'} transform transition-transform duration-300 hover:scale-105`}
                 onClick={() => handleActionClick(application, 'Driver Rejected')}>Reject</button>
             </div>
           )

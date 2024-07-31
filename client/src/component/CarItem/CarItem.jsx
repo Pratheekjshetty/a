@@ -34,7 +34,7 @@ const CarItem = ({id,name,price,location,description,image,model,color,seats,ave
               <p className="text-blue-400 text-md font-medium my-0">{location}</p>
             </div>
             <div className='flex justify-center items-center'>
-              <button onClick={handleBooking} className='bg-blue-400 px-2 py-1 rounded text-white hover:bg-blue-300'>Book Now</button>
+              <button onClick={handleBooking} className='bg-blue-400 px-2 py-1 rounded text-white hover:bg-blue-300 transform transition-transform duration-300 hover:scale-105'>Book Now</button>
             </div>
         </div>
     </div>

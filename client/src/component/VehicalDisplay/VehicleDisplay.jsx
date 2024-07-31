@@ -42,7 +42,7 @@ const VehicleDisplay = ({category,setCategory,carDisplayRef}) => {
     <div className='flex justify-center text-center flex-col'>
       <h1 className='m-8 font-bold text-4xl'>Endless Options</h1>
       <p>With our extensive range of cars, finding a ride anytime, anywhere has never been easier.</p><br />
-      <center><button onClick={scrollToCarDisplay} className='bg-indigo-600 text-white p-2 rounded-lg text-md w-44'>Explore Cars</button></center>
+      <center><button onClick={scrollToCarDisplay} className='bg-indigo-600 text-white p-2 rounded-lg text-md w-44 transform transition-transform duration-300 hover:scale-105'>Explore Cars</button></center>
       <div id="controls-carousel" className="relative w-full" data-carousel="static"><br />
         <div className="relative flex items-center justify-center overflow-hidden rounded-lg" style={{ height: '50vh' }}>
           <h2 className="absolute top-0 mt-4 ml-4 mr-4 font-bold text-xl">Top Cars near you</h2>

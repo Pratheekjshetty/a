@@ -53,7 +53,7 @@ const MyBooking = () => {
         const pickupDateTime = new Date(pickupDate);
         const [hours, minutes] = pickupTime.split(':');
         pickupDateTime.setHours(hours, minutes);
-        const currentTime = new Date();
+        const currentTime = new Date();  
         const timeDifference = pickupDateTime - currentTime;
         return timeDifference > 24 * 60 * 60 * 1000;
     };

@@ -85,7 +85,7 @@ const Blog = () => {
                 <h2 className="text-xl font-bold mb-4">Similar Blogs</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {similarBlogs.map((similarBlog) => (
-                        <div key={similarBlog._id} className="w-full mx-auto rounded shadow-lg bg-white p-4">
+                        <div key={similarBlog._id} className="w-full mx-auto rounded shadow-lg bg-white p-4 transform transition-transform duration-300 hover:scale-105">
                             <img className="w-full h-auto rounded-md cursor-pointer" 
                                 src={`${url}/blog-uploads/${similarBlog.image}`} alt={similarBlog.title} 
                                 onClick={() => navigate(`/blog/${similarBlog._id}`, { state: { blog: similarBlog } })}/>

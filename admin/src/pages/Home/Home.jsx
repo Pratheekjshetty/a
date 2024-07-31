@@ -141,7 +141,7 @@ const Dashboard = ({ url }) => {
             <p className="text-3xl font-bold">{stats.blogs}</p>
           </div>
         </div>
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="card bg-gradient-to-r from-purple-200 to-purple-300 text-white p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-200">
             <h2 className="text-2xl font-bold text-center mb-4">Car Booking Percentages</h2>
             {carBookingPercentages.length > 0 && (

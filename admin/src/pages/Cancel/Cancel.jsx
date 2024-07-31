@@ -104,7 +104,7 @@ const Cancel = ({ url }) => {
                             <p className='w-48'>{cancellation.reason}</p>
                             <p>{formatDate(cancellation.bookingdate)}</p>
                             <p>{formatDate(cancellation.currentdate)}</p>
-                            <button className={`p-2 outline-none ${buttonActive ? (status === 'Cancellation Approved' ? 'bg-green-200 border border-green-500' : 'bg-blue-200 border border-blue-500') : 'bg-gray-300 cursor-not-allowed'}`}
+                            <button className={`p-2 outline-none ${buttonActive ? (status === 'Cancellation Approved' ? 'bg-green-200 border border-green-500' : 'bg-blue-200 border border-blue-500') : 'bg-gray-300 border border-gray-500 cursor-not-allowed'} transform transition-transform duration-300 hover:scale-105`}
                             onClick={() => {
                             if (buttonActive) {
                                 handleActionClick(cancellation, 'Cancellation Approved');
@@ -112,7 +112,7 @@ const Cancel = ({ url }) => {
                                 alert("Accept action is not allowed within 10 minutes of pickup time.");
                             }  
                             }}>Accept</button>
-                            <button className={`p-2 outline-none ${buttonActive ? (status === 'Cancellation Rejected' ? 'bg-orange-200 border border-orange-500' : 'bg-red-200 border border-red-500') : 'bg-gray-300 cursor-not-allowed'}`}
+                            <button className={`p-2 outline-none ${buttonActive ? (status === 'Cancellation Rejected' ? 'bg-orange-200 border border-orange-500' : 'bg-red-200 border border-red-500') : 'bg-gray-300 border border-gray-500 cursor-not-allowed'} transform transition-transform duration-300 hover:scale-105`}
                             onClick={() => {
                             if (buttonActive) {
                                 handleActionClick(cancellation, 'Cancellation Rejected');
