@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import Confirmation from '../../components/Confirmation/Confirmation';
 
 const Apply = ({ url }) => {
-  const [applications, setApplications] = useState([]);
+  const [applications, setApplications] = useState([]);  
   const [currentPage, setCurrentPage] = useState(1);
   const [statuses, setStatuses] = useState({});
   const [selectedApplication, setSelectedApplication] = useState(null);
@@ -15,11 +15,11 @@ const Apply = ({ url }) => {
 
   const fetchApplications = useCallback(async () => {
     try {
-      const response = await axios.get(`${url}/api/driver/applications`);
-      const reversedApplications = response.data.reverse();
-      setApplications(reversedApplications);
-      const newStatuses = {};
-      reversedApplications.forEach(app => {
+        const response = await axios.get(`${url}/api/driver/applications`);
+        const reversedApplications = response.data.reverse();
+        setApplications(reversedApplications);
+        const newStatuses = {};
+        reversedApplications.forEach(app => {
         newStatuses[app.userId] = app.status;
       });
       setStatuses(newStatuses);

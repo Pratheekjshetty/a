@@ -2,11 +2,15 @@ import React, { useEffect, useState, useCallback } from 'react';
 import cancel_icon from '../../assets/cancel_icon.png';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import Confirmation from '../../components/Confirmation/Confirmation';
 
 const Cancel = ({ url }) => {
     const [cancellations, setCancellations] = useState([]);
     const [statuses, setStatuses] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
+    const [selectedCancellation, setSelectedCancellation] = useState(null);
+    const [showConfirmation, setShowConfirmation] = useState(false);
+    const [action, setAction] = useState(null);
     const itemsPerPage = 5;
 
     const fetchCancellations = useCallback(async () => {
@@ -34,35 +38,18 @@ const Cancel = ({ url }) => {
         return timeDifference > 10 * 60 * 1000; // 10 minutes
     };
 
-    const statusHandler = async (event, bookingid, pickupDate, pickupTime) => {
-        event.preventDefault();
-        if (!isButtonActive(pickupDate, pickupTime)) {
-            toast.error("Accept action is not allowed within 10 minutes of pickup time.");
-            return;
-        }
+    const statusHandler = async (bookingid, actionType) => {
         try {
-            await axios.post(`${url}/api/cancel/update-status`, { bookingid });
-            toast.success("Booking status updated successfully");
-            fetchCancellations(); 
-        } catch (err) {
-            console.error('Error updating booking status:', err);
-            toast.error("Failed to update booking status");
-        }
-    };
+            const endpoint = actionType === 'Cancellation Approved'
+                ? `${url}/api/cancel/update-status`
+                : `${url}/api/cancel/delete-status`;
 
-    const handleReject = async (event, bookingid, pickupDate, pickupTime) => {
-        event.preventDefault();
-        if (!isButtonActive(pickupDate, pickupTime)) {
-            toast.error("Reject action is not allowed within 10 minutes of pickup time.");
-            return;
-        }
-        try {
-            await axios.post(`${url}/api/cancel/delete-status`, { bookingid });
-            toast.success("Cancellation request rejected successfully");
+            await axios.post(endpoint, { bookingid });
+            toast.success(`Cancellation ${actionType === 'Cancellation Approved' ? 'approved' : 'rejected'} successfully`);
             fetchCancellations();
         } catch (err) {
-            console.error('Error rejecting cancellation:', err);
-            toast.error("Failed to reject cancellation");
+            console.error(`Error ${actionType.toLowerCase()}:`, err);
+            toast.error(`Failed to ${actionType.toLowerCase()}`);
         }
     };
     
@@ -84,11 +71,26 @@ const Cancel = ({ url }) => {
       setCurrentPage(newPage);
     };
 
+    const handleActionClick = (cancellation, actionType) => {
+        setSelectedCancellation(cancellation);
+        setAction(actionType);
+        setShowConfirmation(true);
+    };
+
+    const handleConfirm = () => {
+        if (selectedCancellation) {
+            statusHandler(selectedCancellation.bookingid, action);
+        }
+        setShowConfirmation(false);
+        setSelectedCancellation(null);
+        setAction(null);
+    };
+
     return (
         <div className="mx-20 my-12">
             <h2 className="text-2xl font-bold">Cancellation Requests</h2>
             <div className='flex flex-col gap-5 mt-7'>
-                {currentItems.map((cancellation, index) => {
+                {currentItems.map((cancellation) => {
                     const status = statuses[cancellation.bookingid];
                     const buttonActive = isButtonActive(cancellation.pickupdate, cancellation.pickuptime);
                     return (
@@ -103,17 +105,17 @@ const Cancel = ({ url }) => {
                             <p>{formatDate(cancellation.bookingdate)}</p>
                             <p>{formatDate(cancellation.currentdate)}</p>
                             <button className={`p-2 outline-none ${buttonActive ? (status === 'Cancellation Approved' ? 'bg-green-200 border border-green-500' : 'bg-blue-200 border border-blue-500') : 'bg-gray-300 cursor-not-allowed'}`}
-                            onClick={(event) => {
+                            onClick={() => {
                             if (buttonActive) {
-                                statusHandler(event, cancellation.bookingid, cancellation.pickupdate, cancellation.pickuptime);
+                                handleActionClick(cancellation, 'Cancellation Approved');
                             } else {
                                 alert("Accept action is not allowed within 10 minutes of pickup time.");
-                            }
+                            }  
                             }}>Accept</button>
                             <button className={`p-2 outline-none ${buttonActive ? (status === 'Cancellation Rejected' ? 'bg-orange-200 border border-orange-500' : 'bg-red-200 border border-red-500') : 'bg-gray-300 cursor-not-allowed'}`}
-                            onClick={(event) => {
+                            onClick={() => {
                             if (buttonActive) {
-                                handleReject(event, cancellation.bookingid, cancellation.pickupdate, cancellation.pickuptime);
+                                handleActionClick(cancellation, 'Cancellation Rejected');
                             } else {
                                 alert("Reject action is not allowed within 10 minutes of pickup time.");
                             }
@@ -132,6 +134,12 @@ const Cancel = ({ url }) => {
                 </button>
             ))}
             </div>
+            <Confirmation
+                show={showConfirmation}
+                message={`Are you sure you want to ${action === 'Cancellation Approved' ? 'approve' : 'reject'} this cancellation?`}
+                onConfirm={handleConfirm}
+                onCancel={() => setShowConfirmation(false)}
+            />
         </div>
     );
 };
