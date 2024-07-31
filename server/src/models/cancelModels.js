@@ -9,6 +9,7 @@ const cancelSchema = new mongoose.Schema({
     from: { type: String, required: true },
     to: { type: String, required: true },
     reason: { type: String, required: true },
+    status: { type: String, default: 'Cancellation Applied' },
     bookingdate: { type: Date, required: true },
     currentdate: { type: Date, required: true },
 });

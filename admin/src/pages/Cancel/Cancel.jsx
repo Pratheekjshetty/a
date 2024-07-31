@@ -5,14 +5,20 @@ import { toast } from 'react-toastify';
 
 const Cancel = ({ url }) => {
     const [cancellations, setCancellations] = useState([]);
+    const [statuses, setStatuses] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
 
     const fetchCancellations = useCallback(async () => {
         try {
             const response = await axios.get(`${url}/api/cancel/cancellations`);
-                const reversedCancellations = response.data.reverse();
-                setCancellations(reversedCancellations);
+            const reversedCancellations = response.data.reverse();
+            setCancellations(reversedCancellations);
+            const newStatuses = {};
+            reversedCancellations.forEach((cancellation) => {
+            newStatuses[cancellation.bookingid] = cancellation.status;
+        });
+        setStatuses(newStatuses);
         } catch (err) {
             toast.error("An error occurred while fetching cancellations");
             console.error(err);  
@@ -31,10 +37,10 @@ const Cancel = ({ url }) => {
         }
     };
 
-    const handleReject = async (event, cancelId) => {
+    const handleReject = async (event, bookingid) => {
         try {
             event.preventDefault();
-            await axios.delete(`${url}/api/cancel/delete-cancellation`, { data: { cancelId } });
+            await axios.post(`${url}/api/cancel/delete-status`, { bookingid });
             toast.success("Cancellation request rejected successfully");
             fetchCancellations();
         } catch (err) {
@@ -66,6 +72,7 @@ const Cancel = ({ url }) => {
             <h2 className="text-2xl font-bold">Cancellation Requests</h2>
             <div className='flex flex-col gap-5 mt-7'>
                 {currentItems.map((cancellation, index) => {
+                    const status = statuses[cancellation.bookingid];
                     return (
                         <div key={cancellation._id} className='grid grid-cols-[1fr_2fr_2fr] items-center gap-5 text-sm p-2.5 px-5 text-gray-500 border border-blue-500 md:grid-cols-[1fr_2fr_2fr_1fr] md-gap-4 lg:grid-cols-[1fr_2fr_2fr_1fr_1fr] xl:grid-cols-[1fr_2fr_2fr_1fr_1fr_1fr_1fr]'>
                             <img className='w-12' src={cancel_icon} alt=""/>
@@ -77,8 +84,10 @@ const Cancel = ({ url }) => {
                             <p className='w-48'>{cancellation.reason}</p>
                             <p>{formatDate(cancellation.bookingdate)}</p>
                             <p>{formatDate(cancellation.currentdate)}</p>
-                            <button className='bg-blue-200 border border-blue-500 p-2 outline-none' onClick={(event) => statusHandler(event, cancellation.bookingid)}>Accept</button>
-                            <button className='bg-red-200 border border-red-500 p-2 outline-none' onClick={(event) => handleReject(event, cancellation._id)}>Reject</button>
+                            <button className={`p-2 outline-none ${status === 'Cancellation Approved' ? 'bg-green-200 border border-green-500' : 'bg-blue-200 border border-blue-500'}`}
+                            onClick={(event) => statusHandler(event, cancellation.bookingid)}>Accept</button>
+                            <button className={`p-2 outline-none ${status === 'Cancellation Rejected' ? 'bg-orange-200 border border-orange-500' : 'bg-red-200 border border-red-500'}`}
+                            onClick={(event) => handleReject(event, cancellation.bookingid)}>Reject</button>
                         </div>
                     )
                 })}

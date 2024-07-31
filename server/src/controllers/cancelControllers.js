@@ -44,12 +44,58 @@ const updateCancellationStatus = async (req, res) => {
         const { bookingid } = req.body;
         if (!bookingid) {
             return res.status(400).json({ message: "Booking ID is required" });
-          }
+        }
+
+        // Update the cancellation status in cancelModel
+        const cancellation = await cancelModel.findOneAndUpdate(
+            { bookingid },
+            { status: "Cancellation Approved" },
+            { new: true }
+        );
+
+        if (!cancellation) {
+            return res.status(404).json({ message: "Cancellation not found" });
+        }
+
+        // Update the booking status in rentModel
         const rentBooking = await rentModel.findById(bookingid);
         if (!rentBooking) {
             return res.status(404).json({ message: "Booking not found" });
         }
         rentBooking.status = "Car Cancelled";
+        await rentBooking.save();
+
+        res.status(200).json({ message: "Booking status updated successfully", rentBooking });
+    } catch (error) {
+        console.error('Error updating cancellation status:', error);
+        res.status(500).send({ message: 'Failed to update booking status.' });
+    }
+};
+
+const deleteCancellationStatus = async (req, res) => {
+    try {
+        const { bookingid } = req.body;
+        if (!bookingid) {
+            return res.status(400).json({ message: "Booking ID is required" });
+        }
+
+        // Update the cancellation status in cancelModel
+        const cancellation = await cancelModel.findOneAndUpdate(
+            { bookingid },
+            { status: "Cancellation Rejected" },
+            { new: true }
+        );
+
+        if (!cancellation) {
+            return res.status(404).json({ message: "Cancellation not found" });
+        }
+
+        // Update the booking status in rentModel
+        const rentBooking = await rentModel.findById(bookingid);
+        if (!rentBooking) {
+            return res.status(404).json({ message: "Booking not found" });
+        }
+        rentBooking.status = "Car Not Cancelled";
         await rentBooking.save();
 
         res.status(200).json({ message: "Booking status updated successfully", rentBooking });
@@ -73,5 +119,5 @@ const deleteCancellation = async (req, res) => {
     }
 };
 
-export { cancelBooking, getCancellations, updateCancellationStatus, deleteCancellation };
+export { cancelBooking, getCancellations, updateCancellationStatus, deleteCancellationStatus, deleteCancellation };
   
