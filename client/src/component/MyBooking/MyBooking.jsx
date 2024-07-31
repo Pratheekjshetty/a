@@ -19,8 +19,10 @@ const MyBooking = () => {
                       phone: rent.address.phone,
                       from: rent.address.from,
                       to:rent.address.to,
+                      pickupDate:rent.pickupdate,
+                      pickupTime:rent.pickuptime,
                       bookingId: rent._id,
-                      date: rent.date
+                      date: rent.date,
                   }
               });
             } else if (rent.status === "Car Cancelled") {
@@ -51,7 +53,6 @@ const MyBooking = () => {
         const pickupDateTime = new Date(pickupDate);
         const [hours, minutes] = pickupTime.split(':');
         pickupDateTime.setHours(hours, minutes);
-
         const currentTime = new Date();
         const timeDifference = pickupDateTime - currentTime;
         return timeDifference > 24 * 60 * 60 * 1000;

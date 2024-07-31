@@ -107,4 +107,3 @@ const Cancel = ({ url }) => {
 };
 
 export default Cancel;
-

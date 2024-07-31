@@ -8,7 +8,7 @@ const CancelBooking = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { url } = useContext(StoreContext);
-    const { firstName, lastName, email, phone, from, to, bookingId, date } = location.state;
+    const { firstName, lastName, email, phone, from, to, pickupDate, pickupTime, bookingId, date } = location.state;
     const [reason, setReason] = useState('');
 
     const getFormatDate = (isoDate) => {
@@ -27,6 +27,7 @@ const CancelBooking = () => {
     return `${year}-${month}-${day}`;
 };
 
+  const PickupDate = getFormatDate(pickupDate);
   const formatDate = getFormatDate(date);
   const currentDate = getCurrentDate();
 
@@ -41,6 +42,8 @@ const CancelBooking = () => {
         phone,
         from,
         to,
+        pickupdate: pickupDate,
+        pickuptime: pickupTime,
         reason,
         booking_date: formatDate,
         current_date: currentDate
@@ -57,13 +60,17 @@ const CancelBooking = () => {
         <div className='flex-1 p-[2.5] w-full max-w-[max(40%,500px)]'>
             <p className='text-[30px] font-semibold mb-[50px]'>Cancel Booking</p>
             <div className='flex gap-[10px]'>
-                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="firstName" type='text' value={firstName} placeholder='First name' required/>
-                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="lastName" type='text' value={lastName} placeholder='Last name' required/>
+                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="firstName" type='text' value={firstName} placeholder='First name' readOnly/>
+                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="lastName" type='text' value={lastName} placeholder='Last name' readOnly/>
             </div>
             <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="booking_id" type='text' value={bookingId} placeholder='Booking Id' readOnly/>
             <div className='flex gap-[10px]'>
                 <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="email" type='email' value={email} placeholder='Email address' readOnly/>
                 <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="phone" type='tel' value={phone} placeholder='Phone Number' readOnly/>
+            </div>
+            <div className='flex gap-[10px]'>
+                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="pickupDate" type='Date' value={PickupDate} placeholder='PickupDate' readOnly/>
+                <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="pickupTime" type='text' value={pickupTime} placeholder='PickupTime' readOnly/>
             </div>
             <div className='flex gap-[10px]'>
                 <input className='mb-[15px] text-sm w-full p-[8px] border border-[#c5c5c5] rounded-[4px] outline-blue-500' name="from" type='text' value={from} placeholder='From Place' readOnly/>
