@@ -180,7 +180,7 @@ const Rent = () => {
       },[totalAmount,navigate])
       const handlePayment = () => {
         if (token) {
-          processRentBooking();
+          processRentBooking();  
       } else {
         alert('Please sign in to continue.');
       }    

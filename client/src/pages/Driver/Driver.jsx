@@ -2,10 +2,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { StoreContext } from '../../context/StoreContext';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const Driver = () => {
   const { token, url } = useContext(StoreContext);
-
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     userId:'',
     firstName: '',
@@ -178,6 +179,7 @@ const Driver = () => {
 
       if (response.data.success) {
         toast.success('Application submitted successfully');
+        navigate('/');  
       } else {
         toast.error(response.data.message || 'Failed to submit application');
       }
