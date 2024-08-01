@@ -40,23 +40,23 @@ const OurGrowth = () => {
     <div className="bg-blue-300">
       <div className="p-16">
         <h2 className="text-4xl font-bold text-center mb-8">Our Growth</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          <div className="w-full mx-auto rounded shadow-lg bg-white p-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
+          <div className="w-full mx-auto rounded shadow-lg bg-white p-4 transform transition-transform duration-300 hover:scale-105">
             <img src={about_2} alt="Total Users" className="w-full rounded-md" />
             <h3 className="text-2xl font-bold mt-4">{counts.users || '0'}+</h3>
             <p className="text-gray-600">Total Users</p>
           </div>
-          <div className="w-full mx-auto rounded shadow-lg bg-white p-4">
+          <div className="w-full mx-auto rounded shadow-lg bg-white p-4 transform transition-transform duration-300 hover:scale-105">
             <img src={about_1} alt="Total Drivers" className="w-full rounded-md" />
             <h3 className="text-2xl font-bold mt-4">{counts.drivers || '0'}+</h3>
             <p className="text-gray-600">Total Drivers</p>
           </div>
-          <div className="w-full mx-auto rounded shadow-lg bg-white p-4">
+          <div className="w-full mx-auto rounded shadow-lg bg-white p-4 transform transition-transform duration-300 hover:scale-105">
             <img src={about_5} alt="Total Cars" className="w-full rounded-md" />
             <h3 className="text-2xl font-bold mt-4">{counts.cars || '0'}+</h3>
             <p className="text-gray-600">Total Cars</p>
           </div>
-          <div className="w-full mx-auto rounded shadow-lg bg-white p-4">
+          <div className="w-full mx-auto rounded shadow-lg bg-white p-4 transform transition-transform duration-300 hover:scale-105">
             <img src={about_7} alt="Total Blogs" className="w-full rounded-md" />
             <h3 className="text-2xl font-bold mt-4">{counts.blogs || '0'}+</h3>
             <p className="text-gray-600">Total Blogs</p>

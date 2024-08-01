@@ -14,6 +14,7 @@ import rentModel from './src/models/rentModels.js';
 import driverRouter from '../server/src/routers/driverRoutes.js';
 import blogRouter from '../server/src/routers/blogRoutes.js';
 import ratingRouter from './src/routers/ratingRoutes.js';
+import nodemailer from 'nodemailer';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -40,7 +41,36 @@ app.use('/doc-uploads', express.static('doc-uploads'));
 app.use('/api/driver', driverRouter);
 app.use('/blog-uploads', express.static('blog-uploads'));
 app.use('/api/blog', blogRouter);
-app.use('/api/rating',ratingRouter)
+app.use('/api/rating',ratingRouter);
+
+app.post('/api/contact', async (req, res) => {
+    const { name, email, message } = req.body;
+  
+    // Setup nodemailer transporter
+    const transporter = nodemailer.createTransport({
+      service: 'Gmail', 
+      auth: {
+        user: process.env.EMAIL_USER, 
+        pass: process.env.EMAIL_PASS, 
+      },
+    });
+  
+    const mailOptions = {
+      from: `${name} <${email}>`,
+      replyTo: email,
+      to: process.env.RECEIVING_EMAIL, // Your receiving email address
+      subject: `Message from ${name}`,
+      text: message,
+    };
+  
+    try {
+      await transporter.sendMail(mailOptions);
+      res.status(200).send('Message sent successfully');
+    } catch (error) {
+      console.error('Error sending email:', error);
+      res.status(500).send('Failed to send message');
+    }
+  });
 
 app.get("/",(req,res)=>{
     res.send("Api Working")
