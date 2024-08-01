@@ -16,6 +16,7 @@ const Rating = () => {
     const [isAdmin, setIsAdmin] = useState(false);
     const [showResponseInput, setShowResponseInput] = useState(null);
     const [adminResponse, setAdminResponse] = useState('');
+    const [selectedRatingFilter, setSelectedRatingFilter] = useState(0);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -122,6 +123,8 @@ const Rating = () => {
         setAdminResponse('');
     };
 
+    const filteredRatings = selectedRatingFilter === 0 ? ratings : ratings.filter(rating => Math.floor(rating.rating) === selectedRatingFilter);
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -135,9 +138,21 @@ const Rating = () => {
               <div className="w-full h-auto md:h-96">
                 <img src={`${url}/images/${image}`} alt={name} className="w-full h-full object-contain" />
               </div>
-                {ratings.length > 0 ? (
+              <div className="mb-4">
+                <label htmlFor="ratingFilter" className="mr-2">Filter by Rating:</label>
+                <select id="ratingFilter" value={selectedRatingFilter} onChange={(e) => setSelectedRatingFilter(Number(e.target.value))}
+                className="p-1 border border-gray-300 rounded">
+                    <option value={0}>All</option>
+                    <option value={5}>5 Stars</option>
+                    <option value={4}>4 Stars</option>
+                    <option value={3}>3 Stars</option>
+                    <option value={2}>2 Stars</option>
+                    <option value={1}>1 Star</option>
+                </select>
+              </div>
+                {filteredRatings.length > 0 ? (
                     <div>
-                        {ratings.map((rating) => (
+                        {filteredRatings.map((rating) => (
                             <div key={rating._id}>
                               {userDetails[rating.userId] && (
                                     <div className="flex items-center mt-4">
