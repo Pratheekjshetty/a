@@ -69,6 +69,10 @@ const Contact = () => {
     }
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div
       className='flex flex-row justify-center items-center h-screen'

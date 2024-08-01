@@ -30,9 +30,9 @@ const Footer = () => {
             <h2 className="text-2xl font-bold">Company</h2>
             <ul>
                 <li className='list-none mb-2.5 curser-pointer' onClick={() => navigate('/')}>Home</li>
-                <li className='list-none mb-2.5 curser-pointer' onClick={() => navigate('/about')}>About Us</li>
+                <li className='list-none mb-2.5 curser-pointer' onClick={() => navigate('/about')}>About</li>
                 <li className='list-none mb-2.5 curser-pointer' onClick={() => navigate('/blogs')}>Blogs</li>
-                <li className='list-none mb-2.5 curser-pointer' onClick={() => navigate('/contact')}>Contact Us</li>
+                <li className='list-none mb-2.5 curser-pointer' onClick={() => navigate('/ratings')}>Reviews & Ratings</li>
             </ul>
             <h2 className="text-2xl font-bold">Legal</h2>
             <ul>
@@ -44,6 +44,7 @@ const Footer = () => {
         <div className="flex flex-col items-start gap-5">
             <h2 className="text-2xl font-bold">Contact Us</h2>
             <ul>
+                <li className='list-none mb-2.5 curser-pointer' onClick={() => navigate('/contact')}>Contact</li>
                 <li className='list-none mb-2.5 curser-pointer'>Phone:+9876543210</li>
                 <li className='list-none mb-2.5 curser-pointer'>Email:voyagerapp@gmail.com</li>
                 <li className='list-none mb-2.5 curser-pointer'>Github:github.com/voyagerapp</li>
