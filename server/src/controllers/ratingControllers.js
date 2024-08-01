@@ -101,5 +101,29 @@ const updateRating = async (req, res) => {
         res.status(500).json({ success: false, message: 'Server error. Please try again later.' });
     }
 };
+// Add admin response to a rating
+const addAdminResponse = async (req, res) => {
+    const { id } = req.params; // rating ID
+    const { response } = req.body; // admin response
+    // Check if user is an admin
+    if (req.userRole !== 'admin') {
+        return res.status(403).json({ success: false, message: 'Access denied.' });
+    }
 
-export {addRating, getRatingsByCarId, getRatingById, updateRating }
+    try {
+        const rating = await ratingModel.findById(id);
+        if (!rating) {
+            return res.status(404).json({ success: false, message: 'Rating not found.' });
+        }
+        // Update the admin response field
+        rating.adminResponse = response;
+        const updatedRating = await rating.save();
+
+        res.status(200).json({ success: true, message: 'Admin response added successfully.', data: updatedRating });
+    } catch (error) {
+        console.error('Error adding admin response:', error);
+        res.status(500).json({ success: false, message: 'Server error. Please try again later.' });
+    }
+};
+
+export {addRating, getRatingsByCarId, getRatingById, updateRating, addAdminResponse }

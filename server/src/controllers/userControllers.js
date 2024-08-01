@@ -42,7 +42,8 @@ const loginUser =async(req,res)=>{
         }
 
         //create a token before login
-        const token =createToken(user._id);
+        // const token =createToken(user._id);
+        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
         // include the image URL in the response
         const imageURL = user.image ? path.join('user-uploads', path.basename(user.image)) : null;
 

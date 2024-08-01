@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { StoreContext } from '../../../context/StoreContext';
 import {useLocation, useParams , useNavigate  } from 'react-router-dom';
 import axios from 'axios';
-import { FaStar, FaStarHalfAlt, FaRegStar, FaEdit } from 'react-icons/fa';
+import { FaStar, FaStarHalfAlt, FaRegStar, FaEdit, FaReply } from 'react-icons/fa';
+import { toast } from 'react-toastify'
 
 const Rating = () => {
     const { url, token  } = useContext(StoreContext);
@@ -12,6 +13,9 @@ const Rating = () => {
     const [ratings, setRatings] = useState([]);
     const [userDetails, setUserDetails] = useState({});
     const [userId, setUserId] = useState('');
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [showResponseInput, setShowResponseInput] = useState(null);
+    const [adminResponse, setAdminResponse] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -53,6 +57,7 @@ const Rating = () => {
                 });
                 if (response.data.success) {
                     setUserId(response.data.user.userId);
+                    setIsAdmin(response.data.user.role === 'admin');
                 }
             } catch (error) {
                 console.error("Error fetching user details", error);
@@ -79,6 +84,42 @@ const Rating = () => {
 
     const handleEditClick = (ratingId) => {
         navigate(`/edit-rating/${ratingId}`);
+    };
+
+    const handleAdminResponseClick = (ratingId) => {
+        setShowResponseInput(ratingId);
+      };
+
+    const handleAdminResponse = async (ratingId) => {
+        if (!adminResponse) return;
+    
+        try {
+          const res = await axios.post(`${url}/api/rating/${ratingId}/admin-response`, { response: adminResponse }, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          if (res.data.success) {
+            toast.success("Response added successfully.");
+            const updatedRatings = ratings.map(rating => {
+                if (rating._id === ratingId) {
+                  return { ...rating, adminResponse };
+                }
+                return rating;
+            });
+            setRatings(updatedRatings);
+            setAdminResponse('');
+            setShowResponseInput(null);
+          } else {
+            toast.error("Failed to add response.");
+          }
+        } catch (error) {
+          console.error("Error adding admin response", error);
+        }
+      };
+    const handleCancelResponse = () => {
+        setShowResponseInput(null);
+        setAdminResponse('');
     };
 
     useEffect(() => {
@@ -109,7 +150,7 @@ const Rating = () => {
                                                 <FaEdit className="text-gray-700" />
                                             </button>
                                         )}
-                                    </div>
+                                    </div>  
                                 )}
                                 <div className="flex items-center">
                                     <strong>Rating:</strong>
@@ -119,7 +160,34 @@ const Rating = () => {
                                 </div>
                                 <div className="flex flex-col w-full">
                                     <p className="mt-4">{rating.comments}</p>
+                                    {rating.adminResponse && (<div className="mt-2 p-4 bg-gray-100 rounded-lg ">
+                                        <p className="mt-2 text-blue-600">Admin Response: <span className='text-black'>{rating.adminResponse}</span></p>
+                                    </div>   
+                                    )}
+                                    {isAdmin && (
+                                    <>
+                                    <button className="mt-2 p-2 bg-gray-200 text-black rounded flex items-center"
+                                    onClick={() => handleAdminResponseClick(rating._id, rating.adminResponse)}>
+                                        <FaReply className="mr-2" /> {rating.adminResponse ? 'Edit' : 'Reply as Admin'}
+                                    </button>
+                                    {showResponseInput === rating._id && (
+                                    <div className="mt-2">
+                                        <textarea className="w-full p-2 border border-gray-300 rounded" placeholder="Write your response..."
+                                        value={adminResponse} onChange={(e) => setAdminResponse(e.target.value)}/>
+                                        <div className="flex justify-start mt-2 space-x-2">
+                                            <button className="p-2 bg-blue-500 text-white rounded" onClick={() => handleAdminResponse(rating._id)}>
+                                                Submit Response
+                                            </button>
+                                            <button className="p-2 bg-gray-300 text-black rounded" onClick={handleCancelResponse}>
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                    )}
+                                    </>
+                                    )}
                                 </div>
+                                <hr className="mt-4 border-gray-400" />
                             </div>
                         ))}
                     </div>
