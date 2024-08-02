@@ -54,7 +54,7 @@ const Booking = () => {
   const isCarBooked = useCallback(() => {
     if (!pickupDate || !dropoffDate) return false;
     return bookingList.some(booking => {
-      return booking.carItemId === id && booking.status === "Car Booked" &&
+      return booking.carItemId === id && (booking.status === "Car Booked" || booking.status === "Car Started" || booking.status === "Car Reached Destination" || booking.status === "Car Not Cancelled") &&
         new Date(pickupDate) <= new Date(booking.dropoffDate) &&
         new Date(dropoffDate) >= new Date(booking.pickupDate);
     });
