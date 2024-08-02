@@ -77,11 +77,27 @@ const Apply = ({ url }) => {
     setAction(null);
   };
 
+  const groupApplicationsByDate = (applications) => {
+    return applications.reduce((groups, application) => {
+      const date = new Date(application.date).toISOString().split('T')[0]; // Extract date part
+      if (!groups[date]) {
+        groups[date] = [];
+      }
+      groups[date].push(application);
+      return groups;
+    }, {});
+  };
+
+  const groupedApplications = groupApplicationsByDate(currentItems);
+
   return (
     <div className="mx-20 my-12">
       <h2 className="text-2xl font-bold">Driver Applications</h2>
       <div className='flex flex-col gap-5 mt-7'>
-        {currentItems.map((application) => {
+      {Object.entries(groupedApplications).map(([date, applications]) => (
+        <div key={date}>
+        <h3 className='text-xl font-semibold'>{formatDate(date)}</h3>
+        {applications.map((application) => {
           const status = statuses[application.userId];
           return (
             <div key={application._id} className='grid grid-cols-[1fr_2fr_2fr] items-center gap-5 text-sm p-2.5 px-5 text-gray-500 border border-blue-500 md:grid-cols-[1fr_2fr_2fr_1fr] md-gap-4 lg:grid-cols-[1fr_2fr_2fr_1fr_1fr] xl:grid-cols-[1fr_2fr_2fr_1fr_1fr_1fr_1fr]'>
@@ -97,7 +113,7 @@ const Apply = ({ url }) => {
                 <p>{application.preferredLocation + ", " + application.experience + " years"}</p>
               </div>
               <p>{application.availability}</p>
-              <p>{formatDate(application.date)}</p>
+              <p>{application.preferredLocation}</p>
               <button className={`p-2 outline-none ${status === 'Driver Confirmed' ? 'bg-green-200 border border-green-500' : 'bg-blue-200 border border-blue-500'} transform transition-transform duration-300 hover:scale-105`}
                 onClick={() => handleActionClick(application, 'Driver Confirmed')}>Accept</button>
               <button className={`p-2 outline-none ${status === 'Driver Rejected' ? 'bg-orange-200 border border-orange-500' : 'bg-red-200 border border-red-500'} transform transition-transform duration-300 hover:scale-105`}
@@ -105,6 +121,8 @@ const Apply = ({ url }) => {
             </div>
           )
         })}
+        </div>
+        ))}
       </div>
       <div className="flex justify-center mt-5">
         {Array.from({ length: totalPages }, (_, index) => (

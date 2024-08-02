@@ -84,13 +84,29 @@ const Cancel = ({ url }) => {
         setShowConfirmation(false);
         setSelectedCancellation(null);
         setAction(null);
-    };
+    };  
+
+    const groupCancellationsByDate = (cancellations) => {
+        return cancellations.reduce((groups, cancellation) => {
+          const date = new Date(cancellation.currentdate).toISOString().split('T')[0]; // Extract date part
+          if (!groups[date]) {
+            groups[date] = [];
+          }
+          groups[date].push(cancellation);
+          return groups;
+        }, {});
+      };
+
+      const groupedCancellations = groupCancellationsByDate(currentItems);
 
     return (
         <div className="mx-20 my-12">
             <h2 className="text-2xl font-bold">Cancellation Requests</h2>
             <div className='flex flex-col gap-5 mt-7'>
-                {currentItems.map((cancellation) => {
+            {Object.entries(groupedCancellations).map(([date, cancellations]) => (
+            <div key={date}>
+            <h3 className='text-xl font-semibold'>{formatDate(date)}</h3>
+                {cancellations.map((cancellation) => {
                     const status = statuses[cancellation.bookingid];
                     const buttonActive = isButtonActive(cancellation.pickupdate, cancellation.pickuptime);
                     return (
@@ -102,8 +118,8 @@ const Cancel = ({ url }) => {
                                 <p>{cancellation.phone}</p>
                             </div>
                             <p className='w-48'>{cancellation.reason}</p>
-                            <p>{formatDate(cancellation.bookingdate)}</p>
-                            <p>{formatDate(cancellation.currentdate)}</p>
+                            <p>{formatDate(cancellation.pickupdate)}</p>
+                            <p>{cancellation.pickuptime}</p>
                             <button className={`p-2 outline-none ${buttonActive ? (status === 'Cancellation Approved' ? 'bg-green-200 border border-green-500' : 'bg-blue-200 border border-blue-500') : 'bg-gray-300 border border-gray-500 cursor-not-allowed'} transform transition-transform duration-300 hover:scale-105`}
                             onClick={() => {
                             if (buttonActive) {
@@ -123,6 +139,8 @@ const Cancel = ({ url }) => {
                         </div>
                     )
                 })}
+              </div>
+              ))}
             </div>
             <div className="flex justify-center mt-5">
             {Array.from({ length: totalPages }, (_, index) => (
