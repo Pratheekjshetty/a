@@ -114,7 +114,7 @@ const Rent = () => {
   const rentBooking =async(event)=>{
     event.preventDefault();
     if (validatePickup()) {
-      handlePayment();
+      handlePayment();  
     }
   };
 
