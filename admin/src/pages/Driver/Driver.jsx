@@ -59,6 +59,14 @@ const DriverPage = ({ url }) => {
     setCurrentPage(newPage);
   };
 
+  const maxVisiblePages = 5;
+  let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+  let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+  if (endPage - startPage < maxVisiblePages - 1) {
+    startPage = Math.max(1, endPage - maxVisiblePages + 1);
+  }
+
   return (
     <div className="mx-20 my-12">
       <h2 className="text-2xl font-bold">Drivers Page</h2>
@@ -78,13 +86,12 @@ const DriverPage = ({ url }) => {
         ))}
       </div>
       <div className="flex justify-center mt-5">
-        {Array.from({ length: totalPages }, (_, index) => (
+        {Array.from({ length: endPage - startPage + 1}, (_, index) => (
           <button
-            key={index}
-            className={`page-button ${currentPage === index + 1 ? 'active' : ''}`}
-            onClick={() => handlePageChange(index + 1)}
-          >
-            {index + 1}
+            key={index + startPage}
+            className={`page-button ${currentPage === index + startPage ? 'active' : ''}`}
+            onClick={() => handlePageChange(index + startPage)}>
+            {index + startPage}
           </button>
         ))}
       </div>
