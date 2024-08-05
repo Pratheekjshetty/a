@@ -20,6 +20,16 @@ const createToken = (id) =>{
     return jwt.sign({id},process.env.JWT_SECRET)
 };
 
+const validatePassword = (password) => {
+    const errors = [];
+    if (password.length < 8) errors.push("Password must be at least 8 characters long.");
+    if (!/[A-Z]/.test(password)) errors.push("Password must include at least one uppercase letter.");
+    if (!/[a-z]/.test(password)) errors.push("Password must include at least one lowercase letter.");
+    if (!/[0-9]/.test(password)) errors.push("Password must include at least one number.");
+    if (!/[#?!]/.test(password)) errors.push("Password must include at least one special character (#, ?, !).");
+    return errors;
+};
+
 //login user
 const loginUser =async(req,res)=>{
     const {email,password} = req.body;
@@ -86,11 +96,12 @@ const registerUser =async(req,res)=>{
             return res.status(400).json({success:false,message:"Please enter a valid email"})
         }
 
-        if(password.length<8){
+        const passwordErrors = validatePassword(password);
+        if(passwordErrors.length > 0){
             if (imagePath && fs.existsSync(imagePath)) {
                 fs.unlinkSync(imagePath);
             }
-            return res.status(400).json({success:false,message:"Please enter a strong password"})
+            return res.status(400).json({success: false, message: passwordErrors.join(" ") })
         }
 
         //validating phone number
@@ -151,8 +162,9 @@ const editUser = async (req, res) => {
 
         // validate and hash password if provided
         if (password) {
-            if (password.length < 8) {
-                return res.status(400).json({ success: false, message: "Please enter a strong password" });
+            const passwordErrors = validatePassword(password);
+            if (passwordErrors.length > 0) {
+                return res.status(400).json({ success: false, message: passwordErrors.join(" ") });
             }
             const salt = await bcrypt.genSalt(10);
             user.password = await bcrypt.hash(password, salt);

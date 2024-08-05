@@ -157,7 +157,6 @@ const Rent = () => {
                   color: "#3399cc",
                 },
               };
-
               const rzp1 = new window.Razorpay(options);
               rzp1.on('payment.failed', function (response) {
                 window.location.href = `${cancel_url}&error=${response.error.description}`;

@@ -8,8 +8,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-const Login = ({setShowLogin}) => {
-
+const Login = ({setShowLogin}) => {  
     const [image,setImage] = useState(false);
     const {url,setToken} = useContext(StoreContext)
     const[currState,setCurrState]=useState("Login")
@@ -22,6 +21,7 @@ const Login = ({setShowLogin}) => {
 
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const onChangeHandler =(event)=>{
         const name = event.target.name;
@@ -31,6 +31,10 @@ const Login = ({setShowLogin}) => {
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
+      };
+
+    const toggleConfirmPasswordVisibility = () => {
+        setShowConfirmPassword(!showConfirmPassword);
       };
 
     const onLogin =async(event) =>{
@@ -50,6 +54,11 @@ const Login = ({setShowLogin}) => {
             formData.append("email", data.email);
             formData.append("password", data.password);
             formData.append("image", image);
+
+            if (data.password !== data.confirmPassword) {
+                toast.error("Passwords do not match");
+                return;
+              }
         }
         
         try {
@@ -97,11 +106,19 @@ const Login = ({setShowLogin}) => {
                 <input name='phone' onChange={onChangeHandler} value={data.phone} type="number" placeholder='Phone Number' required/></>}  
                 <input name='email' onChange={onChangeHandler} value={data.email} type="email" placeholder='Your Email'required/>
                 <div style={{ position: 'relative', display: 'inline-block', width: '100%' }}>
-                    <input name='password' onChange={onChangeHandler} value={data.password} type={showPassword?"text":"password"} placeholder='Password'required style={{ width: '100%', paddingRight: '40px' }}/>
+                    <input name='password' onChange={onChangeHandler} value={data.password} type={showPassword?"text":"password"} placeholder='Password' required style={{ width: '100%', paddingRight: '40px' }}/>
                     <span onClick={togglePasswordVisibility} style={{position: 'absolute',right: 10,top: '50%',transform: 'translateY(-50%)',cursor: 'pointer'}}>
                         {showPassword ? <FaEyeSlash /> : <FaEye />}
                     </span>
-                </div>  
+                </div>
+                {currState !== "Login" && (
+                <div style={{ position: 'relative', display: 'inline-block', width: '100%' }}>
+                    <input name='confirmPassword' onChange={onChangeHandler} value={data.confirmPassword} type={showConfirmPassword ? "text" : "password"} placeholder='Confirm Password' required style={{ width: '100%', paddingRight: '40px' }} />
+                    <span onClick={toggleConfirmPasswordVisibility} style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', cursor: 'pointer' }}>
+                        {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                    </span>
+                </div>
+                )}
             </div>
             <button type='submit'>{currState==="Sign Up"?"Sign Up":"Login"}</button>
             <div className="login-condition">

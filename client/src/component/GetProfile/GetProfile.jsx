@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import profile_icon from '../../assets/profile_icon.png'
+import { FaEye, FaEyeSlash} from 'react-icons/fa';
 import getprofile from '../../assets/getprofile.jpg'
 import { toast } from 'react-toastify';
 
@@ -9,11 +10,13 @@ const GetProfile = ({ url }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     password: '',
+    confirmPassword: '',
     role: '',
   });
   const [image, setImage] = useState(null);
@@ -40,6 +43,7 @@ const GetProfile = ({ url }) => {
             email: response.data.user.email,
             phone: response.data.user.phone,
             password: '',
+            confirmPassword: '',
           });
           const userImage = response.data.user.image ? `${url}/${response.data.user.image}` : profile_icon;
           axios.get(userImage)
@@ -61,6 +65,10 @@ const GetProfile = ({ url }) => {
     fetchUserDetails();
   }, [url]);
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -80,6 +88,11 @@ const GetProfile = ({ url }) => {
     const token = localStorage.getItem('token');
     if (!token) {
       toast.error('No token found');
+      return;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      toast.error('Passwords do not match');
       return;
     }
 
@@ -105,6 +118,7 @@ const GetProfile = ({ url }) => {
           email: response.data.user.email,
           phone: response.data.user.phone,
           password: '',
+          confirmPassword: '',
         });
         setImage(null);
         const userImage = response.data.user.image ? `${url}/${response.data.user.image}` : profile_icon;
@@ -120,7 +134,10 @@ const GetProfile = ({ url }) => {
         toast.error(response.data.message);
       }
     } catch (err) {
-      toast.error('Error updating profile');
+      const message = err.response && err.response.data && err.response.data.message
+      ? err.response.data.message
+      : 'Error updating profile';
+      toast.error(message);
     }
   };
 
@@ -131,6 +148,7 @@ const GetProfile = ({ url }) => {
       email: user.email,
       phone: user.phone,
       password: '',
+      confirmPassword: '',
     });
     setImage(null);
     const userImage = user.image ? `${url}/${user.image}` : profile_icon;
@@ -182,19 +200,29 @@ const GetProfile = ({ url }) => {
       </div>
       <div className='m-4'>
         <p><strong>Name:</strong></p>
-        <input className='ml-2 p-2 border border-none text-sm outline-blue-500' type="text" name='name' value={formData.name} onChange={handleInputChange} placeholder='Sooraj Jain'/>
+        <input className='w-full p-2 border border-none text-sm outline-blue-500' type="text" name='name' value={formData.name} onChange={handleInputChange} placeholder='Enter your Name'/>
       </div>
       <div className='m-4'>
         <p><strong>Email:</strong></p>
-        <input className='ml-2 p-2 border border-none text-sm outline-blue-500' type="email" name='email' value={formData.email} readOnly/>
+        <input className='w-full p-2 border border-none text-sm outline-blue-500' type="email" name='email' value={formData.email} readOnly/>
       </div>
       <div className='m-4'>
         <p><strong>Phone:</strong></p>
-        <input className='ml-2 p-2 border border-none text-sm outline-blue-500' type="tel" name='phone' value={formData.phone} onChange={handleInputChange} placeholder='Enter your phone number'/>
+        <input className='w-full p-2 border border-none text-sm outline-blue-500' type="tel" name='phone' value={formData.phone} onChange={handleInputChange} placeholder='Enter your phone number'/>
       </div>
-      <div className='m-4'>
+      <div className='relative m-4'>
         <p><strong>Password:</strong></p>
-        <input className='ml-2 p-2 border border-none text-sm outline-blue-500' type="password" name='password' value={formData.password} onChange={handleInputChange} placeholder='Enter new password'/>
+        <input className='w-full p-2 border border-none text-sm outline-blue-500' type={showPassword?"text" : "password"} name='password' value={formData.password} onChange={handleInputChange} placeholder='Enter new password'/>
+        <span onClick={togglePasswordVisibility} className="absolute inset-y-0 right-0 top-5 flex items-center pr-3 cursor-pointer">
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+        </span>
+      </div>
+      <div className='relative m-4'>
+        <p><strong>Confirm Password:</strong></p>
+        <input className="w-full p-2 border border-none text-sm outline-blue-500" type={showPassword?'text' : 'password'} name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange} placeholder="Confirm your password"/>
+        <span onClick={togglePasswordVisibility} className="absolute inset-y-0 right-0 top-5 flex items-center pr-3 cursor-pointer">
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+        </span>
       </div>
       <div className='flex justify-center items-center m-4 gap-4'>
         <button className='bg-blue-600 text-white px-4 py-2 rounded-md' type='submit'>Update</button>
