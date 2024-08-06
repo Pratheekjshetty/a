@@ -11,6 +11,7 @@ const GetProfile = ({ url }) => {
   const [error, setError] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -66,7 +67,11 @@ const GetProfile = ({ url }) => {
   }, [url]);
 
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+    setShowPassword(!showPassword);  
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
   const handleInputChange = (e) => {
@@ -220,8 +225,8 @@ const GetProfile = ({ url }) => {
       <div className='relative m-4'>
         <p><strong>Confirm Password:</strong></p>
         <input className="w-full p-2 border border-none text-sm outline-blue-500" type={showPassword?'text' : 'password'} name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange} placeholder="Confirm your password"/>
-        <span onClick={togglePasswordVisibility} className="absolute inset-y-0 right-0 top-5 flex items-center pr-3 cursor-pointer">
-            {showPassword ? <FaEyeSlash /> : <FaEye />}
+        <span onClick={toggleConfirmPasswordVisibility} className="absolute inset-y-0 right-0 top-5 flex items-center pr-3 cursor-pointer">
+            {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
         </span>
       </div>
       <div className='flex justify-center items-center m-4 gap-4'>

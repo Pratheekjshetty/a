@@ -96,7 +96,7 @@ const Login = ({setShowLogin}) => {
                 <h2>{currState}</h2>
                 <img onClick={()=>setShowLogin(false)}src={cross_icon} alt="Cross"/>
             </div>
-            <div className="login-inputs">
+            <div className="login-inputs">  
                 {currState==="Login"?<></>:<>
                 <center>
                     <label htmlFor='image'><img className=' profile-image rounded-lg' src={image?URL.createObjectURL(image):upload_area} alt=''/></label>
