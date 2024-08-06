@@ -224,7 +224,7 @@ const GetProfile = ({ url }) => {
       </div>
       <div className='relative m-4'>
         <p><strong>Confirm Password:</strong></p>
-        <input className="w-full p-2 border border-none text-sm outline-blue-500" type={showPassword?'text' : 'password'} name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange} placeholder="Confirm your password"/>
+        <input className="w-full p-2 border border-none text-sm outline-blue-500" type={showConfirmPassword?'text' : 'password'} name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange} placeholder="Confirm your password"/>
         <span onClick={toggleConfirmPasswordVisibility} className="absolute inset-y-0 right-0 top-5 flex items-center pr-3 cursor-pointer">
             {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
         </span>

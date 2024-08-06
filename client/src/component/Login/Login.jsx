@@ -106,14 +106,14 @@ const Login = ({setShowLogin}) => {
                 <input name='phone' onChange={onChangeHandler} value={data.phone} type="number" placeholder='Phone Number' required/></>}  
                 <input name='email' onChange={onChangeHandler} value={data.email} type="email" placeholder='Your Email'required/>
                 <div style={{ position: 'relative', display: 'inline-block', width: '100%' }}>
-                    <input name='password' onChange={onChangeHandler} value={data.password} type={showPassword?"text":"password"} placeholder='Password' required style={{ width: '100%', paddingRight: '40px' }}/>
+                    <input name='password' onChange={onChangeHandler} value={data.password} type={showPassword?"text":"password"} placeholder='Enter password' required style={{ width: '100%', paddingRight: '40px' }}/>
                     <span onClick={togglePasswordVisibility} style={{position: 'absolute',right: 10,top: '50%',transform: 'translateY(-50%)',cursor: 'pointer'}}>
                         {showPassword ? <FaEyeSlash /> : <FaEye />}
                     </span>
                 </div>
                 {currState !== "Login" && (
                 <div style={{ position: 'relative', display: 'inline-block', width: '100%' }}>
-                    <input name='confirmPassword' onChange={onChangeHandler} value={data.confirmPassword} type={showConfirmPassword ? "text" : "password"} placeholder='Confirm Password' required style={{ width: '100%', paddingRight: '40px' }} />
+                    <input name='confirmPassword' onChange={onChangeHandler} value={data.confirmPassword} type={showConfirmPassword ? "text" : "password"} placeholder='Confirm your Password' required style={{ width: '100%', paddingRight: '40px' }} />
                     <span onClick={toggleConfirmPasswordVisibility} style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', cursor: 'pointer' }}>
                         {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
                     </span>
