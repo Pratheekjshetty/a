@@ -205,26 +205,26 @@ const GetProfile = ({ url }) => {
       </div>
       <div className='m-4'>
         <p><strong>Name:</strong></p>
-        <input className='w-full p-2 border border-none text-sm outline-blue-500' type="text" name='name' value={formData.name} onChange={handleInputChange} placeholder='Enter your Name'/>
+        <input className='w-full p-2 border border-none text-sm outline-blue-500 rounded-md' type="text" name='name' value={formData.name} onChange={handleInputChange} placeholder='Enter your Name'/>
       </div>
       <div className='m-4'>
         <p><strong>Email:</strong></p>
-        <input className='w-full p-2 border border-none text-sm outline-blue-500' type="email" name='email' value={formData.email} readOnly/>
+        <input className='w-full p-2 border border-none text-sm outline-blue-500 rounded-md' type="email" name='email' value={formData.email} readOnly/>
       </div>
       <div className='m-4'>
         <p><strong>Phone:</strong></p>
-        <input className='w-full p-2 border border-none text-sm outline-blue-500' type="tel" name='phone' value={formData.phone} onChange={handleInputChange} placeholder='Enter your phone number'/>
+        <input className='w-full p-2 border border-none text-sm outline-blue-500 rounded-md' type="tel" name='phone' value={formData.phone} onChange={handleInputChange} placeholder='Enter your phone number'/>
       </div>
       <div className='relative m-4'>
         <p><strong>Password:</strong></p>
-        <input className='w-full p-2 border border-none text-sm outline-blue-500' type={showPassword?"text" : "password"} name='password' value={formData.password} onChange={handleInputChange} placeholder='Enter new password'/>
+        <input className='w-full p-2 border border-none text-sm outline-blue-500 rounded-md' type={showPassword?"text" : "password"} name='password' value={formData.password} onChange={handleInputChange} placeholder='Enter new password'/>
         <span onClick={togglePasswordVisibility} className="absolute inset-y-0 right-0 top-5 flex items-center pr-3 cursor-pointer">
             {showPassword ? <FaEyeSlash /> : <FaEye />}
         </span>
       </div>
       <div className='relative m-4'>
         <p><strong>Confirm Password:</strong></p>
-        <input className="w-full p-2 border border-none text-sm outline-blue-500" type={showConfirmPassword?'text' : 'password'} name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange} placeholder="Confirm your password"/>
+        <input className="w-full p-2 border border-none text-sm outline-blue-500 rounded-md" type={showConfirmPassword?'text' : 'password'} name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange} placeholder="Confirm your password"/>
         <span onClick={toggleConfirmPasswordVisibility} className="absolute inset-y-0 right-0 top-5 flex items-center pr-3 cursor-pointer">
             {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
         </span>
