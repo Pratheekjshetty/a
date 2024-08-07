@@ -77,10 +77,10 @@ return (
         </div>
       </div>
       </div>
-      <div className={`fixed inset-0 bg-blue-300 text-white p-8 transition-transform transform ${
-            isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} lg:hidden`}style={{ width: '30%',height:'694px', zIndex: 50 }} >
+      <div className={`fixed inset-0 bg-blue-300 text-white p-4 transition-transform transform ${
+            isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} lg:hidden`}style={{ width: '30%',height:'100%', zIndex: 50 }} >
           <button className="text-white text-2xl mb-2" onClick={() => setIsMobileMenuOpen(false)}> x </button>
-          <ul className="flex flex-col">
+          <ul className="flex flex-col ml-4">
             <li className="cursor-pointer p-2">
               <Link to='/' onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
             </li>
