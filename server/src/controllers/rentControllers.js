@@ -118,7 +118,7 @@ const updateStatus = async (req,res)=>{
     }
 }
 
-//get weekly bookings
+//get weekly bookings  
 const getWeekBookings = async (req, res) => {
     try {
         const firstBooking = await rentModel.findOne().sort({ date: 1 });
@@ -183,4 +183,30 @@ const getWeekBookings = async (req, res) => {
       res.status(500).json({ success: false, message: "Error fetching car booking percentages" });
     }
   };
-export {rentBooking,verifyBooking,userBooking,listBooking,updateStatus,getWeekBookings,getCarBookingPercentages}
+  // update car availability by admin
+const updateCarAvailability = async (req, res) => {
+  const { carId, startDate, endDate } = req.body;
+  try {
+      // Find the car's current rent record
+      const rentRecord = await rentModel.findOne({ "caritem._id": carId });
+      
+      if (!rentRecord) {
+          return res.status(404).json({ success: false, message: "Car not found" });
+      }
+
+      // Update the status and unavailable dates
+      rentRecord.status = "Car Not Available";
+      rentRecord.unavailableDates.push({
+          startDate: new Date(startDate),
+          endDate: new Date(endDate),
+      });
+
+      await rentRecord.save();
+
+      res.json({ success: true, message: "Car availability updated successfully" });
+  } catch (err) {
+      console.log(err);
+      res.json({ success: false, message: "Error updating car availability" });
+  }
+};
+export {rentBooking,verifyBooking,userBooking,listBooking,updateStatus,getWeekBookings,getCarBookingPercentages,updateCarAvailability}
