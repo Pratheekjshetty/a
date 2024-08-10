@@ -1,4 +1,5 @@
 import carModel from '../models/carModels.js'
+import cron from 'node-cron';
 import fs from 'fs'
 //add car
 const addCar = async(req,res)=>{
@@ -36,7 +37,7 @@ const listCar =async(req,res)=>{
 // list active cars
 const listActiveCars = async (req, res) => {
     try {
-        const cars = await carModel.find({ is_Active: "1" });
+        const cars = await carModel.find({ is_Active: "1"});
         res.json({success:true,data:cars});
     } catch (err) {
         console.log(err);

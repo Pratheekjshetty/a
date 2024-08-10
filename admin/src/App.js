@@ -13,7 +13,6 @@ import List from './pages/List/List';
 import Booking from './pages/Booking/Booking';
 import Cancel from './pages/Cancel/Cancel';
 import Apply from './pages/Apply/Apply';
-import Available from './pages/Available/Available';
 
 function App() {
   const url ="http://localhost:4001"
@@ -32,7 +31,6 @@ function App() {
           <Route path='/booking' element={<Booking url={url}/>}/>
           <Route path='/cancel' element={<Cancel url={url}/>}/>
           <Route path='/apply' element={<Apply url={url}/>}/>
-          <Route path='/available' element={<Available url={url}/>}/>
         </Routes>
       </div>
     </div>

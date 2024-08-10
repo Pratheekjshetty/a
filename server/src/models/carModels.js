@@ -10,7 +10,7 @@ const carSchema =new mongoose.Schema({
     color:{type:String,required:true},
     seats:{type:Number,required:true},
     model:{type:String,required:true},
-    is_Active:{type:String,default:"1"}
+    is_Active:{type:String,default:"1"},
 })
 
 const carModel=mongoose.models.car || mongoose.model("car",carSchema);
