@@ -134,8 +134,10 @@ const Available = ({ url }) => {
             });
     
             if (response.data.success) {
-                toast.success('Availability Updated Successfully');
-            } 
+                toast.success(response.data.message);
+            } else {
+                toast.error(response.data.message);
+            }
         } catch (error) {
             toast.error('Failed to update availability');
             console.log(error);
@@ -155,10 +157,10 @@ const Available = ({ url }) => {
             </div>
             <div className="mt-5">
                 <h3 className="text-lg font-semibold mb-3">Select Car:</h3>
-                <div className="grid grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
                     {cars.map((car, index) => (
-                        <div key={index} className={`border p-3 cursor-pointer ${selectedCar && selectedCar._id === car._id ? 'border-blue-500' : 'border-gray-300'} ${isCarBooked(car._id) ? 'opacity-50 cursor-not-allowed' : ''}`} onClick={() => !isCarBooked(car._id) && handleCarSelection(car)}>
-                            <img src={`${url}/images/${car.image}`} alt={car.name} className="w-full h-32 object-cover" />
+                        <div key={index} className={`border p-3 cursor-pointer transform transition-transform duration-300 hover:scale-105 ${selectedCar && selectedCar._id === car._id ? 'border-2 border-blue-500 ' : 'border-gray-300'} ${isCarBooked(car._id) ? 'opacity-50 cursor-not-allowed' : ''}`} onClick={() => !isCarBooked(car._id) && handleCarSelection(car)}>
+                            <img src={`${url}/images/${car.image}`} alt={car.name} className="w-full h-28 object-cover" />
                             <p className="mt-2 text-center">{car.name}</p>
                         </div>
                     ))}

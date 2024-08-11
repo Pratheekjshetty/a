@@ -57,25 +57,6 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
         const [min, max] = range.split('-').map(Number);
         return price >= min && price <= max;
     };
-
-    // const isCarBooked = (carId) => {
-    //     if (!pickupDate || !dropoffDate) return false;
-    //     return bookingList.some(booking => {
-    //         return booking.carItemId === carId && (booking.status === "Car Booked" || booking.status === "Car Started" || booking.status === "Car Reached Destination" || booking.status === "Car Not Cancelled") &&
-    //             new Date(pickupDate) <= new Date(booking.dropoffDate) &&
-    //             new Date(dropoffDate) >= new Date(booking.pickupDate);
-    //     });
-    // };
-
-    // const isCarAdminBooked = (carId) => {
-    //     if (!pickupDate || !dropoffDate) return false;
-    //     return adminbookingList.some(adminBooking => {
-    //         return adminBooking.carItemId === carId && adminBooking.status === "Car Booked by Admin" &&
-    //             new Date(pickupDate) <= new Date(adminBooking.endDate) &&
-    //             new Date(dropoffDate) >= new Date(adminBooking.startDate);
-    //     });
-    // };
-
     const isCarBooked = (carId) => {
         if (!pickupDate || !dropoffDate) return false;
     
@@ -106,11 +87,6 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
                 dropoff >= adminStart;
         });
     };
-
-    // console.log('pickupDate:', pickupDate, 'dropoffDate:', dropoffDate);
-    // console.log('Booking List:', bookingList);
-    // console.log('Admin Booking List:', adminbookingList);
-    
     useEffect(() => {
         const fetchAverageRatings = async () => {
           const ratingsMap = {};

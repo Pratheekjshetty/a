@@ -3,7 +3,7 @@ import carModel from '../models/carModels.js';
 
 const availableBooking = async (req, res) => {
     try{
-        const { carId} = req.body;
+        const {carId} = req.body;
         const car = await carModel.findById(carId);
         if (!car) {
             return res.json({ success: false, message: "Car not found" });
@@ -14,6 +14,7 @@ const availableBooking = async (req, res) => {
             enddate:req.body.endDate,
         })
         await newAvailable.save();
+        res.json({ success: true, message: 'Availability Updated Successfully'});
     } catch (err) {
         console.error(err);
         res.json({ success: false, message: "Available Booking Error" });
