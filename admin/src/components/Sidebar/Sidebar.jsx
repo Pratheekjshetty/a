@@ -8,6 +8,7 @@ import order_icon from '../../assets/order_icon.png'
 import car_icon from '../../assets/car_icon.png'
 import cancel_icon from '../../assets/cancel.png'
 import apply_icon from '../../assets/apply.png'
+import available_icon from '../../assets/event_available.png'
 import { NavLink } from 'react-router-dom'
 
 const Sidebar = () => {
@@ -38,6 +39,10 @@ const Sidebar = () => {
             <NavLink to='/booking' className="sidebar-option flex items-center gap-[12px] border border-gray-400 border-r-0 p-[8px_10px] rounded-[3px_0px_0px_3px] cursor-pointer bg-blue-100">
                 <img src={car_icon} style={{ width: '30px' }} alt="" />
                 <p className='hidden lg:block'>Bookings</p>
+            </NavLink>
+            <NavLink to='/available' className="sidebar-option flex items-center gap-[12px] border border-gray-400 border-r-0 p-[8px_10px] rounded-[3px_0px_0px_3px] cursor-pointer bg-blue-100">
+                <img src={available_icon} style={{ width: '30px' }} alt="" />
+                <p className='hidden lg:block'>Available</p>
             </NavLink>
             <NavLink to='/cancel' className="sidebar-option flex items-center gap-[12px] border border-gray-400 border-r-0 p-[8px_10px] rounded-[3px_0px_0px_3px] cursor-pointer bg-blue-100">
                 <img src={cancel_icon} alt="" style={{ width: '30px' }}/>

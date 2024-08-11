@@ -5,7 +5,7 @@ import axios from 'axios';
 import CarItem from '../CarItem/CarItem';
 
 const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPriceRange, location, setLocation }) => {
-    const { vehicle_list, bookingList ,url} = useContext(StoreContext);
+    const { vehicle_list, bookingList, adminbookingList, url} = useContext(StoreContext);
     const [filterType, setFilterType] = useState('');
     const [pickupDate, setPickupDate] = useState('');
     const [dropoffDate, setDropoffDate] = useState('');
@@ -33,7 +33,10 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
 
     const handlePickupDateChange = (e) => {
         const newPickupDate = e.target.value;
-        if (new Date(newPickupDate) > new Date(dropoffDate)) {
+        const today = new Date().toISOString().split('T')[0];
+        if(new Date(newPickupDate) < new Date(today)){
+            alert("Pickup date cannot be earlier than today.");
+        } else if (new Date(newPickupDate) > new Date(dropoffDate)) {
             alert("Pickup date cannot be greater than dropoff date.");
         } else {
             setPickupDate(newPickupDate);
@@ -55,15 +58,59 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
         return price >= min && price <= max;
     };
 
+    // const isCarBooked = (carId) => {
+    //     if (!pickupDate || !dropoffDate) return false;
+    //     return bookingList.some(booking => {
+    //         return booking.carItemId === carId && (booking.status === "Car Booked" || booking.status === "Car Started" || booking.status === "Car Reached Destination" || booking.status === "Car Not Cancelled") &&
+    //             new Date(pickupDate) <= new Date(booking.dropoffDate) &&
+    //             new Date(dropoffDate) >= new Date(booking.pickupDate);
+    //     });
+    // };
+
+    // const isCarAdminBooked = (carId) => {
+    //     if (!pickupDate || !dropoffDate) return false;
+    //     return adminbookingList.some(adminBooking => {
+    //         return adminBooking.carItemId === carId && adminBooking.status === "Car Booked by Admin" &&
+    //             new Date(pickupDate) <= new Date(adminBooking.endDate) &&
+    //             new Date(dropoffDate) >= new Date(adminBooking.startDate);
+    //     });
+    // };
+
     const isCarBooked = (carId) => {
         if (!pickupDate || !dropoffDate) return false;
+    
+        const pickup = new Date(pickupDate).setHours(0, 0, 0, 0);
+        const dropoff = new Date(dropoffDate).setHours(0, 0, 0, 0);
+    
         return bookingList.some(booking => {
-            return booking.carItemId === carId && (booking.status === "Car Booked" || booking.status === "Car Started" || booking.status === "Car Reached Destination" || booking.status === "Car Not Cancelled") &&
-                new Date(pickupDate) <= new Date(booking.dropoffDate) &&
-                new Date(dropoffDate) >= new Date(booking.pickupDate);
+            const bookingPickup = new Date(booking.pickupDate).setHours(0, 0, 0, 0);
+            const bookingDropoff = new Date(booking.dropoffDate).setHours(0, 0, 0, 0);
+            const isStatusValid = ["Car Booked", "Car Started", "Car Reached Destination", "Car Not Cancelled"].includes(booking.status);
+            return booking.carItemId === carId && isStatusValid &&
+                pickup <= bookingDropoff &&
+                dropoff >= bookingPickup;
+        });
+    };
+    
+    const isCarAdminBooked = (carId) => {
+        if (!pickupDate || !dropoffDate) return false;
+    
+        const pickup = new Date(pickupDate).setHours(0, 0, 0, 0);
+        const dropoff = new Date(dropoffDate).setHours(0, 0, 0, 0);
+    
+        return adminbookingList.some(adminBooking => {
+            const adminStart = new Date(adminBooking.startDate).setHours(0, 0, 0, 0);
+            const adminEnd = new Date(adminBooking.endDate).setHours(0, 0, 0, 0);
+            return adminBooking.carItemId === carId && adminBooking.status === "Car Booked by Admin" &&
+                pickup <= adminEnd &&
+                dropoff >= adminStart;
         });
     };
 
+    // console.log('pickupDate:', pickupDate, 'dropoffDate:', dropoffDate);
+    // console.log('Booking List:', bookingList);
+    // console.log('Admin Booking List:', adminbookingList);
+    
     useEffect(() => {
         const fetchAverageRatings = async () => {
           const ratingsMap = {};
@@ -144,8 +191,9 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
         const matchesPrice = isPriceInRange(item.price, priceRange);
         const matchesLocation = location === 'All' || location === item.location;
         const notBooked = !isCarBooked(item._id);
+        const notAdminBooked = !isCarAdminBooked(item._id);
 
-        return matchesCategory && matchesSeats && matchesPrice && matchesLocation && notBooked;
+        return matchesCategory && matchesSeats && matchesPrice && matchesLocation && notBooked && notAdminBooked ;
     });
 
     return (
@@ -182,8 +230,9 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
                         const matchesPrice = isPriceInRange(item.price, priceRange);
                         const matchesLocation = location === 'All' || location === item.location;
                         const notBooked = !isCarBooked(item._id);
+                        const notAdminBooked = !isCarAdminBooked(item._id);
 
-                        if (matchesCategory && matchesSeats && matchesPrice && matchesLocation && notBooked) {
+                        if (matchesCategory && matchesSeats && matchesPrice && matchesLocation && notBooked && notAdminBooked) {
                             return (
                                 <CarItem
                                     key={index}

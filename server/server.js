@@ -15,6 +15,7 @@ import driverRouter from '../server/src/routers/driverRoutes.js';
 import blogRouter from '../server/src/routers/blogRoutes.js';
 import ratingRouter from './src/routers/ratingRoutes.js';
 import nodemailer from 'nodemailer';
+import availableRouter from './src/routers/availableRoutes.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -42,6 +43,7 @@ app.use('/api/driver', driverRouter);
 app.use('/blog-uploads', express.static('blog-uploads'));
 app.use('/api/blog', blogRouter);
 app.use('/api/rating',ratingRouter);
+app.use('/api/available',availableRouter) 
 
 app.post('/api/contact', async (req, res) => {
     const { name, email, message } = req.body;
