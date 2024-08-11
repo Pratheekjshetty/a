@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const Booking = () => {
   const location = useLocation();
   const { id, name, price, location: carLocation, description, image, model, color, seats } = location.state;
-  const { url,bookingList } = useContext(StoreContext);
+  const { url, bookingList, adminbookingList } = useContext(StoreContext);
   const [pickupDate, setPickupDate] = useState('');
   const [pickupTime, setPickupTime] = useState('');
   const [dropoffDate, setDropoffDate] = useState('');
@@ -60,12 +60,23 @@ const Booking = () => {
     });
   }, [bookingList, id, pickupDate, dropoffDate]);
 
+  const isCarAdminBooked = useCallback(() => {
+    if (!pickupDate || !dropoffDate) return false;
+    return adminbookingList.some(adminBooking => {
+      return adminBooking.carItemId === id && (adminBooking.status === "Car Booked by Admin") &&
+        new Date(pickupDate) <= new Date(adminBooking.endDate) &&
+        new Date(dropoffDate) >= new Date(adminBooking.startDate);
+    });
+  }, [adminbookingList, id, pickupDate, dropoffDate]);
+
   const handleBookNow = (event) => {
     event.preventDefault();
     if (new Date(pickupDate) > new Date(dropoffDate)) {
       alert("Pickup date cannot be later than Dropoff date.");  
     } else if (isCarBooked()) {
       alert("The car is already booked during the selected dates.");
+    }else if (isCarAdminBooked()) {
+      alert("The car is already booked by admin during the selected dates.");
     } else {
       const form = event.target;
       if (form.checkValidity()) {
@@ -115,10 +126,22 @@ const Booking = () => {
           </div>
           <div className="w-full md:w-1/2 p-4 flex-grow">
           <form onSubmit={handleBookNow}>
-            <input type="date" className="w-full p-2 mb-2 border rounded outline-blue-500" placeholder='pickupDate' value={pickupDate} onChange={(e) => setPickupDate(e.target.value)} onFocus={(e) => (e.target.type = 'date')} onBlur={(e) => (e.target.type = e.target.value ? 'date' : 'text')} required/>
-            <input type="time" className="w-full p-2 mb-2 border rounded outline-blue-500" placeholder='pickupTime' value={pickupTime} onChange={(e) => setPickupTime(e.target.value)} onFocus={(e) => (e.target.type = 'time')} onBlur={(e) => (e.target.type = e.target.value ? 'time' : 'text')} required/>
-            <input type="date" className="w-full p-2 mb-2 border rounded outline-blue-500" placeholder='dropoffDate' value={dropoffDate} onChange={(e) => setDropoffDate(e.target.value)} onFocus={(e) => (e.target.type = 'date')} onBlur={(e) => (e.target.type = e.target.value ? 'date' : 'text')} required/>
-            <input type="time" className="w-full p-2 mb-2 border rounded outline-blue-500" placeholder='dropoffTime' value={dropoffTime} onChange={(e) => setDropoffTime(e.target.value)} onFocus={(e) => (e.target.type = 'time')} onBlur={(e) => (e.target.type = e.target.value ? 'time' : 'text')} required/>
+            <div className="mt-3">
+              <label className="block text-lg font-semibold mb-2">Pickup Date:</label>
+              <input type="date" className="w-full p-2 mb-2 border rounded outline-blue-500" placeholder='pickupDate' value={pickupDate} onChange={(e) => setPickupDate(e.target.value)} onFocus={(e) => (e.target.type = 'date')} onBlur={(e) => (e.target.type = e.target.value ? 'date' : 'text')} required/>
+            </div>
+            <div className="mt-3">
+              <label className="block text-lg font-semibold mb-2">Pickup Time:</label>
+              <input type="time" className="w-full p-2 mb-2 border rounded outline-blue-500" placeholder='pickupTime' value={pickupTime} onChange={(e) => setPickupTime(e.target.value)} onFocus={(e) => (e.target.type = 'time')} onBlur={(e) => (e.target.type = e.target.value ? 'time' : 'text')} required/>
+            </div>
+            <div className="mt-3">
+              <label className="block text-lg font-semibold mb-2">Dropoff Date:</label>
+              <input type="date" className="w-full p-2 mb-2 border rounded outline-blue-500" placeholder='dropoffDate' value={dropoffDate} onChange={(e) => setDropoffDate(e.target.value)} onFocus={(e) => (e.target.type = 'date')} onBlur={(e) => (e.target.type = e.target.value ? 'date' : 'text')} required/>
+            </div>
+            <div className="mt-3">
+              <label className="block text-lg font-semibold mb-2">Dropoff Time:</label>
+              <input type="time" className="w-full p-2 mb-2 border rounded outline-blue-500" placeholder='dropoffTime' value={dropoffTime} onChange={(e) => setDropoffTime(e.target.value)} onFocus={(e) => (e.target.type = 'time')} onBlur={(e) => (e.target.type = e.target.value ? 'time' : 'text')} required/>
+            </div>
             <span>Total Hours:</span><span className='font-semibold'> {totalHours}</span><br/>
             <span>Rent Per Hour: </span><span className='font-semibold'> ₹ {price}</span><br/>
             <p>SubTotal:<span className='font-semibold'>₹ {subtotal}</span></p>
