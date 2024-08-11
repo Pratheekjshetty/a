@@ -63,7 +63,7 @@ const Booking = () => {
   const isCarAdminBooked = useCallback(() => {
     if (!pickupDate || !dropoffDate) return false;
     return adminbookingList.some(adminBooking => {
-      return adminBooking.carItemId === id && (adminBooking.status === "Car Booked by Admin") &&
+      return adminBooking.carItemId === id && (adminBooking.status === "Car Booked by Admin" || adminBooking.status === "Admin Car Being Started" || adminBooking.status === "Admin Car Being Ended") &&
         new Date(pickupDate) <= new Date(adminBooking.endDate) &&
         new Date(dropoffDate) >= new Date(adminBooking.startDate);
     });

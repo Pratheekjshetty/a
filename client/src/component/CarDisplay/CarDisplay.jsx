@@ -82,7 +82,8 @@ const CarDisplay = ({ category, setCategory, seats, setSeats, priceRange, setPri
         return adminbookingList.some(adminBooking => {
             const adminStart = new Date(adminBooking.startDate).setHours(0, 0, 0, 0);
             const adminEnd = new Date(adminBooking.endDate).setHours(0, 0, 0, 0);
-            return adminBooking.carItemId === carId && adminBooking.status === "Car Booked by Admin" &&
+            const isStatusValid = ["Car Booked by Admin", "Admin Car Being Started", "Admin Car Being Ended"].includes(adminBooking.status);
+            return adminBooking.carItemId === carId && isStatusValid &&
                 pickup <= adminEnd &&
                 dropoff >= adminStart;
         });

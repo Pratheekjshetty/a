@@ -21,7 +21,6 @@ const availableBooking = async (req, res) => {
     }
 };
 const listadminBooking = async (req, res) => {
-
     try{
         const available=await availableModel.find({});
         res.json({success:true,data:available})

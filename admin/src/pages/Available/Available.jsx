@@ -77,6 +77,7 @@ const Available = ({ url }) => {
                         carItemId: booking.caritem._id,
                         startDate: booking.startdate,
                         endDate: booking.enddate,
+                        status: booking.status,
                     }));
                     setAdminBookingList(adminBookingData);
                 }
@@ -104,10 +105,10 @@ const Available = ({ url }) => {
 
         const isadminBooking = adminBookingList.some(booking => (
             booking.carItemId === carId &&
+            (booking.status === "Car Booked by Admin" || booking.status === "Admin Car Being Started" || booking.status === "Admin Car Being Ended") &&
             new Date(startDate) <= new Date(booking.endDate) &&
             new Date(endDate) >= new Date(booking.startDate)
         ));
-    
         return iscustomerBooking || isadminBooking;
     };
 

@@ -11,6 +11,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import cron from 'node-cron';
 import rentModel from './src/models/rentModels.js';
+import availableModel from './src/models/availableModels.js';
 import driverRouter from '../server/src/routers/driverRoutes.js';
 import blogRouter from '../server/src/routers/blogRoutes.js';
 import ratingRouter from './src/routers/ratingRoutes.js';
@@ -120,7 +121,36 @@ cron.schedule('* * * * *', async () => {
             await rentModel.findByIdAndUpdate(booking._id, { status: "Car Available" });
         }
 
-        // console.log(`Updated status for ${startedBookings.length} started bookings and ${reachedBookings.length} reached bookings.`);
+        // Check if today is the start date
+        const adminStartBookings = await availableModel.find({
+          startdate: { $eq: currentDate },
+          status: { $in: ["Car Booked by Admin"] }
+        });
+
+        for (const booking of adminStartBookings) {
+            await availableModel.findByIdAndUpdate(booking._id, { status: "Admin Car Being Started" });
+        }
+
+        // Check if today is the end date
+        const adminEndBookings = await availableModel.find({
+            enddate: { $eq: currentDate },
+            status: { $in: ["Admin Car Being Started", "Car Booked by Admin"] }
+        });
+
+        for (const booking of adminEndBookings) {
+            await availableModel.findByIdAndUpdate(booking._id, { status: "Admin Car Being Ended" });
+        }
+
+        // Update status to "Car Available" after booking ends
+        const completedAdminBookings = await availableModel.find({
+            enddate: { $eq: yesterdayDate },
+            status: "Admin Car Being Ended"
+        });
+
+        for (const booking of completedAdminBookings) {
+            await availableModel.findByIdAndUpdate(booking._id, { status: "Car Available" });
+        }
+
     } catch (err) {
         console.error("Error updating booking status:", err);
     }
