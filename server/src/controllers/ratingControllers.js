@@ -29,7 +29,7 @@ const addRating = async(req,res)=>{
         // Respond with success
         res.status(201).json({ success: true, message: 'Rating added successfully.', data: savedRating });
     } catch (error) {
-        console.error('Error adding rating:', error);
+        console.error('Error while adding the rating', error);
         res.status(500).json({ success: false, message: 'Server error. Please try again later.' });
     }
 };

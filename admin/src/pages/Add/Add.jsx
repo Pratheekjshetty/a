@@ -49,7 +49,7 @@ const Add = ({url}) => {
       toast.success(response.data.message)
     }
     else{
-      toast.error(response.data.message)
+      toast.error("Error while adding the car")
     }    
   }
   return (  

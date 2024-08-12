@@ -19,7 +19,7 @@ const addBlog = async(req,res)=>{
         res.json({success:true,message:"Blog Added Successfully"});
     } catch(err){
         console.log(err)
-        res.json({success:false,message:"Error"})
+        res.json({success:false,message:"Error while adding the Blog"})
     }
 }
 
