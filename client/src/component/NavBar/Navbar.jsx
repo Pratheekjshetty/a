@@ -3,14 +3,15 @@ import logo from '../../assets/logo.png'
 import profile_icon from '../../assets/profile_icon.png'
 import booking_icon from '../../assets/booking_icon.png'
 import logout_icon from '../../assets/logout_icon.png'
-import { Link, useNavigate } from 'react-router-dom';
-import { FaBars,FaSearch, FaChevronDown } from 'react-icons/fa';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { FaBars, FaChevronDown } from 'react-icons/fa';
 import { StoreContext } from '../../context/StoreContext';
 
 const Navbar = ({setShowLogin}) => {
 
 const{token,setToken}=useContext(StoreContext);
 const navigate = useNavigate(); 
+const location = useLocation();
 const [userImage, setUserImage] = useState(null);
 const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -34,6 +35,7 @@ const logout = () =>{
     setUserImage(null); // Clear userImage state on logout
     navigate("/");
 }
+const isActive = (path) => location.pathname === path ? 'text-blue-900' : '';
 return (
   <div className="Navbar bg-blue-300">
     <nav className='flex flex-col'>
@@ -43,22 +45,22 @@ return (
           <Link to='/'><img src={logo} className="w-[200px]" alt="logo" /></Link>
         </div>
         <ul className='flex flex-row space-x-4'>
-          <li className="hidden lg:block cursor-pointer p-4"><Link to='/'>Home</Link></li>
-          <li className="hidden lg:block cursor-pointer p-4"><Link to='/about'>About</Link></li>
-          <li className="hidden lg:block cursor-pointer p-4"> <Link to='/contact'>Contact</Link></li>
-          <li className="hidden lg:block cursor-pointer p-4 relative group"> <Link to='/blogs'>Blogs<FaChevronDown className="inline ml-1"/></Link>
+          <li className={`hidden lg:block cursor-pointer p-4 hover:text-blue-900 ${isActive('/')}`}><Link to='/'>Home</Link></li>
+          <li className={`hidden lg:block cursor-pointer p-4 hover:text-blue-900 ${isActive('/about')}`}><Link to='/about'>About</Link></li>
+          <li className={`hidden lg:block cursor-pointer p-4 hover:text-blue-900 ${isActive('/contact')}`}> <Link to='/contact'>Contact</Link></li>
+          <li className={`hidden lg:block cursor-pointer p-4 hover:text-blue-900 relative group ${isActive('/blogs')}`}> <Link to='/blogs'>Blogs<FaChevronDown className="inline ml-1"/></Link>
               <ul className="absolute hidden group-hover:block bg-white text-blue-900 mt-2 rounded-md shadow-lg"style={{ width: '100%', zIndex: 50 }}>
                   <li className="p-2 hover:bg-blue-200 hover:rounded-md cursor-pointer"><Link to='/add-blog'>Add Blog</Link></li>
-                  <li className="p-2 hover:bg-blue-200 hover:rounded-md cursor-pointer"><Link to='/ratings'>Review &Rating</Link></li>
               </ul>
           </li>
+          <li className={`hidden lg:block cursor-pointer p-4 hover:text-blue-900 ${isActive('/ratings')}`}><Link to='/ratings'>Review &Rating</Link></li>
         </ul>
       </div>
       <div className="flex gap-6 items-center mx-4">
-        <div className="relative hidden sm:block">
+        {/* <div className="relative hidden sm:block">
           <input type="text" placeholder="Search" className="p-2 rounded-full text-blue-900 placeholder-blue-200 border border-blue-900 focus:outline-none"/>
           <FaSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-blue-900" />
-        </div>
+        </div> */}
         {!token?(
           <button className='bg-white text-blue-900 rounded-full p-2 cursor-pointer transition duration-500 hover:bg-blue-700 hover:text-white' onClick={()=>setShowLogin(true)}>Sign In</button>)
         :(<div className='relative group'>{userImage ? (
@@ -94,16 +96,18 @@ return (
               <Link to='/blogs' onClick={() => setIsMobileMenuOpen(false)}>Blogs<FaChevronDown className="inline ml-1"/></Link>
               <ul className="absolute hidden group-hover:block bg-white text-blue-900 mt-2 rounded-md shadow-lg"style={{ width: '100%', zIndex: 50 }}>
                   <li className="p-2 hover:bg-blue-200 hover:rounded-md cursor-pointer"><Link to='/add-blog'>Add Blog</Link></li>
-                  <li className="p-2 hover:bg-blue-200 hover:rounded-md cursor-pointer"><Link to='/ratings'>Review &Rating</Link></li>
               </ul>
+            </li>
+            <li className="cursor-pointer p-2">
+              <Link to='/ratings' onClick={() => setIsMobileMenuOpen(false)}>Review &Rating</Link>
             </li>
           </ul>
         </div>
       <div className="block sm:hidden w-full mt-4 md:mt-0">
-        <div className="flex items-center justify-center relative">
+        {/* <div className="flex items-center justify-center relative">
           <input type="text" placeholder="Search" className="w-full px-4 py-2 rounded-full text-blue-900 placeholder-blue-200 border border-blue-900 focus:outline-none"/>
           <FaSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-blue-900" />
-        </div>
+        </div> */}
       </div>
     </nav>
   </div>
