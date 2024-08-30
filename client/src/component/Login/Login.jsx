@@ -89,6 +89,7 @@ const Login = ({setShowLogin}) => {
         toast.error(error.response?.data?.message || 'Failed to login/register. Please check your details and try again.');
     }
 };
+
   return (
     <div className='login'>
         <form onSubmit={onLogin} className='login-container'>
@@ -133,4 +134,5 @@ const Login = ({setShowLogin}) => {
     </div>
   )
 }
+
 export default Login

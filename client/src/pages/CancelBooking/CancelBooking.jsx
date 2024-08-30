@@ -31,11 +31,14 @@ const CancelBooking = () => {
   const formatDate = getFormatDate(date);
   const currentDate = getCurrentDate();
 
-  const isCancellationAllowed = () => {
-    const pickupDateTime = new Date(pickupDate + 'T' + pickupTime);
-    const currentTime = new Date();
-    const timeDifference = pickupDateTime - currentTime;
-    return timeDifference > 24 * 60 * 60 * 1000;
+const isCancellationAllowed = () => {
+  const datePart = pickupDate.split('T')[0];
+  const pickupDateTime = new Date(`${datePart}T${pickupTime}:00`);
+
+  const currentTime = new Date();
+  const timeDifference = pickupDateTime - currentTime;
+
+  return timeDifference > 24 * 60 * 60 * 1000;  
 };
 
   const handleSubmit = async (e) => {

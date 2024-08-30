@@ -34,7 +34,9 @@ const MyBooking = () => {
     const fetchBooking = useCallback(async () => {
         try {
             const response = await axios.post(url + "/api/book/userbooking", {}, { headers: { token } });
-            setData(response.data.data);
+            const bookings = response.data.data;
+            const reversedBooking = bookings.reverse()
+            setData(reversedBooking);
         } catch (err) {
             console.log(err);
         }
